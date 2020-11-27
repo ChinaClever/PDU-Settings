@@ -25,5 +25,6 @@ void Home_MainWid::initWid()
     ui->tabWidget->tabBar()->hide();
     mMpduWid = new Home_MpdubWid(ui->tabWidget);
     ui->tabWidget->insertTab(0, mMpduWid, tr("MPDU参数设置"));
+    connect(mMpduWid, SIGNAL(errSig()), mWorkWid, SLOT(errSlot()));
     connect(mWorkWid, SIGNAL(enabledSig(bool)), mMpduWid, SLOT(enabledSlot(bool)));
 }

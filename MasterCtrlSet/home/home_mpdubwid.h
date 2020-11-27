@@ -16,6 +16,13 @@ public:
     explicit Home_MpdubWid(QWidget *parent = nullptr);
     ~Home_MpdubWid();
 
+signals:
+    void errSig();
+
+protected:
+    bool inputCheck();
+    void dataSave();
+
 public slots:
     void enabledSlot(bool en);
 
