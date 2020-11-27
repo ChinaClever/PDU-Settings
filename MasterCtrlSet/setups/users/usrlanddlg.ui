@@ -178,7 +178,7 @@
     <string notr="true"/>
    </property>
    <property name="text">
-    <string>PDU质检平台</string>
+    <string>主控设置平台</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
