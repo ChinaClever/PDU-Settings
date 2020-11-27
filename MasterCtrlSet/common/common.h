@@ -2,6 +2,7 @@
 #define COMMON_H
 #include "msgbox.h"
 #include "config.h"
+#include "datapacket.h"
 
 bool cm_pingNet(const QString& ip);
 bool cm_isDigitStr(const QString &src);

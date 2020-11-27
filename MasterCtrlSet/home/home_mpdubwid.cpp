@@ -7,6 +7,9 @@ Home_MpdubWid::Home_MpdubWid(QWidget *parent) :
 {
     ui->setupUi(this);
     set_background_icon(this,":/image/back.jpg");
+    mDev = sDataPacket::bulid()->getDev();
+
+    initWid();
     enabledSlot(false);
 }
 
@@ -14,6 +17,26 @@ Home_MpdubWid::~Home_MpdubWid()
 {
     delete ui;
 }
+
+void Home_MpdubWid::initWid()
+{
+    sDevType *dt = &(mDev->dt); //设备类型
+    sObjData data; // MPDU配置数据
+
+    int v = dt->lines-1; if(v) v = 1;
+    ui->lineBox->setCurrentIndex(v);
+    ui->outputSpin->setValue(dt->outputs);
+
+    v = dt->loops-1; if(v>4) v = 4;
+    ui->loopBox->setCurrentIndex(v)
+
+
+
+
+
+
+}
+
 
 bool Home_MpdubWid::inputCheck()
 {

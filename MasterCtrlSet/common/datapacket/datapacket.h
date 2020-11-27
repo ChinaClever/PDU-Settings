@@ -3,36 +3,19 @@
 #include <QtCore>
 #include <QColor>
 
-#define LINE_NUM  3
-#define SENOR_NUM 1
-#define NAME_SIZE 32
-#define DEV_NUM 3
-#define ARRAY_SIZE 255 //一包数据最长
-#define PACK_ARRAY_SIZE LINE_NUM
-
-// 倍率定义
-#define COM_RATE_VOL	1.0    // 电压
-#define COM_RATE_CUR	10.0    // 电流
-#define COM_RATE_POW	1000.0  // 功率
-#define COM_RATE_ELE	10.0    // 电能
-#define COM_RATE_PF     100.0   // 功率因数
-#define COM_RATE_TEM	1.0    // 温度
-#define COM_RATE_HUM	1.0    // 湿度
-
+#define OpSize  12
 
 /**
  * 数据单元：包括当前值，阈值，临界值，告警状态等
  */
-struct sDataUnit
+struct sUnit
 {
-    sDataUnit() {size=0;}
+    bool en;
+    float min; // 最小值
+    float max; // 最大值
 
-    ushort size;
-    ushort value[PACK_ARRAY_SIZE]; // 值
-    ushort min[PACK_ARRAY_SIZE]; // 最小值
-    ushort max[PACK_ARRAY_SIZE]; // 最大值
-    uchar alarm[PACK_ARRAY_SIZE]; // 报警值 0表示未报警  1表示已报警 2表示已纪录
-    uchar status[PACK_ARRAY_SIZE];
+    float crMin; // 最小值
+    float crMax; // 最大值
 };
 
 
@@ -42,62 +25,29 @@ struct sDataUnit
  */
 struct sObjData
 {
-    sObjData() {size=0;}
-    int size;
-    sDataUnit vol; // 电压
-    sDataUnit cur; // 电流
+    sUnit vol; // 电压
+    sUnit cur; // 电流
+    sUnit opCur[OpSize]; // 输出位电流
 
-    ushort pow[PACK_ARRAY_SIZE]; // 功率
-    uint ele[PACK_ARRAY_SIZE]; // 电能
-
-    uchar pf[PACK_ARRAY_SIZE]; // 功率因数
-    uchar sw[PACK_ARRAY_SIZE]; // 开关状态 0 表示未启用
-
-    ushort hz[PACK_ARRAY_SIZE]; // 电压频率
-    ushort aPow[PACK_ARRAY_SIZE]; // 视在功率值
-
-    uint powStatus[PACK_ARRAY_SIZE]; // 功率
-    uint ratedCur[PACK_ARRAY_SIZE]; // 额定电流
-    uint wave[PACK_ARRAY_SIZE]; // 谐波值
-    uint tem[PACK_ARRAY_SIZE];
-    uchar delay[PACK_ARRAY_SIZE];
-
-    uchar pl[PACK_ARRAY_SIZE]; // 负载百分比
-    uint curThd[PACK_ARRAY_SIZE]; // 电流谐波含量
-    uint volThd[PACK_ARRAY_SIZE]; // 电压谐波含量
+    sUnit tem; // 温度
+    sUnit hum; // 湿度
 };
-
-
-
-/**
- * 环境数据结构体
- */
-struct sEnvData
-{
-    sEnvData() {size=0;}
-    uchar size;
-    sDataUnit tem; // 温度
-    sDataUnit hum; // 湿度
-};
-
 
 struct sDevType
 {
-    sDevType() {}
-
-    uint devId;
     uchar devType; // 1 ZPDU执行板类型  2 MPDU执行板类型   3 RPDU执行板类型
     // 4 SI-PDU  5 IP-PDU  6 BM-PDU
 
-    uchar ac; // 1 交流 2 直流
     uchar series; // 1 A系列  2 B系列  3 C系列  4 D系列1
     uchar lines;
+    uchar loops;
     uchar outputs;
+    uchar breaker;
+    uchar language;
+    uchar modbus;
+    uchar standar;
 
-    uchar specs; // 1 互感器  2锰铜
-    uchar version; // 版本号
-
-    uchar ip[18];
+    QString mac;
     QString sn;
     QString dev_type;
 };
@@ -109,30 +59,17 @@ struct sDevType
  */
 struct sDevData
 {
-    sDevData() {id=1; en=0;}
-
-    uchar id, en;  // 设备号
-    sDevType devType; //设备类型
-    uchar offLine; //离线标志 > 0在线
-
-    sObjData line; // 相数据
-    sEnvData env; // 环境数据
-
-    uchar hz; // 电压频率
-    ushort br;  // 00	表示波特率9600(00默认9600，01为4800，02为9600，03为19200，04为38400)
-    ushort version;
-    ushort reserve;
+    sDevType dt; //设备类型
+    sObjData data; // MPDU配置数据
 };
 
 
 enum {
     Test_Fun, // 功能
     Test_Start, // 开始
-    Test_Ading,
     Test_vert, // 验证
     Test_Over, // 终止
     Test_End, // 完成
-    Collect_Start, // 数据采集
 
     Test_Info=0,
     Test_Pass=1,
@@ -164,13 +101,19 @@ public:
 
     void init();
     sProgress *getPro() {return pro;}
-    sDevData *getDev(int id=1) {return dev[id];}
+    sDevData *getDev() {return dev;}
     bool updatePro(const QString &str, bool pass=true, int sec=1);
     bool delay(int s=1);
 
 protected:
-    void clear(int id=1);
-    sDevData *dev[DEV_NUM];
+    void initType();
+    void initUnit(const QString &prefix, sUnit &unit);
+
+    void initData();
+    void initCfg();
+
+private:
+    sDevData *dev;
     sProgress *pro;
 };
 

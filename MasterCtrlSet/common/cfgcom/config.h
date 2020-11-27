@@ -99,8 +99,8 @@ public:
     void writeCfgDev();
     void setAddr(int addr);
 
-    void write(const QString &key, const QVariant& v, const QString &g="Cfg");
-    QVariant read(const QString &key, const QVariant &v = QVariant(), const QString &g="Cfg");
+    void write(const QString &key, const QVariant& v, const QString &g="mCfg");
+    QVariant read(const QString &key, const QVariant &v = QVariant(), const QString &g="mCfg");
 
 protected:
     void initCnt();

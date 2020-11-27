@@ -20,6 +20,8 @@ signals:
     void errSig();
 
 protected:
+    void initWid();
+
     bool inputCheck();
     void dataSave();
 
@@ -28,6 +30,7 @@ public slots:
 
 private:
     Ui::Home_MpdubWid *ui;
+    sDevData *mDev;
 };
 
 #endif // HOME_MPDUBWID_H

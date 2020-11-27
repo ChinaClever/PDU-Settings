@@ -10,7 +10,7 @@
 Sn_DevType::Sn_DevType()
 {
     sDevData *dev = sDataPacket::bulid()->getDev();
-    mDt = &(dev->devType);
+    mDt = &(dev->dt);
 
     QJsonObject json;
     Json_Build::bulid()->getJson(json);
