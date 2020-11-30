@@ -2,7 +2,7 @@
 #define HOME_WORKWID_H
 
 #include <QWidget>
-#include "home_mpdubwid.h"
+#include "home_mpduwid.h"
 
 namespace Ui {
 class Home_WorkWid;

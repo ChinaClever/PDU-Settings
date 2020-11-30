@@ -25,7 +25,7 @@ protected:
 private:
     Ui::Home_MainWid *ui;
     Home_WorkWid *mWorkWid;
-    Home_MpdubWid *mMpduWid;
+    Home_MpduWid *mMpduWid;
 };
 
 #endif // HOME_MAINWID_H

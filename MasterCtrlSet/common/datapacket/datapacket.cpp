@@ -8,60 +8,13 @@
 
 sDataPacket::sDataPacket()
 {
+    si = new sDevData;
+    ip = new sDevData;
+    mpdu = new sDevData;
+    zpdu = new sDevData;
     pro = new sProgress();
-    dev = new sDevData;
-    initCfg();
 }
 
-
-void sDataPacket::initType()
-{
-    Cfg *cfg = Cfg::bulid();
-    sDevType *ptr = &(dev->dt);
-
-    ptr->lines = cfg->read("lines", 1).toInt();
-    ptr->loops = cfg->read("loops", 3).toInt();
-    ptr->series = cfg->read("series", 4).toInt();
-    ptr->breaker = cfg->read("breaker", 1).toInt();
-    ptr->outputs = cfg->read("outputs", 24).toInt();
-    ptr->language = cfg->read("language", 1).toInt();
-    ptr->modbus = cfg->read("modbus", 0).toInt();
-    ptr->mac = cfg->read("mac", "").toString();
-}
-
-void sDataPacket::initUnit(const QString& prefix, sUnit &unit)
-{
-    Cfg *cfg = Cfg::bulid();
-
-    unit.en = cfg->read(prefix+"_en", 0).toBool();
-    unit.min = cfg->read(prefix+"_min", 0).toFloat();
-    unit.max = cfg->read(prefix+"_max", 10).toFloat();
-
-    unit.crMin = cfg->read(prefix+"_crMin", 0).toFloat();
-    unit.crMax = cfg->read(prefix+"_crMax", 10).toFloat();
-}
-
-void sDataPacket::initData()
-{
-    sObjData *ptr = &(dev->data);
-
-    initUnit("vol", ptr->vol);
-    initUnit("cur", ptr->cur);
-
-    initUnit("tem", ptr->tem);
-    initUnit("hum", ptr->hum);
-
-    for(int i=0; i<OpSize; ++i) {
-        QString str = "op_" + QString::number(i+1);
-        initUnit(str, ptr->opCur[i]);
-    }
-}
-
-void sDataPacket::initCfg()
-{
-    initType();
-    initData();
-}
 
 sDataPacket *sDataPacket::bulid()
 {

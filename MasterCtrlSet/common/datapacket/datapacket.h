@@ -27,6 +27,7 @@ struct sObjData
 {
     sUnit vol; // 电压
     sUnit cur; // 电流
+    sUnit output; // 电流
     sUnit opCur[OpSize]; // 输出位电流
 
     sUnit tem; // 温度
@@ -38,6 +39,7 @@ struct sDevType
     uchar devType; // 1 ZPDU执行板类型  2 MPDU执行板类型   3 RPDU执行板类型
     // 4 SI-PDU  5 IP-PDU  6 BM-PDU
 
+    uchar ac;
     uchar series; // 1 A系列  2 B系列  3 C系列  4 D系列1
     uchar lines;
     uchar loops;
@@ -46,6 +48,8 @@ struct sDevType
     uchar language;
     uchar modbus;
     uchar standar;
+    uchar versions;
+    uchar logs;
 
     QString mac;
     QString sn;
@@ -100,20 +104,19 @@ public:
     static sDataPacket *bulid();
 
     void init();
+    sDevData *getSi() {return si;}
+    sDevData *getIp() {return ip;}
+    sDevData *getMpdu() {return mpdu;}
+    sDevData *getZpdu() {return zpdu;}
     sProgress *getPro() {return pro;}
-    sDevData *getDev() {return dev;}
+
     bool updatePro(const QString &str, bool pass=true, int sec=1);
     bool delay(int s=1);
-
-protected:
-    void initType();
-    void initUnit(const QString &prefix, sUnit &unit);
-
-    void initData();
-    void initCfg();
-
 private:
-    sDevData *dev;
+    sDevData *si;
+    sDevData *ip;
+    sDevData *mpdu;
+    sDevData *zpdu;
     sProgress *pro;
 };
 

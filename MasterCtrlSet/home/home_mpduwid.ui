@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Home_MpdubWid</class>
- <widget class="QWidget" name="Home_MpdubWid">
+ <class>Home_MpduWid</class>
+ <widget class="QWidget" name="Home_MpduWid">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -68,12 +68,12 @@
         </property>
         <item>
          <property name="text">
-          <string>中文</string>
+          <string>英文</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>英文</string>
+          <string>中文</string>
          </property>
         </item>
        </widget>

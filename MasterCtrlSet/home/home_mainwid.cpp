@@ -23,7 +23,7 @@ void Home_MainWid::initWid()
     //    connect(mWorkWid, SIGNAL(startSig()), this, SIGNAL(startSig()));
 
     ui->tabWidget->tabBar()->hide();
-    mMpduWid = new Home_MpdubWid(ui->tabWidget);
+    mMpduWid = new Home_MpduWid(ui->tabWidget);
     ui->tabWidget->insertTab(0, mMpduWid, tr("MPDU参数设置"));
     connect(mMpduWid, SIGNAL(errSig()), mWorkWid, SLOT(errSlot()));
     connect(mWorkWid, SIGNAL(enabledSig(bool)), mMpduWid, SLOT(enabledSlot(bool)));
