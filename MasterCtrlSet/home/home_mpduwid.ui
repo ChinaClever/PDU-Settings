@@ -35,7 +35,7 @@
       </size>
      </property>
      <property name="title">
-      <string>后台参数</string>
+      <string>MPDU后台参数</string>
      </property>
      <layout class="QGridLayout" name="gridLayout">
       <item row="0" column="1">
@@ -439,7 +439,7 @@
       </size>
      </property>
      <property name="title">
-      <string>报警阈值</string>
+      <string>MPDU报警阈值</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
       <item row="5" column="2">

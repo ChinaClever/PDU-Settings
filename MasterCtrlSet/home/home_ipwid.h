@@ -1,28 +1,25 @@
-#ifndef HOME_MPDUBWID_H
-#define HOME_MPDUBWID_H
+#ifndef HOME_IPWID_H
+#define HOME_IPWID_H
 
-#include <QWidget>
-#include "home_ipwid.h"
+#include "home_lineunitwid.h"
 
 namespace Ui {
-class Home_MpduWid;
+class Home_IpWid;
 }
 
-class Home_MpduWid : public QWidget
+class Home_IpWid : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit Home_MpduWid(QWidget *parent = nullptr);
-    ~Home_MpduWid();
+    explicit Home_IpWid(QWidget *parent = nullptr);
+    ~Home_IpWid();
 
 signals:
     void errSig();
 
 protected:
     void initType();
-    void initData();
-    void initWid();
 
     void updateType();
     void updateData();
@@ -35,9 +32,11 @@ public slots:
     void enabledSlot(bool en);
 
 private:
-    Ui::Home_MpduWid *ui;
+    Ui::Home_IpWid *ui;
+    Home_LineUnitWid *mUnitWid;
+
     Dev_Object *mObj;
     sDevData *mDev;
 };
 
-#endif // HOME_MPDUBWID_H
+#endif // HOME_IPWID_H

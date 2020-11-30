@@ -29,11 +29,11 @@ void Dev_Object::initUnit(const QString& prefix, sUnit &unit)
 void Dev_Object::writeUnit(const QString& prefix, sUnit &unit)
 {
     write(prefix+"_en", unit.en);
-    write(prefix+"_min", unit.min);
-    write(prefix+"_max", unit.max);
+    write(prefix+"_min", QString::number(unit.min));
+    write(prefix+"_max", QString::number(unit.max));
 
-    write(prefix+"_crMin", unit.crMin);
-    write(prefix+"_crMax", unit.crMax);
+    write(prefix+"_crMin", QString::number(unit.crMin));
+    write(prefix+"_crMax", QString::number(unit.crMax));
 }
 
 

@@ -8,10 +8,9 @@ Home_WorkWid::Home_WorkWid(QWidget *parent) :
     ui->setupUi(this);
 
     mCnt = 0;
-
-     QGridLayout *gridLayout = new QGridLayout(parent);
-     gridLayout->setContentsMargins(0, 0, 0, 0);
-     gridLayout->addWidget(this);
+    QGridLayout *gridLayout = new QGridLayout(parent);
+    gridLayout->setContentsMargins(0, 0, 0, 0);
+    gridLayout->addWidget(this);
 }
 
 Home_WorkWid::~Home_WorkWid()

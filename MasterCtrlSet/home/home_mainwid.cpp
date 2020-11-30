@@ -19,12 +19,20 @@ Home_MainWid::~Home_MainWid()
 
 void Home_MainWid::initWid()
 {
+    ui->tabWidget->tabBar()->hide();
     mWorkWid = new Home_WorkWid(ui->workWid);
     //    connect(mWorkWid, SIGNAL(startSig()), this, SIGNAL(startSig()));
 
-    ui->tabWidget->tabBar()->hide();
+    mIpWid = new Home_IpWid(ui->tabWidget);
+    ui->tabWidget->addTab(mIpWid, tr("IP-PDU参数设置"));
+    connect(mIpWid, SIGNAL(errSig()), mWorkWid, SLOT(errSlot()));
+    connect(mWorkWid, SIGNAL(enabledSig(bool)), mIpWid, SLOT(enabledSlot(bool)));
+
+
     mMpduWid = new Home_MpduWid(ui->tabWidget);
-    ui->tabWidget->insertTab(0, mMpduWid, tr("MPDU参数设置"));
+    ui->tabWidget->addTab(mMpduWid, tr("MPDU参数设置"));
     connect(mMpduWid, SIGNAL(errSig()), mWorkWid, SLOT(errSlot()));
     connect(mWorkWid, SIGNAL(enabledSig(bool)), mMpduWid, SLOT(enabledSlot(bool)));
+
+
 }
