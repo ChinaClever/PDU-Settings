@@ -1,7 +1,7 @@
 #ifndef DEV_IPCFG_H
 #define DEV_IPCFG_H
 
-#include "dev_sicfg.h"
+#include "dev_sictrl.h"
 
 class Dev_IpCfg : public Dev_Object
 {

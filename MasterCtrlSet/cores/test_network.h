@@ -11,16 +11,17 @@ class Test_NetWork : public Test_Object
 public:
     static Test_NetWork *bulid(QObject *parent = nullptr);
 
+    bool updatePro(const QString &str, bool pass);
 protected:
     void run();
     void workDown();
-    void appendItem(const QString &str, bool pass);
 
 protected slots:
     void initFunSlot();
 
 private:
     Test_Logs *mLogs;
+    Sn_SerialNum *mSn;
     UdpRecvSocket *mUdp;
 };
 

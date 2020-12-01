@@ -36,7 +36,6 @@ bool Test_Logs::appendLogItem(const QString &str, bool pass)
 
 void Test_Logs::saveLogs()
 {
-    mPro->step = Test_Over;
     mPacket->updatePro(tr("测试日志保存"));
     bool ret = writeLog();
     if(ret) writeLogs();
@@ -85,10 +84,7 @@ void Test_Logs::writeLogs()
 }
 
 bool Test_Logs::updatePro(const QString &str, bool pass, int sec)
-{
-    if(mPro->step < Test_End) {
-        appendLogItem(str, pass);
-    }
-
+{       
+    appendLogItem(str, pass);
     return mPacket->updatePro(str, pass, sec);
 }
