@@ -4,6 +4,9 @@
 #include <QMainWindow>
 #include "navbarwid.h"
 #include "home_mainwid.h"
+#include "td_mainwid.h"
+#include "logmainwid.h"
+#include "setup_mainwid.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -26,7 +29,11 @@ protected slots:
 
 private:
     Ui::MainWindow *ui;
+
+    LogMainWid *mLog;
+    Td_MainWid *mTdWid;
     NavBarWid *mNavBarWid;
     Home_MainWid *mHomeWid;
+    Setup_MainWid *mSetupWid;
 };
 #endif // MAINWINDOW_H
