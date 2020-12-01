@@ -18,6 +18,7 @@ public:
 
 protected:
     void save(){}
+    QString cfgGroup(){return "siCfg";}
     bool sentRtuCmd(ushort reg, ushort value);
 };
 
