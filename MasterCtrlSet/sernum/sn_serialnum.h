@@ -15,7 +15,7 @@ struct sSnItem
 };
 
 
-class Sn_SerialNum : public Dev_Object
+class Sn_SerialNum : public Sn_Object
 {
     Q_OBJECT
     explicit Sn_SerialNum(QObject *parent = nullptr);
@@ -31,6 +31,12 @@ protected:
     bool readSn(sSnItem &itSn);
     bool readPduData(){return false;}
     bool analySn(uchar *sn, int len, sSnItem &it);
+
+    void writeStatus(bool ret);
+    void initWriteCmd(sRtuSetItems &item, uchar *data, int len);
+    void createSn(sSnItem &it);
+    int toSnData(sSnItem &it, uchar *data);
+    bool writeSn(sSnItem &itSn);
 
 private:
     sSnItem mSnItem;

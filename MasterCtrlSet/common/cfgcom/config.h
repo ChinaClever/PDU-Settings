@@ -35,11 +35,18 @@ struct sCount
 };
 
 struct sCfgItem
-{
+{    
+    uchar addr;
+    uint devId;
+
+    QString sn;
+    QString dev_type;
+
     sCount cnt;
     int logCount;
 
     uchar pcNum;
+    ushort currentNum;
     SerialPort *com;
 };
 
@@ -60,15 +67,19 @@ public:
     QString getLoginName();
     void setLoginName(const QString &name);
 
-    int initAddr();
+    void initAddr();
     void writeCnt();
     void setAddr(int addr);
 
-    void write(const QString &key, const QVariant& v, const QString &g="mCfg");
-    QVariant read(const QString &key, const QVariant &v = QVariant(), const QString &g="mCfg");
+    void setCurrentNum();
+    void write(const QString &key, const QVariant& v, const QString &g="cfg");
+    QVariant read(const QString &key, const QVariant &v = QVariant(), const QString &g="cfg");
 
 protected:
     void initCnt();
+    bool getDate();
+    void setDate();
+    void initCurrentNum();
 
 private:
     CfgCom *mCfg;

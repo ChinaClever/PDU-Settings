@@ -12,6 +12,8 @@ Cfg::Cfg()
     item = new sCfgItem();
 
     initCnt();
+    initAddr();
+    initCurrentNum();
 }
 
 Cfg *Cfg::bulid()
@@ -23,9 +25,49 @@ Cfg *Cfg::bulid()
 }
 
 
-int Cfg::initAddr()
+void Cfg::setDate()
 {
-    return read("addr", 1,"Sys").toInt();
+    QString value = QDate::currentDate().toString("yyyy-MM-dd");
+    write("date", value, "Date");
+}
+
+bool Cfg::getDate()
+{
+    bool ret = false;
+
+    QString str = read("date","","Date").toString();
+    if(!str.isEmpty()) {
+        QDate date = QDate::fromString(str, "yyyy-MM-dd");
+        if(QDate::currentDate() > date) {
+            ret = true;
+        }
+    }
+
+    return ret;
+}
+
+void Cfg::setCurrentNum()
+{
+    setDate();
+    write("num", item->currentNum, "Date");
+}
+
+void Cfg::initCurrentNum()
+{
+    bool ret = getDate();
+    if(ret) {
+        item->currentNum = 0;
+        setCurrentNum();
+    } else {
+        int value = read("num", 0,"Date").toInt();
+        item->currentNum = value;
+    }
+}
+
+
+void Cfg::initAddr()
+{
+    item->addr = read("addr", 1,"Sys").toInt();
 }
 
 void Cfg::setAddr(int addr)

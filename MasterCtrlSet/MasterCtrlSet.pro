@@ -19,7 +19,7 @@ include(logs/logs.pri)
 include(home/home.pri)
 include(common/common.pri)
 include(setups/setups.pri)
-#include(sernum/sernum.pri)
+include(sernum/sernum.pri)
 include(devices/devices.pri)
 include(statedata/statedata.pri)
 

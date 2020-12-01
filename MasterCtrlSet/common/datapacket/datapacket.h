@@ -53,8 +53,6 @@ struct sDevType
     uchar logs;
 
     QString mac;
-    QString sn;
-    QString dev_type;
 };
 
 

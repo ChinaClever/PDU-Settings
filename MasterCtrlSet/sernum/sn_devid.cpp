@@ -5,7 +5,7 @@
  */
 #include "sn_devid.h"
 
-Sn_DevId::Sn_DevId(QObject *parent) : Dev_Object(parent)
+Sn_DevId::Sn_DevId(QObject *parent) : Sn_Object(parent)
 {
     mTypeDef = Sn_DevType::bulid();
 }
@@ -20,7 +20,7 @@ Sn_DevId *Sn_DevId::bulid(QObject *parent)
 
 void Sn_DevId::initReadType(sRtuItem &it)
 {
-    it.addr = mDev->id;
+    it.addr = mItem->addr;
     it.fn = 0x03;
     it.reg = 0xA001;
     it.num = 2;
@@ -41,7 +41,9 @@ bool Sn_DevId::analysDevType(uchar *buf, int len)
     }
 
     ret = mTypeDef->analysDevType(id);
-    if(!ret){
+    if(ret){
+        mItem->devId = id;
+    } else {
         str = tr("不支持此设备类型 ID：%1").arg(id);
     }
 
@@ -67,8 +69,10 @@ bool Sn_DevId::readDevId()
 
 bool Sn_DevId::readDevType()
 {
-    mDev->devType.dev_type[0] = 0;
-    QString str = tr("开始识别设备类型！");
+    mItem->sn.clear();
+    mItem->dev_type.clear();
+
+    QString str = tr("开始读取设备ID！");
     bool ret = mPacket->updatePro(str, true, 1);
     if(ret) {
         ret = readDevId();
