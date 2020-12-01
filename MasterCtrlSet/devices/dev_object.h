@@ -20,6 +20,9 @@ protected:
     void write(const QString &key, const QVariant& v);
     QVariant read(const QString &key, const QVariant &v = QVariant());
 
+protected slots:
+    virtual void initFunSlot();
+
 protected:
     sDevType *mDt;
     sDevData *mDev;

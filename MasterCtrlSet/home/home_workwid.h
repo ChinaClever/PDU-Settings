@@ -17,13 +17,14 @@ public:
     ~Home_WorkWid();
 
 signals:
+    void typeSig(int i);
     void enabledSig(bool en);
-
 
 private slots:
     void saveErrSlot();
     void on_setBtn_clicked();
     void on_outputBtn_clicked();
+    void on_typeComboBox_currentIndexChanged(int index);
 
 public slots:
     void errSlot() {QTimer::singleShot(5,this,SLOT(saveErrSlot()));}

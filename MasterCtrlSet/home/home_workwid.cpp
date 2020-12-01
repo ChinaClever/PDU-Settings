@@ -40,3 +40,8 @@ void Home_WorkWid::on_outputBtn_clicked()
 {
     mSetOpDlg->exec();
 }
+
+void Home_WorkWid::on_typeComboBox_currentIndexChanged(int index)
+{
+    emit typeSig(index);
+}

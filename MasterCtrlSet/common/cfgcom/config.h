@@ -55,13 +55,6 @@ struct sErrRange
     ushort powErr;
 };
 
-struct sSerial
-{
-    sSerial() {source=ser1=ser2=nullptr;}
-    SerialPort *source; // 标准源
-    SerialPort *ser1; // 串口对象
-    SerialPort *ser2; // 串口对象
-};
 
 struct sCfgItem
 {
@@ -73,7 +66,7 @@ struct sCfgItem
 
     uchar pcNum;
     QString user; // 客户名称
-    sSerial coms;
+    SerialPort *com;
 };
 
 

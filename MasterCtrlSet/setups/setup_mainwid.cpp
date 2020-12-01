@@ -34,14 +34,8 @@ void Setup_MainWid::initFunSlot()
 
 void Setup_MainWid::initSerial()
 {
-    mSer1Wid = new SerialStatusWid(ui->serWid_1);
-    mItem->coms.ser1 = mSer1Wid->initSerialPort(tr("级联口 1"));
-
-    mSer2Wid = new SerialStatusWid(ui->serWid_2);
-    mItem->coms.ser2 = mSer2Wid->initSerialPort(tr("级联口 2"));
-
-    mSourceWid = new SerialStatusWid(ui->sourceWid);
-    mItem->coms.source = mSourceWid->initSerialPort(tr("标准源"));
+    mComWid = new SerialStatusWid(ui->comWid);
+    mItem->com = mComWid->initSerialPort(tr("PDU"));
 }
 
 

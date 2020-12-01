@@ -20,6 +20,8 @@ void Home_MainWid::initWid()
 {
     ui->tabWidget->tabBar()->hide();
     mWorkWid = new Home_WorkWid(ui->workWid);
+    connect(mWorkWid, SIGNAL(typeSig(int)), ui->tabWidget, SLOT(setCurrentIndex(int)));
+
     //    connect(mWorkWid, SIGNAL(startSig()), this, SIGNAL(startSig()));
 
     mSiWid = new Home_SiWid(ui->tabWidget);
