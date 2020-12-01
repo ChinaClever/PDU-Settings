@@ -3,14 +3,15 @@
 #include <QtCore>
 #include <QColor>
 
-#define OpSize  12
+#define OpSize  6
 
 /**
  * 数据单元：包括当前值，阈值，临界值，告警状态等
  */
 struct sUnit
 {
-    bool en;
+    uchar en;
+    uchar id;
     float min; // 最小值
     float max; // 最大值
 

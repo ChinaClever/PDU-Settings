@@ -16,24 +16,36 @@ Dev_Object::Dev_Object(QObject *parent) : QThread(parent)
 }
 
 
-void Dev_Object::initUnit(const QString& prefix, sUnit &unit)
+void Dev_Object::initUnit(const QString& prefix, sUnit &unit, int f)
 {
-    unit.en = read(prefix+"_en", 0).toBool();
     unit.min = read(prefix+"_min", 0).toFloat();
     unit.max = read(prefix+"_max", 10).toFloat();
 
-    unit.crMin = read(prefix+"_crMin", 0).toFloat();
-    unit.crMax = read(prefix+"_crMax", 10).toFloat();
+    switch (f) {
+    case 2:
+        unit.en = read(prefix+"_en", 0).toInt();
+        unit.id = read(prefix+"_id", 0).toInt();
+    case 1:
+        unit.crMin = read(prefix+"_crMin", 0).toFloat();
+        unit.crMax = read(prefix+"_crMax", 10).toFloat();
+        break;
+    }
 }
 
-void Dev_Object::writeUnit(const QString& prefix, sUnit &unit)
+void Dev_Object::writeUnit(const QString& prefix, sUnit &unit, int f)
 {
-    write(prefix+"_en", unit.en);
     write(prefix+"_min", QString::number(unit.min));
     write(prefix+"_max", QString::number(unit.max));
 
-    write(prefix+"_crMin", QString::number(unit.crMin));
-    write(prefix+"_crMax", QString::number(unit.crMax));
+    switch (f) {
+    case 2:
+        write(prefix+"_en", unit.en);
+        write(prefix+"_id", unit.id);
+    case 1:
+        write(prefix+"_crMin", QString::number(unit.crMin));
+        write(prefix+"_crMax", QString::number(unit.crMax));
+        break;
+    }
 }
 
 

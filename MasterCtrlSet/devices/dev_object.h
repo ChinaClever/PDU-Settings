@@ -14,8 +14,8 @@ public:
 
 protected:
     virtual QString cfgGroup()=0;
-    void initUnit(const QString& prefix, sUnit &unit);
-    void writeUnit(const QString& prefix, sUnit &unit);
+    void initUnit(const QString& prefix, sUnit &unit, int f=0);
+    void writeUnit(const QString& prefix, sUnit &unit, int f=0);
 
     void write(const QString &key, const QVariant& v);
     QVariant read(const QString &key, const QVariant &v = QVariant());

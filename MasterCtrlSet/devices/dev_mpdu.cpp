@@ -49,15 +49,15 @@ void Dev_Mpdu::initData()
 {
     sObjData *ptr = &(mDev->data);
     initUnit("vol", ptr->vol);
-    initUnit("cur", ptr->cur);
+    initUnit("cur", ptr->cur, 1);
 
     initUnit("tem", ptr->tem);
     initUnit("hum", ptr->hum);
-    initUnit("output", ptr->output);
+    initUnit("output", ptr->output, 1);
 
     for(int i=0; i<OpSize; ++i) {
         QString str = "op_" + QString::number(i+1);
-        initUnit(str, ptr->opCur[i]);
+        initUnit(str, ptr->opCur[i], 2);
     }
 }
 
@@ -65,15 +65,15 @@ void Dev_Mpdu::writeData()
 {
     sObjData *ptr = &(mDev->data);
     writeUnit("vol", ptr->vol);
-    writeUnit("cur", ptr->cur);
+    writeUnit("cur", ptr->cur, 1);
 
     writeUnit("tem", ptr->tem);
     writeUnit("hum", ptr->hum);
-    writeUnit("output", ptr->output);
+    writeUnit("output", ptr->output, 1);
 
     for(int i=0; i<OpSize; ++i) {
         QString str = "op_" + QString::number(i+1);
-        writeUnit(str, ptr->opCur[i]);
+        writeUnit(str, ptr->opCur[i], 2);
     }
 }
 

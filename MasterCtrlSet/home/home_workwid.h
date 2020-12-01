@@ -23,6 +23,7 @@ signals:
 private slots:
     void saveErrSlot();
     void on_setBtn_clicked();
+    void on_outputBtn_clicked();
 
 public slots:
     void errSlot() {QTimer::singleShot(5,this,SLOT(saveErrSlot()));}
@@ -31,6 +32,7 @@ private:
     Ui::Home_WorkWid *ui;
 
     int mCnt;
+    Home_SetOpDlg *mSetOpDlg;
 };
 
 #endif // HOME_WORKWID_H

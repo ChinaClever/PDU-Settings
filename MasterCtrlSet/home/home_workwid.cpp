@@ -8,6 +8,8 @@ Home_WorkWid::Home_WorkWid(QWidget *parent) :
     ui->setupUi(this);
 
     mCnt = 0;
+    mSetOpDlg = new Home_SetOpDlg(this);
+
     QGridLayout *gridLayout = new QGridLayout(parent);
     gridLayout->setContentsMargins(0, 0, 0, 0);
     gridLayout->addWidget(this);
@@ -32,4 +34,9 @@ void Home_WorkWid::saveErrSlot()
     mCnt = 1;
     emit enabledSig(true);
     ui->setBtn->setText(tr("保存"));
+}
+
+void Home_WorkWid::on_outputBtn_clicked()
+{
+    mSetOpDlg->exec();
 }

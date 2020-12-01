@@ -27,6 +27,7 @@ private:
     Home_WorkWid *mWorkWid;
     Home_MpduWid *mMpduWid;
     Home_IpWid *mIpWid;
+    Home_SiWid *mSiWid;
 };
 
 #endif // HOME_MAINWID_H

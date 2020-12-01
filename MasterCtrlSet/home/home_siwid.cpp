@@ -1,76 +1,55 @@
-#include "home_ipwid.h"
-#include "ui_home_ipwid.h"
+#include "home_siwid.h"
+#include "ui_home_siwid.h"
 
-Home_IpWid::Home_IpWid(QWidget *parent) :
+Home_SiWid::Home_SiWid(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::Home_IpWid)
+    ui(new Ui::Home_SiWid)
 {
     ui->setupUi(this);
     set_background_icon(this,":/image/back.jpg");
     mUnitWid = new Home_LineUnitWid(ui->groupBox);
-    QTimer::singleShot(10,this,SLOT(initFunSlot()));
+    QTimer::singleShot(13,this,SLOT(initFunSlot()));
 }
 
-Home_IpWid::~Home_IpWid()
+Home_SiWid::~Home_SiWid()
 {
     delete ui;
 }
 
-void Home_IpWid::initFunSlot()
+
+void Home_SiWid::initFunSlot()
 {
     this->setEnabled(false);
-    mObj = Dev_IpCfg::bulid(this);
+    mObj = Dev_SiCfg::bulid(this);
     mDev = mObj->getDev();
     mUnitWid->init(mDev);
     initType();
 }
 
-void Home_IpWid::initType()
+void Home_SiWid::initType()
 {
     sDevType *dt = &(mDev->dt); //设备类型
     int v = dt->lines-1; if(v) v = 1;
     ui->lineBox->setCurrentIndex(v);
-
-    v = dt->versions-1; if(v) v = 1;
-    ui->ipTypeBox->setCurrentIndex(v);
-
-    ui->logBox->setCurrentIndex(dt->logs);
     ui->sBox->setCurrentIndex(dt->standar);
-    ui->ipModeBox->setCurrentIndex(dt->modbus);
-    ui->languageBox->setCurrentIndex(dt->language);
-    ui->macEdit->setText(dt->mac);
 }
 
-
-
-
-void Home_IpWid::updateType()
+void Home_SiWid::updateType()
 {
     sDevType *dt = &(mDev->dt); //设备类型
     int v = ui->lineBox->currentIndex();
     if(v) v = 3; else v = 1; dt->lines = v;
-
-    v = ui->ipTypeBox->currentIndex()+1;
-    if(v > 1) v = 3; dt->versions = v;
-
-    dt->modbus = ui->ipModeBox->currentIndex();
     dt->standar = ui->sBox->currentIndex();
-    dt->logs = ui->logBox->currentIndex();
-    dt->language = ui->languageBox->currentIndex();
-    dt->mac = ui->macEdit->text();
 }
 
-
-
-
-bool Home_IpWid::inputCheck()
+bool Home_SiWid::inputCheck()
 {
 
 
     return true;
 }
 
-bool Home_IpWid::dataSave()
+bool Home_SiWid::dataSave()
 {
     bool ret = inputCheck();
     if(ret) {
@@ -81,7 +60,7 @@ bool Home_IpWid::dataSave()
     return ret;
 }
 
-void Home_IpWid::enabledSlot(bool en)
+void Home_SiWid::enabledSlot(bool en)
 {
     this->setEnabled(en);
     if(!en) {

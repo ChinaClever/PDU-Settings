@@ -1,19 +1,19 @@
-#ifndef HOME_IPWID_H
-#define HOME_IPWID_H
+#ifndef HOME_SIWID_H
+#define HOME_SIWID_H
 
-#include "home_siwid.h"
+#include "home_setopdlg.h"
 
 namespace Ui {
-class Home_IpWid;
+class Home_SiWid;
 }
 
-class Home_IpWid : public QWidget
+class Home_SiWid : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit Home_IpWid(QWidget *parent = nullptr);
-    ~Home_IpWid();
+    explicit Home_SiWid(QWidget *parent = nullptr);
+    ~Home_SiWid();
 
 signals:
     void errSig();
@@ -30,13 +30,12 @@ protected:
 public slots:
     void initFunSlot();
     void enabledSlot(bool en);
-
 private:
-    Ui::Home_IpWid *ui;
+    Ui::Home_SiWid *ui;
     Home_LineUnitWid *mUnitWid;
 
     Dev_Object *mObj;
     sDevData *mDev;
 };
 
-#endif // HOME_IPWID_H
+#endif // HOME_SIWID_H
