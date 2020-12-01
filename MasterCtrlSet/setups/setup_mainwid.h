@@ -18,25 +18,27 @@ public:
 
 protected:
     void initSerial();
-    void initErrData();
-    void updateErrData();
+    void updateCnt();
+
     void initLogCount();
     void writeLogCount();
     void initPcNum();
     void writePcNum();
 
 protected slots:
+    void timeoutDone();
     void initFunSlot();
-    void on_saveBtn_clicked();
+    void checkPcNumSlot();
     void on_pcBtn_clicked();
 
 private slots:
-
     void on_verBtn_clicked();
+    void on_resBtn_clicked();
 
 private:
     Ui::Setup_MainWid *ui;
 
+    QTimer *timer;
     sCfgItem *mItem;
     UserMainWid *mUserWid;
     SerialStatusWid *mComWid;

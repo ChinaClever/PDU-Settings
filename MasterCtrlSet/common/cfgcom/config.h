@@ -21,20 +21,6 @@ enum eDevTypes {
     Mn    // 锰铜
 };
 
-struct sCfgDev {
-    uchar type; // 0 不设置， 1 32安  2 16安， 3 63安  4 自定义
-    uchar enModify;
-    ushort vol_min;
-    ushort vol_max;
-    ushort cur_min;
-    ushort cur_max;
-    uchar si_mod;
-
-    QString ip_addr;
-    uchar ip_version;
-    uchar ip_log;
-};
-
 
 /**
  * RTU传输统计结构体
@@ -48,24 +34,12 @@ struct sCount
     int err;
 };
 
-struct sErrRange
-{
-    ushort volErr;
-    ushort curErr;
-    ushort powErr;
-};
-
-
 struct sCfgItem
 {
-    sErrRange err; // 电流误差
-    sCfgDev cTh;
-
     sCount cnt;
     int logCount;
 
     uchar pcNum;
-    QString user; // 客户名称
     SerialPort *com;
 };
 
@@ -88,8 +62,6 @@ public:
 
     int initAddr();
     void writeCnt();
-    void writeErrData();
-    void writeCfgDev();
     void setAddr(int addr);
 
     void write(const QString &key, const QVariant& v, const QString &g="mCfg");
@@ -97,8 +69,6 @@ public:
 
 protected:
     void initCnt();
-    void initErrData();
-    void initCfgDev();
 
 private:
     CfgCom *mCfg;

@@ -25,11 +25,28 @@ Setup_MainWid::~Setup_MainWid()
 
 void Setup_MainWid::initFunSlot()
 {
+    initPcNum();
     initLogCount();
-    initErrData();
-
     mUserWid = new UserMainWid(ui->stackedWid);
     ui->stackedWid->addWidget(mUserWid);
+    QTimer::singleShot(2*1000,this,SLOT(checkPcNumSlot()));
+
+    timer = new QTimer(this);
+    timer->start(3*1000);
+    connect(timer, SIGNAL(timeout()),this, SLOT(timeoutDone()));
+}
+
+
+void Setup_MainWid::checkPcNumSlot()
+{
+    int num = mItem->pcNum;
+    if(num < 1) {
+        if(!usr_land_jur())
+            MsgBox::warning(this, tr("请联系研发部设定电脑号！\n 服务设置 -> 设置功能 \n 需要管理员权限!"));
+        else
+            MsgBox::warning(this, tr("请自行设定电脑号！\n 服务设置 -> 设置功能 \n 需要管理员权限!"));
+        QTimer::singleShot(20*1000,this,SLOT(checkPcNumSlot()));
+    }
 }
 
 void Setup_MainWid::initSerial()
@@ -57,46 +74,25 @@ void Setup_MainWid::writeLogCount()
     Cfg::bulid()->write("log_count", arg1, "Sys");
 }
 
-void Setup_MainWid::updateErrData()
+void Setup_MainWid::updateCnt()
 {
-    sErrRange *item = &(mItem->err);
-    item->volErr = ui->volErrBox->value();
-    item->curErr = ui->curErrBox->value() * 10;
-    item->powErr = ui->powErrBox->value() * 10;
-
-    Cfg::bulid()->writeErrData();
+    sCount *cnt = &(mItem->cnt);
+    ui->allLab->setNum(cnt->all);
+    ui->okLab->setNum(cnt->ok);
+    ui->errLab->setNum(cnt->err);
 }
 
-void Setup_MainWid::initErrData()
+void Setup_MainWid::on_resBtn_clicked()
 {
-    sErrRange *item = &(mItem->err);
-    ui->volErrBox->setValue(item->volErr);
-    ui->curErrBox->setValue(item->curErr / 10.0);
-    ui->powErrBox->setValue(item->powErr / 10.0);
-}
-
-void Setup_MainWid::on_saveBtn_clicked()
-{
-    static int flg = 0;
-    QString str = tr("修改");
-
     bool ret = usr_land_jur();
-    if(!ret) {
-        MsgBox::critical(this, tr("你无权进行此操作"));
-        return;
-    }
-
-    if(flg++ %2) {
-        ret = false;
-        updateErrData();
+    if(ret) {
+        sCount *cnt = &(mItem->cnt);
+        cnt->all = cnt->ok = cnt->err = 0;
+        updateCnt();
+        Cfg::bulid()->writeCnt();
     } else {
-        str = tr("保存");
+        MsgBox::critical(this, tr("你无权进行此操作"));
     }
-
-    ui->saveBtn->setText(str);
-    ui->volErrBox->setEnabled(ret);
-    ui->curErrBox->setEnabled(ret);
-    ui->powErrBox->setEnabled(ret);
 }
 
 
@@ -146,4 +142,9 @@ void Setup_MainWid::on_verBtn_clicked()
 {
     VersionDlg dlg(this);
     dlg.exec();
+}
+
+void Setup_MainWid::timeoutDone()
+{
+    updateCnt();
 }
