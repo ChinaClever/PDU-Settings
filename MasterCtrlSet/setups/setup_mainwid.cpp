@@ -90,6 +90,7 @@ void Setup_MainWid::on_resBtn_clicked()
         cnt->all = cnt->ok = cnt->err = 0;
         updateCnt();
         Cfg::bulid()->writeCnt();
+        MsgBox::information(this, tr("计数已重置！"));
     } else {
         MsgBox::critical(this, tr("你无权进行此操作"));
     }

@@ -9,6 +9,7 @@ Home_WorkWid::Home_WorkWid(QWidget *parent) :
 
     mCnt = 0;
     mSetOpDlg = new Home_SetOpDlg(this);
+    //ui->typeComboBox->setCurrentIndex(1);
 
     QGridLayout *gridLayout = new QGridLayout(parent);
     gridLayout->setContentsMargins(0, 0, 0, 0);
