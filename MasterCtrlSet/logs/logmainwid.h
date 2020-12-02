@@ -1,7 +1,7 @@
 #ifndef LOGMAINWID_H
 #define LOGMAINWID_H
 #include "dbstates.h"
-#include "logquerydlg/log_logquerydlg.h"
+#include "logquerydlg/log_macquerydlg.h"
 
 namespace Ui {
 class LogMainWid;

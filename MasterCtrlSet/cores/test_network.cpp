@@ -14,24 +14,11 @@ Test_NetWork *Test_NetWork::bulid(QObject *parent)
 }
 
 void Test_NetWork::initFunSlot()
-{
-    mSn = Sn_SerialNum::bulid(this);
+{    
     mLogs = Test_Logs::bulid(this);
     mUdp = new UdpRecvSocket(this);
     mUdp->initSocket(10086);
     this->start();
-}
-
-bool Test_NetWork::updatePro(const QString &str, bool pass)
-{
-    mLogs->updatePro(str, pass);
-    if(str == "设置结束") {
-        mSn->snEnter();
-        mLogs->saveLogs();
-        mPro->step = Test_Over;
-    }
-
-    return pass;
 }
 
 void Test_NetWork::workDown()
@@ -41,7 +28,7 @@ void Test_NetWork::workDown()
         QStringList list = QString(res->datagram).split("; ");
         bool pass = list.first().toInt();
         QString str = list.last();
-        updatePro(str, pass);
+        mLogs->updatePro(str, pass);
         delete res;
     } else {
         msleep(1);

@@ -15,7 +15,7 @@ Td_StatusTabWid::Td_StatusTabWid(QWidget *parent) : ComTableWid(parent)
 void Td_StatusTabWid::initWid()
 {
     QStringList header;
-    QString title = tr("校准数据列表");
+    QString title = tr("设置数据列表");
     header << tr("时间") << tr("结果") << tr("设置项");
     initTableWid(header, 0, title);
 

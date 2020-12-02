@@ -1,0 +1,30 @@
+#ifndef TEST_CORETHREAD_H
+#define TEST_CORETHREAD_H
+
+#include "test_sictrl.h"
+
+class Test_CoreThread : public Test_Object
+{
+    Q_OBJECT
+public:
+    explicit Test_CoreThread(QObject *parent = nullptr);
+
+protected:
+    void run();
+    void workDown();
+    bool checkNet();
+    bool startProcess();
+    void updateMacAddr();
+    void workResult(bool res);
+
+protected slots:
+    void initFunSlot();
+
+private:
+    Test_Logs *mLogs;
+    Sn_SerialNum *mSn;
+    Test_SiCtrl *mCtrl;
+    Test_NetWork *mRead;
+};
+
+#endif // TEST_CORETHREAD_H

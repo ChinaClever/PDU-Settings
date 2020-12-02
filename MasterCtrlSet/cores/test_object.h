@@ -10,6 +10,9 @@ public:
     explicit Test_Object(QObject *parent = nullptr);
     ~Test_Object();
 
+protected:
+    void updateDev();
+
 protected slots:
     virtual void initFunSlot(){}
 
@@ -19,6 +22,7 @@ protected:
     sDevData *mDev;
     sCfgItem *mItem;
     sProgress *mPro;
+    Dev_Object *mObj;
     sDataPacket *mPacket;
 };
 

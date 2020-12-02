@@ -26,3 +26,15 @@ void Home_SetOpDlg::on_okBtn_clicked()
     unit.crMax = ui->curCrMaxSpin->value();
     mOutputWid->setUnit(unit);
 }
+
+void Home_SetOpDlg::updateIndex(int id)
+{
+    Dev_Object *dev = Dev_Mpdu::bulid(this);
+    switch (id) {
+    case 2: break;
+    case 3: break;
+    }
+
+    sObjData *obj = &(dev->getDev()->data);
+    mOutputWid->init(obj);
+}

@@ -4,14 +4,10 @@
 #include "serialstatuswid.h"
 
 enum eDevTypes {
-    PDU=0,
-    ZPDU,
-    MPDU,
-    RPDU,     // RPDU 执行板
-    RPDU_Mc, // RPDU 主控
-    SI_PDU,
+    SI_PDU=0,
     IP_PDU,
-    BM_PDU,
+    MPDU,
+    ZPDU,
 
     AC = 1, // 交流
     DC,     // 直流

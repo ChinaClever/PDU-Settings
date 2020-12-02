@@ -22,6 +22,8 @@ void Home_MpduWid::initFunSlot()
     mObj = Dev_Mpdu::bulid(this);
     mDev = mObj->getDev();
     initWid();
+
+    connect(mObj, SIGNAL(setMacSig()), this, SLOT(updateMacSlot()));
 }
 
 void Home_MpduWid::initType()
@@ -116,6 +118,11 @@ void Home_MpduWid::updateType()
 }
 
 
+void Home_MpduWid::updateMacSlot()
+{
+    ui->macEdit->setText(mDev->dt.mac);
+}
+
 
 bool Home_MpduWid::inputCheck()
 {
@@ -137,7 +144,7 @@ bool Home_MpduWid::dataSave()
 
 void Home_MpduWid::enabledSlot(bool en)
 {
-    if(mItem->modeId != 2) return;
+    if(mItem->modeId != MPDU) return;
 
     this->setEnabled(en);
     if(!en) {

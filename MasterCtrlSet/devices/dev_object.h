@@ -11,6 +11,10 @@ public:
     sDevData *getDev() {return mDev;}
 
     virtual void save()=0;
+    void setMacAddr();
+
+signals:
+    void setMacSig();
 
 protected:
     virtual QString cfgGroup()=0;

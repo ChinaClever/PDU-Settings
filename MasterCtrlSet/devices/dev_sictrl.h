@@ -16,9 +16,13 @@ public:
     bool setCurTh(int i);
     bool setVolTh(int i);
 
+    bool setTem();
+    bool setHum();
+
 protected:
     void save(){}
     QString cfgGroup(){return "siCfg";}
+    bool writeReg(ushort reg, sUnit &unit, int r=1);
     bool sentRtuCmd(ushort reg, ushort value);
 };
 

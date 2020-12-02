@@ -33,15 +33,30 @@ bool Dev_SiCtrl::setCurTh(int i)
 
 bool Dev_SiCtrl::setVolTh(int i)
 {
-    bool ret = true;
     ushort reg = 0x1002 + 2*i;
     if(DC == mDt->ac) reg = 0x1014;
 
-    sUnit *unit = &(mDev->data.vol);
-    ushort value = unit->max;
+    return writeReg(reg, mDev->data.vol);;
+}
+
+bool Dev_SiCtrl::setTem()
+{
+    return writeReg(0x100E, mDev->data.tem);
+}
+
+bool Dev_SiCtrl::setHum()
+{
+    return writeReg(0x1010, mDev->data.hum);
+}
+
+bool Dev_SiCtrl::writeReg(ushort reg, sUnit &unit, int r)
+{
+    bool ret = true;
+
+    ushort value = unit.max * r;
     ret = sentRtuCmd(reg++, value); if(!ret) return ret;
 
-    value = unit->min;
+    value = unit.min *r;
     ret = sentRtuCmd(reg++, value); if(!ret) return ret;
 
     return ret;

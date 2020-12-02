@@ -11,7 +11,6 @@ class Test_NetWork : public Test_Object
 public:
     static Test_NetWork *bulid(QObject *parent = nullptr);
 
-    bool updatePro(const QString &str, bool pass);
 protected:
     void run();
     void workDown();
@@ -21,7 +20,6 @@ protected slots:
 
 private:
     Test_Logs *mLogs;
-    Sn_SerialNum *mSn;
     UdpRecvSocket *mUdp;
 };
 

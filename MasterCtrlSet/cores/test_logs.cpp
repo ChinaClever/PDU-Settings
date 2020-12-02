@@ -19,6 +19,21 @@ Test_Logs *Test_Logs::bulid(QObject *parent)
     return sington;
 }
 
+
+bool Test_Logs::writeMac()
+{
+    sMacItem it;
+
+    it.dev = mItem->dev_type.split("_").first();
+    it.op = user_land_name();
+    it.user = mItem->user;
+    it.sn = mItem->sn;
+    it.mac = mMac;
+    mMac.clear();
+
+    return DbMacs::bulid()->insertItem(it);
+}
+
 bool Test_Logs::appendLogItem(const QString &str, bool pass)
 {
     sStateItem it;
@@ -29,16 +44,20 @@ bool Test_Logs::appendLogItem(const QString &str, bool pass)
     }
 
     it.memo = str;
-    if(it.sn.size()) mLogItems << it;
+    mLogItems << it;
 
     return pass;
 }
 
 void Test_Logs::saveLogs()
 {
-    mPacket->updatePro(tr("测试日志保存"));
     bool ret = writeLog();
-    if(ret) writeLogs();
+    if(ret) {
+        writeLogs();
+        if(mMac.size()) writeMac();
+    } else {
+       updatePro(tr("因未创建序列号，日志无法保存！"), false);
+    }
 }
 
 bool Test_Logs::writeLog()
@@ -78,6 +97,7 @@ void Test_Logs::writeLogs()
     Db_Tran db;
     for(int i=0; i<mLogItems.size(); ++i) {
         sStateItem it = mLogItems.at(i);
+        initItem(it);
         DbStates::bulid()->insertItem(it);
     }
     mLogItems.clear();
@@ -85,6 +105,10 @@ void Test_Logs::writeLogs()
 
 bool Test_Logs::updatePro(const QString &str, bool pass, int sec)
 {       
-    appendLogItem(str, pass);
-    return mPacket->updatePro(str, pass, sec);
+    if(mPro->step < Test_Over) {
+        appendLogItem(str, pass);
+        mPacket->updatePro(str, pass, sec);
+    }
+
+    return pass;
 }

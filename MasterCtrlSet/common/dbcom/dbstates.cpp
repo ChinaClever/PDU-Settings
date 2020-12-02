@@ -44,7 +44,7 @@ DbStates *DbStates::bulid()
 
 bool DbStates::insertItem(const sStateItem &item)
 {
-    QString cmd = "insert into %1 (date,time,dev,user,sn,op,result,memo) "
+    QString cmd = "insert into %1 (date,time,dev,user,op,sn,result,memo) "
                   "values(:date,:time,:dev,:user,:op,:sn,:result,:memo)";
     bool ret = modifyItem(item,cmd.arg(tableName()));
     //if(ret) emit itemChanged(item.id,Insert);

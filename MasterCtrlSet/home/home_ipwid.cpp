@@ -24,6 +24,7 @@ void Home_IpWid::initFunSlot()
     mDev = mObj->getDev();
     mUnitWid->init(mDev);
     initType();
+    connect(mObj, SIGNAL(setMacSig()), this, SLOT(updateMacSlot()));
 }
 
 void Home_IpWid::initType()
@@ -42,7 +43,10 @@ void Home_IpWid::initType()
     ui->macEdit->setText(dt->mac);
 }
 
-
+void Home_IpWid::updateMacSlot()
+{
+    ui->macEdit->setText(mDev->dt.mac);
+}
 
 
 void Home_IpWid::updateType()
@@ -84,7 +88,7 @@ bool Home_IpWid::dataSave()
 
 void Home_IpWid::enabledSlot(bool en)
 {
-    if(mItem->modeId != 1) return;
+    if(mItem->modeId != IP_PDU) return;
 
     this->setEnabled(en);
     if(!en) {

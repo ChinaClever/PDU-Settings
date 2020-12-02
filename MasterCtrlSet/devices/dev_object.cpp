@@ -21,6 +21,12 @@ void Dev_Object::initFunSlot()
     mModbus = Rtu_Modbus::bulid(this)->get();
 }
 
+void Dev_Object::setMacAddr()
+{
+    write("mac", mDt->mac);
+    emit setMacSig();
+}
+
 void Dev_Object::initUnit(const QString& prefix, sUnit &unit, int f)
 {
     unit.min = read(prefix+"_min", 0).toFloat();

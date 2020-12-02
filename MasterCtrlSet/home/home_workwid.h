@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include "home_mpduwid.h"
+#include "test_corethread.h"
 
 namespace Ui {
 class Home_WorkWid;
@@ -17,16 +18,31 @@ public:
     ~Home_WorkWid();
 
 signals:
+    void startSig();
     void typeSig(int i);
     void enabledSig(bool en);
 
 protected:
+    void initLayout();
+    void insertText();
+    void setTextColor();
     void initTypeComboBox();
 
+    QString getTime();
+    void updateWid();
+    void updateTime();
+    void updateResult();
+    void updateCnt();
+
+    bool initSerial();
+    bool initWid();
+
 private slots:
+    void timeoutDone();
     void initFunSlot();
     void saveErrSlot();
     void on_setBtn_clicked();
+    void on_startBtn_clicked();
     void on_outputBtn_clicked();
     void on_typeComboBox_currentIndexChanged(int index);
 
@@ -36,9 +52,13 @@ public slots:
 private:
     Ui::Home_WorkWid *ui;
 
-    int mCnt;
+    int mId, mCnt;
+    QTimer *timer;
+    sProgress *mPro;
     sCfgItem *mItem;
+    sDataPacket *mPacket;
     Home_SetOpDlg *mSetOpDlg;
+    Test_CoreThread *mCoreThread;
 };
 
 #endif // HOME_WORKWID_H

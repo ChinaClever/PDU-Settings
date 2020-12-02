@@ -32,5 +32,9 @@ void LogMainWid::initFunSLot()
     mStatusWid = new LogComWid(ui->tabWidget);
     mStatusWid->initWid(DbStates::bulid(),new LogBtnBar(),  new Log_LogQueryDlg(this), str);
     ui->tabWidget->addTab(mStatusWid, str);   
+
+    mStatusWid = new LogComWid(ui->tabWidget);
+    mStatusWid->initWid(DbMacs::bulid(),new LogBtnBar(),  new Log_MacQueryDlg(this));
+    ui->tabWidget->addTab(mStatusWid, tr("设备Mac记录"));
 }
 

@@ -16,6 +16,8 @@ public:
     explicit Home_SetOpDlg(QWidget *parent = nullptr);
     ~Home_SetOpDlg();
 
+    void updateIndex(int id);
+
 private slots:
     void on_okBtn_clicked();
 

@@ -30,7 +30,7 @@ void Home_SiWid::initFunSlot()
 void Home_SiWid::initType()
 {
     sDevType *dt = &(mDev->dt); //设备类型
-    int v = dt->lines-1; if(v) v = 1;
+    int v = dt->lines-1;
     ui->lineBox->setCurrentIndex(v);
     ui->sBox->setCurrentIndex(dt->standar);
 }
@@ -38,15 +38,12 @@ void Home_SiWid::initType()
 void Home_SiWid::updateType()
 {
     sDevType *dt = &(mDev->dt); //设备类型
-    int v = ui->lineBox->currentIndex();
-    if(v) v = 3; else v = 1; dt->lines = v;
+    dt->lines = ui->lineBox->currentIndex()+1;
     dt->standar = ui->sBox->currentIndex();
 }
 
 bool Home_SiWid::inputCheck()
 {
-
-
     return true;
 }
 
@@ -63,7 +60,7 @@ bool Home_SiWid::dataSave()
 
 void Home_SiWid::enabledSlot(bool en)
 {
-    if(mItem->modeId != 0) return;
+    if(mItem->modeId != SI_PDU) return;
 
     this->setEnabled(en);
     if(!en) {

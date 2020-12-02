@@ -29,6 +29,7 @@ protected:
 
 public slots:
     void initFunSlot();
+    void updateMacSlot();
     void enabledSlot(bool en);
 
 private:

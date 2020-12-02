@@ -20,10 +20,10 @@ include(backcolour/backcolour.pri)
 include(qtsingleapplication/qtsingleapplication.pri)
 
 
-HEADERS += \	
+HEADERS += \
     $$PWD/common.h
 	
-SOURCES += \	
+SOURCES += \
     $$PWD/common.cpp
 
 FORMS += \

@@ -21,3 +21,15 @@ Test_Object::~Test_Object()
     isRun = false;
     wait();
 }
+
+void Test_Object::updateDev()
+{
+    switch (mItem->modeId) {
+    case SI_PDU: mObj = Dev_SiCfg::bulid(this); break;
+    case IP_PDU: mObj = Dev_IpCfg::bulid(this); break;
+    case MPDU: mObj = Dev_Mpdu::bulid(this); break;
+    }
+
+    mDev = mObj->getDev();
+    mDt = &(mDev->dt);
+}

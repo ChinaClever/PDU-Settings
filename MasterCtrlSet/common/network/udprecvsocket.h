@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QtCore>
 #include <QtNetwork>
-
+#include "macaddr.h"
 
 /**
  * UDP层接收到的数据包
