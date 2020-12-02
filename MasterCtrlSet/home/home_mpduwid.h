@@ -36,6 +36,7 @@ public slots:
 
 private:
     Ui::Home_MpduWid *ui;
+    sCfgItem *mItem;
     Dev_Object *mObj;
     sDevData *mDev;
 };

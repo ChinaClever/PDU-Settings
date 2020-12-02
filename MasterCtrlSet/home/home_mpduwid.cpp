@@ -18,6 +18,7 @@ Home_MpduWid::~Home_MpduWid()
 void Home_MpduWid::initFunSlot()
 {
     this->setEnabled(false);
+    mItem = Cfg::bulid()->item;
     mObj = Dev_Mpdu::bulid(this);
     mDev = mObj->getDev();
     initWid();
@@ -136,6 +137,8 @@ bool Home_MpduWid::dataSave()
 
 void Home_MpduWid::enabledSlot(bool en)
 {
+    if(mItem->modeId != 2) return;
+
     this->setEnabled(en);
     if(!en) {
         en = dataSave();

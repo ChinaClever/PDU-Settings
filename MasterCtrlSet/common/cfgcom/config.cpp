@@ -12,7 +12,7 @@ Cfg::Cfg()
     item = new sCfgItem();
 
     initCnt();
-    initAddr();
+    initCfgDev();
     initCurrentNum();
 }
 
@@ -65,14 +65,18 @@ void Cfg::initCurrentNum()
 }
 
 
-void Cfg::initAddr()
+void Cfg::initCfgDev()
 {
     item->addr = read("addr", 1,"Sys").toInt();
+    item->modeId = read("modeId", 1,"Sys").toInt();
+    item->user = read("user", "", "User").toString();
 }
 
-void Cfg::setAddr(int addr)
+void Cfg::writeCfgDev()
 {
-    write("addr", addr, "Sys");
+    write("addr", item->addr, "Sys");
+    write("modeId", item->modeId, "Sys");
+    write("user", item->user, "User");
 }
 
 void Cfg::initCnt()

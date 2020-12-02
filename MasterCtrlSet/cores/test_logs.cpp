@@ -48,7 +48,7 @@ bool Test_Logs::writeLog()
 
     it.dev = mItem->dev_type.split("_").first();
     it.op = user_land_name();
-//    it.user = mItem->user;
+    it.user = mItem->user;
     it.sn = mItem->sn;
     if(it.sn.isEmpty()) return false;
 
@@ -69,7 +69,7 @@ void Test_Logs::initItem(sStateItem &it)
 {
     it.dev = mItem->dev_type.split("_").first();
     it.op = user_land_name();
-//    it.user = mItem->user;
+    it.user = mItem->user;
     it.sn = mItem->sn;
 }
 

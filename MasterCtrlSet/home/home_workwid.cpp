@@ -7,10 +7,7 @@ Home_WorkWid::Home_WorkWid(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    mCnt = 0;
-    mSetOpDlg = new Home_SetOpDlg(this);
-    //ui->typeComboBox->setCurrentIndex(1);
-
+    QTimer::singleShot(150,this,SLOT(initFunSlot()));
     QGridLayout *gridLayout = new QGridLayout(parent);
     gridLayout->setContentsMargins(0, 0, 0, 0);
     gridLayout->addWidget(this);
@@ -21,13 +18,27 @@ Home_WorkWid::~Home_WorkWid()
     delete ui;
 }
 
+void Home_WorkWid::initFunSlot()
+{
+    mCnt = 0;
+    mItem = Cfg::bulid()->item;
+    mSetOpDlg = new Home_SetOpDlg(this);
+    initTypeComboBox();
+}
+
 void Home_WorkWid::on_setBtn_clicked()
 {
     QString str = tr("修改");
     bool en = ++mCnt % 2;
     if(en) str = tr("保存");
-    ui->setBtn->setText(str);
+    else {
+        mItem->user = ui->userEdit->text();
+        Cfg::bulid()->writeCfgDev();
+    }
+
     emit enabledSig(en);
+    ui->setBtn->setText(str);
+    ui->userEdit->setEnabled(en);
 }
 
 void Home_WorkWid::saveErrSlot()
@@ -44,5 +55,14 @@ void Home_WorkWid::on_outputBtn_clicked()
 
 void Home_WorkWid::on_typeComboBox_currentIndexChanged(int index)
 {
+    emit typeSig(index);
+    mItem->modeId = index;
+    Cfg::bulid()->writeCfgDev();
+}
+
+void Home_WorkWid::initTypeComboBox()
+{
+    int index = mItem->modeId;
+    ui->typeComboBox->setCurrentIndex(index);
     emit typeSig(index);
 }

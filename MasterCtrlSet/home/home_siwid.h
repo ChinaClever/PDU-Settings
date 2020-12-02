@@ -34,6 +34,7 @@ private:
     Ui::Home_SiWid *ui;
     Home_LineUnitWid *mUnitWid;
 
+    sCfgItem *mItem;
     Dev_Object *mObj;
     sDevData *mDev;
 };

@@ -36,10 +36,12 @@ struct sCount
 
 struct sCfgItem
 {    
+    uchar modeId;
     uchar addr;
     uint devId;
 
     QString sn;
+    QString user;
     QString dev_type;
 
     sCount cnt;
@@ -67,9 +69,8 @@ public:
     QString getLoginName();
     void setLoginName(const QString &name);
 
-    void initAddr();
     void writeCnt();
-    void setAddr(int addr);
+    void writeCfgDev();
 
     void setCurrentNum();
     void write(const QString &key, const QVariant& v, const QString &g="cfg");
@@ -79,6 +80,7 @@ protected:
     void initCnt();
     bool getDate();
     void setDate();
+    void initCfgDev();
     void initCurrentNum();
 
 private:

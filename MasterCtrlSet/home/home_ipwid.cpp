@@ -20,6 +20,7 @@ void Home_IpWid::initFunSlot()
 {
     this->setEnabled(false);
     mObj = Dev_IpCfg::bulid(this);
+    mItem = Cfg::bulid()->item;
     mDev = mObj->getDev();
     mUnitWid->init(mDev);
     initType();
@@ -83,6 +84,8 @@ bool Home_IpWid::dataSave()
 
 void Home_IpWid::enabledSlot(bool en)
 {
+    if(mItem->modeId != 1) return;
+
     this->setEnabled(en);
     if(!en) {
         en = dataSave();

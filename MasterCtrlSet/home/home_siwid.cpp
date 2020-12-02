@@ -21,6 +21,7 @@ void Home_SiWid::initFunSlot()
 {
     this->setEnabled(false);
     mObj = Dev_SiCfg::bulid(this);
+    mItem = Cfg::bulid()->item;
     mDev = mObj->getDev();
     mUnitWid->init(mDev);
     initType();
@@ -62,6 +63,8 @@ bool Home_SiWid::dataSave()
 
 void Home_SiWid::enabledSlot(bool en)
 {
+    if(mItem->modeId != 0) return;
+
     this->setEnabled(en);
     if(!en) {
         en = dataSave();

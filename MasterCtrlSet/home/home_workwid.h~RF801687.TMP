@@ -24,7 +24,6 @@ protected:
     void initTypeComboBox();
 
 private slots:
-    void initFunSlot();
     void saveErrSlot();
     void on_setBtn_clicked();
     void on_outputBtn_clicked();
@@ -37,7 +36,6 @@ private:
     Ui::Home_WorkWid *ui;
 
     int mCnt;
-    sCfgItem *mItem;
     Home_SetOpDlg *mSetOpDlg;
 };
 
