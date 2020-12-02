@@ -4,7 +4,7 @@
 
 struct sMacItem : public DbBasicItem{
     sMacItem(){}
-    QString dev,user,op, sn, mac;
+    QString dev,user,sn,mac;
 };
 
 class DbMacs : public SqlBasic<sMacItem>

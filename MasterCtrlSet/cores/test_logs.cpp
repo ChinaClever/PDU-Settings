@@ -25,7 +25,6 @@ bool Test_Logs::writeMac()
     sMacItem it;
 
     it.dev = mItem->dev_type.split("_").first();
-    it.op = user_land_name();
     it.user = mItem->user;
     it.sn = mItem->sn;
     it.mac = mMac;
@@ -87,7 +86,6 @@ bool Test_Logs::writeLog()
 void Test_Logs::initItem(sStateItem &it)
 {
     it.dev = mItem->dev_type.split("_").first();
-    it.op = user_land_name();
     it.user = mItem->user;
     it.sn = mItem->sn;
 }
