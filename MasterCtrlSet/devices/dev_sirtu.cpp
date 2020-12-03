@@ -22,7 +22,6 @@ Dev_SiRtu *Dev_SiRtu::bulid(QObject *parent)
     return sington;
 }
 
-
 void Dev_SiRtu::initRtuItem(sRtuItem &it)
 {
     it.addr = mItem->addr;
@@ -30,13 +29,12 @@ void Dev_SiRtu::initRtuItem(sRtuItem &it)
     it.reg = 0;
     it.num = SI_RTU_THREE_LEN;
 
-    ///////============
-//    uchar res = mDev->dt.ac;
-//    if(DC == res) {
-//        it.num = SI_RTU_DC_LEN;
-//    } else if(mItem->cTh.si_mod) {
-//        it.num /= 2;  // 特殊定制
-//    }
+    uchar res = mDev->dt.ac;
+    if(DC == res) {
+        it.num = SI_RTU_DC_LEN;
+    } else if(mDev->dt.standar) {
+        it.num /= 2;  // 特殊定制
+    }
 }
 
 
@@ -126,7 +124,6 @@ int Dev_SiRtu::recvAcData(uchar *ptr, int line)
 
     return SI_RTU_THREE_LEN;
 }
-
 
 
 bool Dev_SiRtu::recvPacket(uchar *buf, int len)
