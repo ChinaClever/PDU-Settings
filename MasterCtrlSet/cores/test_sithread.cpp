@@ -1,3 +1,8 @@
+/*
+ *
+ *  Created on: 2021年1月1日
+ *      Author: Lzy
+ */
 #include "test_sithread.h"
 
 Test_SiThread::Test_SiThread(QObject *parent) : Test_Object(parent)

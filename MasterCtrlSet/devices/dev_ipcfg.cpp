@@ -1,3 +1,8 @@
+/*
+ *
+ *  Created on: 2021年1月1日
+ *      Author: Lzy
+ */
 #include "dev_ipcfg.h"
 
 Dev_IpCfg::Dev_IpCfg(QObject *parent) : Dev_Object(parent)

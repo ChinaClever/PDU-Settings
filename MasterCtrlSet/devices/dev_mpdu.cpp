@@ -1,3 +1,8 @@
+/*
+ *
+ *  Created on: 2021年1月1日
+ *      Author: Lzy
+ */
 #include "dev_mpdu.h"
 
 Dev_Mpdu::Dev_Mpdu(QObject *parent) : Dev_Object(parent)

@@ -1,3 +1,8 @@
+/*
+ *
+ *  Created on: 2021年1月1日
+ *      Author: Lzy
+ */
 #include "dev_sicfg.h"
 
 Dev_SiCfg::Dev_SiCfg(QObject *parent) : Dev_Object(parent)

@@ -1,3 +1,8 @@
+/*
+ *
+ *  Created on: 2021年1月1日
+ *      Author: Lzy
+ */
 #include "dev_sictrl.h"
 
 Dev_SiCtrl::Dev_SiCtrl(QObject *parent) : Dev_Object(parent)

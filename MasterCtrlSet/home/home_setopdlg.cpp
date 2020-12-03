@@ -1,3 +1,8 @@
+/*
+ *
+ *  Created on: 2021年1月1日
+ *      Author: Lzy
+ */
 #include "home_setopdlg.h"
 #include "ui_home_setopdlg.h"
 
@@ -32,8 +37,8 @@ void Home_SetOpDlg::updateIndex(int id)
 {
     mDev = Dev_Mpdu::bulid(this);
     switch (id) {
-    case 2: break;
-    case 3: break;
+    case MPDU: break;
+    case ZPDU: break;
     }
 
     sObjCfg *obj = &(mDev->getDev()->cfg);
