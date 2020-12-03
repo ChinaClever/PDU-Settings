@@ -20,9 +20,11 @@ public:
 
 private slots:
     void on_okBtn_clicked();
+    void on_saveBtn_clicked();
 
 private:
     Ui::Home_SetOpDlg *ui;
+    Dev_Object *mDev;
     Home_OutputWid *mOutputWid;
 };
 

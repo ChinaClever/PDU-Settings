@@ -27,14 +27,22 @@ void Home_SetOpDlg::on_okBtn_clicked()
     mOutputWid->setUnit(unit);
 }
 
+
 void Home_SetOpDlg::updateIndex(int id)
 {
-    Dev_Object *dev = Dev_Mpdu::bulid(this);
+    mDev = Dev_Mpdu::bulid(this);
     switch (id) {
     case 2: break;
     case 3: break;
     }
 
-    sObjCfg *obj = &(dev->getDev()->cfg);
+    sObjCfg *obj = &(mDev->getDev()->cfg);
     mOutputWid->init(obj);
+}
+
+void Home_SetOpDlg::on_saveBtn_clicked()
+{
+    this->accept();
+    mOutputWid->updateData();
+    mDev->save();
 }
