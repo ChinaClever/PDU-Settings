@@ -84,7 +84,13 @@ bool Dev_SiCtrl::setModel()
 
 bool Dev_SiCtrl::factorySet()
 {
-    return sentRtuCmd(0x1013, 0xFF00); // 清除电能
+    bool ret = sentRtuCmd(0x1013, 0xFF00); // 清除电能
+    if(ret) {
+        if(mDt->standar) // 切换成行业标准
+            ret = setModel();
+    }
+
+    return ret;
 }
 
 bool Dev_SiCtrl::sentRtuCmd(ushort reg, ushort value)
