@@ -19,7 +19,7 @@ Home_LineUnitWid::~Home_LineUnitWid()
 void Home_LineUnitWid::init(sDevData *dev)
 {
     mDev = dev;
-    sObjData *obj = &(dev->data);
+    sObjCfg *obj = &(dev->cfg);
 
     ui->curMinSpin->setValue(obj->cur.min);
     ui->curMaxSpin->setValue(obj->cur.max);
@@ -34,7 +34,7 @@ void Home_LineUnitWid::init(sDevData *dev)
 
 void Home_LineUnitWid::updateData()
 {
-    sObjData *obj = &(mDev->data);
+    sObjCfg *obj = &(mDev->cfg);
     obj->cur.min = ui->curMinSpin->value();
     obj->cur.max = ui->curMaxSpin->value();
     obj->vol.min = ui->volMinSpin->value();

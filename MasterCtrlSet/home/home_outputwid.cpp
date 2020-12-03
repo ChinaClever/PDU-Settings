@@ -31,10 +31,10 @@ void Home_OutputWid::initWid()
     }
 }
 
-void Home_OutputWid::init(sObjData *dev)
+void Home_OutputWid::init(sObjCfg *dev)
 {
     for(int i=0; i<mId; ++i) {
-        sUnit *opCur = &(dev->opCur[i]);
+        sUnitCfg *opCur = &(dev->opCur[i]);
         mBoxWid[i]->init(opCur);
     }
 }
@@ -46,7 +46,7 @@ void Home_OutputWid::updateData()
     }
 }
 
-void Home_OutputWid::setUnit(sUnit &unit)
+void Home_OutputWid::setUnit(sUnitCfg &unit)
 {
     for(int i=0; i<mId; ++i) {
         mBoxWid[i]->setUnit(unit);

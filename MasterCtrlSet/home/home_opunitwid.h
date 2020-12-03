@@ -16,12 +16,12 @@ public:
     ~Home_OpUnitWid();
 
     void updateData();
-    void init(sUnit *opCur);
-    void setUnit(sUnit &unit);
+    void init(sUnitCfg *opCur);
+    void setUnit(sUnitCfg &unit);
 
 private:
     Ui::Home_OpUnitWid *ui;
-    sUnit *mOpCur;
+    sUnitCfg *mOpCur;
 };
 
 #endif // HOME_OPUNITWID_H

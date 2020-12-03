@@ -9,7 +9,7 @@ void Test_CoreThread::initFunSlot()
 {
     mLogs = Test_Logs::bulid(this);
     mRead = Test_NetWork::bulid(this);
-    mCtrl = Test_SiCtrl::bulid(this);
+    mCtrl = Test_SiThread::bulid(this);
     mSn = Sn_SerialNum::bulid(this);
 }
 
@@ -80,7 +80,7 @@ void Test_CoreThread::workDown()
         ret = startProcess();
         if(ret) updateMacAddr();
     } else {
-        ret = mCtrl->setAlarm();
+        ret = mCtrl->checkDev();
     }
 
     workResult(ret);

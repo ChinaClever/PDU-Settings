@@ -46,7 +46,7 @@ void Home_MpduWid::initType()
 
 void Home_MpduWid::initData()
 {
-    sObjData *obj = &(mDev->data);
+    sObjCfg *obj = &(mDev->cfg);
     ui->outputMinSpin->setValue(obj->output.min);
     ui->outputMaxSpin->setValue(obj->output.max);
     ui->outputCrMinSpin->setValue(obj->output.crMin);
@@ -77,7 +77,7 @@ void Home_MpduWid::initWid()
 
 void Home_MpduWid::updateData()
 {
-    sObjData *obj = &(mDev->data);
+    sObjCfg *obj = &(mDev->cfg);
     obj->output.min = ui->outputMinSpin->value();
     obj->output.max = ui->outputMaxSpin->value();
     obj->output.crMin = ui->outputCrMinSpin->value();

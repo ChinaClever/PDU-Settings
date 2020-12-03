@@ -47,7 +47,7 @@ void Dev_IpCfg::writeType()
 
 void Dev_IpCfg::initData()
 {
-    sObjData *ptr = &(mDev->data);
+    sObjCfg *ptr = &(mDev->cfg);
     initUnit("vol", ptr->vol);
     initUnit("cur", ptr->cur);
 
@@ -57,7 +57,7 @@ void Dev_IpCfg::initData()
 
 void Dev_IpCfg::writeData()
 {
-    sObjData *ptr = &(mDev->data);
+    sObjCfg *ptr = &(mDev->cfg);
     writeUnit("vol", ptr->vol);
     writeUnit("cur", ptr->cur);
 

@@ -20,13 +20,17 @@ bool Dev_SiCtrl::setCurTh(int i)
     ushort reg = 0x1008 + 2*i;
     if(DC == mDt->ac) reg = 0x1016;
 
-    sUnit *unit = &(mDev->data.cur);
-    ushort value = unit->max;
+    sUnitCfg *unit = &(mDev->cfg.cur);
+    ushort value = unit->max * 10;
     if((mDt->lines == 2) && i) value = (value/10 +1)/2 * 10; // 解决单项二路阈值问题
-    ret = sentRtuCmd(reg++, value); if(!ret) return ret;
+    if(mDev->data.cur.max[i] != value) {
+        ret = sentRtuCmd(reg++, value); if(!ret) return ret;
+    } else reg++;
 
-    value = unit->min;
-    ret = sentRtuCmd(reg++, value); if(!ret) return ret;
+    value = unit->min * 10;
+    if(mDev->data.cur.min[i] != value) {
+        ret = sentRtuCmd(reg++, value); if(!ret) return ret;
+    } else reg++;
 
     return ret;
 }
@@ -36,28 +40,32 @@ bool Dev_SiCtrl::setVolTh(int i)
     ushort reg = 0x1002 + 2*i;
     if(DC == mDt->ac) reg = 0x1014;
 
-    return writeReg(reg, mDev->data.vol);;
+    return writeReg(reg, i, mDev->data.vol, mDev->cfg.vol);
 }
 
 bool Dev_SiCtrl::setTem()
 {
-    return writeReg(0x100E, mDev->data.tem);
+    return writeReg(0x100E, 0, mDev->data.tem, mDev->cfg.tem);
 }
 
 bool Dev_SiCtrl::setHum()
 {
-    return writeReg(0x1010, mDev->data.hum);
+    return writeReg(0x1010, 0, mDev->data.hum, mDev->cfg.hum);
 }
 
-bool Dev_SiCtrl::writeReg(ushort reg, sUnit &unit, int r)
+bool Dev_SiCtrl::writeReg(ushort reg, int i, sDataUnit &it, sUnitCfg &unit, int r)
 {
     bool ret = true;
 
     ushort value = unit.max * r;
-    ret = sentRtuCmd(reg++, value); if(!ret) return ret;
+    if(it.max[i] != value) {
+        ret = sentRtuCmd(reg++, value); if(!ret) return ret;
+    } else reg++;
 
-    value = unit.min *r;
-    ret = sentRtuCmd(reg++, value); if(!ret) return ret;
+    value = unit.min * r;;
+    if(it.min[i] != value) {
+        ret = sentRtuCmd(reg++, value); if(!ret) return ret;
+    } else reg++;
 
     return ret;
 }

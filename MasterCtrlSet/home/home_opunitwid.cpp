@@ -16,7 +16,7 @@ Home_OpUnitWid::~Home_OpUnitWid()
     delete ui;
 }
 
-void Home_OpUnitWid::init(sUnit *opCur)
+void Home_OpUnitWid::init(sUnitCfg *opCur)
 {
     mOpCur = opCur;
 
@@ -42,7 +42,7 @@ void Home_OpUnitWid::updateData()
 
 }
 
-void Home_OpUnitWid::setUnit(sUnit &unit)
+void Home_OpUnitWid::setUnit(sUnitCfg &unit)
 {
     ui->enComboBox->setCurrentIndex(unit.en);
 

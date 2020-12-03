@@ -33,7 +33,7 @@ void Dev_SiCfg::writeType()
 
 void Dev_SiCfg::initData()
 {
-    sObjData *ptr = &(mDev->data);
+    sObjCfg *ptr = &(mDev->cfg);
     initUnit("vol", ptr->vol);
     initUnit("cur", ptr->cur);
 
@@ -43,7 +43,7 @@ void Dev_SiCfg::initData()
 
 void Dev_SiCfg::writeData()
 {
-    sObjData *ptr = &(mDev->data);
+    sObjCfg *ptr = &(mDev->cfg);
     writeUnit("vol", ptr->vol);
     writeUnit("cur", ptr->cur);
 

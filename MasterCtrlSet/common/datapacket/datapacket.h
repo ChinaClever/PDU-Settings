@@ -3,12 +3,55 @@
 #include <QtCore>
 #include <QColor>
 
+#define LINE_NUM  3
+#define PACK_ARRAY_SIZE LINE_NUM
 #define OpSize  6
+
 
 /**
  * 数据单元：包括当前值，阈值，临界值，告警状态等
  */
-struct sUnit
+struct sDataUnit
+{
+    sDataUnit() {size=0;}
+
+    ushort size;
+    ushort value[PACK_ARRAY_SIZE]; // 值
+    ushort min[PACK_ARRAY_SIZE]; // 最小值
+    ushort max[PACK_ARRAY_SIZE]; // 最大值
+    uchar alarm[PACK_ARRAY_SIZE]; // 报警值 0表示未报警  1表示已报警 2表示已纪录
+    uchar status[PACK_ARRAY_SIZE];
+};
+
+
+
+/**
+ * 数据对象：包括电流，电压，功率，电能，开关状态，插接位名称
+ */
+struct sObjData
+{
+    sObjData() {size=0;}
+    int size;
+    sDataUnit vol; // 电压
+    sDataUnit cur; // 电流
+    sDataUnit tem; // 温度
+    sDataUnit hum; // 湿度
+
+    ushort pow[PACK_ARRAY_SIZE]; // 功率
+    uint ele[PACK_ARRAY_SIZE]; // 电能
+
+    uchar pf[PACK_ARRAY_SIZE]; // 功率因数
+    uchar sw[PACK_ARRAY_SIZE]; // 开关状态 0 表示未启用
+    ushort aPow[PACK_ARRAY_SIZE]; // 视在功率值
+
+    uchar hz; // 电压频率
+    ushort br;  // 00	表示波特率9600(00默认9600，01为4800，02为9600，03为19200，04为38400)
+};
+
+/**
+ * 数据单元：包括当前值，阈值，临界值，告警状态等
+ */
+struct sUnitCfg
 {
     uchar en;
     uchar id;
@@ -24,15 +67,15 @@ struct sUnit
 /**
  * 数据对象：包括电流，电压，功率，电能，开关状态，插接位名称
  */
-struct sObjData
+struct sObjCfg
 {
-    sUnit vol; // 电压
-    sUnit cur; // 电流
-    sUnit output; // 电流
-    sUnit opCur[OpSize]; // 输出位电流
+    sUnitCfg vol; // 电压
+    sUnitCfg cur; // 电流
+    sUnitCfg output; // 电流
+    sUnitCfg opCur[OpSize]; // 输出位电流
 
-    sUnit tem; // 温度
-    sUnit hum; // 湿度
+    sUnitCfg tem; // 温度
+    sUnitCfg hum; // 湿度
 };
 
 struct sDevType
@@ -64,7 +107,8 @@ struct sDevType
 struct sDevData
 {
     sDevType dt; //设备类型
-    sObjData data; // MPDU配置数据
+    sObjCfg cfg; // MPDU配置数据
+    sObjData data;
 };
 
 

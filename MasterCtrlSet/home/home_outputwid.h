@@ -16,8 +16,8 @@ public:
     ~Home_OutputWid();
 
     void updateData();
-    void init(sObjData *dev);
-    void setUnit(sUnit &unit);
+    void init(sObjCfg *dev);
+    void setUnit(sUnitCfg &unit);
 
 protected:
     void initWid();

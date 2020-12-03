@@ -47,7 +47,7 @@ void Dev_Mpdu::writeType()
 
 void Dev_Mpdu::initData()
 {
-    sObjData *ptr = &(mDev->data);
+    sObjCfg *ptr = &(mDev->cfg);
     initUnit("vol", ptr->vol);
     initUnit("cur", ptr->cur, 1);
 
@@ -63,7 +63,7 @@ void Dev_Mpdu::initData()
 
 void Dev_Mpdu::writeData()
 {
-    sObjData *ptr = &(mDev->data);
+    sObjCfg *ptr = &(mDev->cfg);
     writeUnit("vol", ptr->vol);
     writeUnit("cur", ptr->cur, 1);
 

@@ -1,7 +1,7 @@
 #ifndef DEV_SICTRL_H
 #define DEV_SICTRL_H
 
-#include "dev_sicfg.h"
+#include "dev_sirtu.h"
 
 class Dev_SiCtrl : public Dev_Object
 {
@@ -22,7 +22,7 @@ public:
 protected:
     void save(){}
     QString cfgGroup(){return "siCfg";}
-    bool writeReg(ushort reg, sUnit &unit, int r=1);
+    bool writeReg(ushort reg, int i, sDataUnit &it, sUnitCfg &unit, int r=1);
     bool sentRtuCmd(ushort reg, ushort value);
 };
 

@@ -1,7 +1,7 @@
 #ifndef TEST_CORETHREAD_H
 #define TEST_CORETHREAD_H
 
-#include "test_sictrl.h"
+#include "test_sithread.h"
 
 class Test_CoreThread : public Test_Object
 {
@@ -23,7 +23,7 @@ protected slots:
 private:
     Test_Logs *mLogs;
     Sn_SerialNum *mSn;
-    Test_SiCtrl *mCtrl;
+    Test_SiThread *mCtrl;
     Test_NetWork *mRead;
 };
 

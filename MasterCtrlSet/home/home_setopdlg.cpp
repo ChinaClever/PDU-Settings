@@ -17,7 +17,7 @@ Home_SetOpDlg::~Home_SetOpDlg()
 
 void Home_SetOpDlg::on_okBtn_clicked()
 {
-    sUnit unit;
+    sUnitCfg unit;
 
     unit.en = ui->enComboBox->currentIndex();
     unit.min = ui->curMinSpin->value();
@@ -35,6 +35,6 @@ void Home_SetOpDlg::updateIndex(int id)
     case 3: break;
     }
 
-    sObjData *obj = &(dev->getDev()->data);
+    sObjCfg *obj = &(dev->getDev()->cfg);
     mOutputWid->init(obj);
 }
