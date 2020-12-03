@@ -80,6 +80,19 @@ bool Test_SiThread::setAlarm()
     return ret;
 }
 
+bool Test_SiThread::clearEle()
+{
+    QString str = tr("清除设备电能");
+    bool ret = mCtrl->factorySet();
+    if(ret) {
+        str += tr("正常");
+    } else {
+        str += tr("错误");
+    }
+
+    return  mLogs->updatePro(str, ret);
+}
+
 bool Test_SiThread::readDev()
 {
     QString str = tr("开始读取设备信息");
@@ -109,7 +122,10 @@ bool Test_SiThread::checkLine()
 bool Test_SiThread::checkDev()
 {
     bool ret = checkLine();
-    if(ret)  ret = setAlarm();
+    if(ret)  {
+        ret = setAlarm();
+        if(ret) ret = clearEle();
+    }
 
     return ret;
 }

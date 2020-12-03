@@ -20,6 +20,7 @@ protected:
     bool envAlarmWrite();
     bool writeAlarmTh();
     bool setAlarm();
+    bool clearEle();
 
 protected slots:
     void initFunSlot();
