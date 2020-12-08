@@ -115,13 +115,32 @@ bool Test_SiThread::checkLine()
 {
     bool ret = readDev();
     if(ret) {
-        if(mDev->dt.lines != mDev->data.size) {
+        int line = 3;
+        switch (mDev->dt.lines) {
+        case 0:  case 1: line = 1; break;
+        case 2:  line = 3;  break;
+        }
+
+        if(line != mDev->data.size) {
             ret = false;
             mLogs->updatePro(tr("设备相数出错"), ret);
         }
     }
 
     return ret;
+}
+
+bool Test_SiThread::setDev()
+{
+    QString str = tr("设备配置信息写入");
+    bool ret = mCtrl->setDev();
+    if(ret) str += tr("正常");
+    else str += tr("错误");
+
+    ret = mLogs->updatePro(str, ret);
+    if(ret) ret = checkDev();
+
+    return  ret;
 }
 
 bool Test_SiThread::checkDev()
