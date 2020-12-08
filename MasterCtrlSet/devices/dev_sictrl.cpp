@@ -77,9 +77,10 @@ bool Dev_SiCtrl::writeReg(ushort reg, int i, sDataUnit &it, sUnitCfg &unit, int 
 
 bool Dev_SiCtrl::setDev()
 {
-    bool ret = sentRtuCmd(0x1049, mDt->lines);
-    if(ret) {
-        ret = sentRtuCmd(0x1051, mDt->series);
+    bool ret = sentRtuCmd(0x1048, 0x4A53);
+    if(ret){
+        ret = sentRtuCmd(0x1049, mDt->lines);
+        if(ret) ret = sentRtuCmd(0x1051, mDt->series);
     }
 
     return ret;
@@ -89,7 +90,8 @@ bool Dev_SiCtrl::factorySet()
 {
     bool ret = sentRtuCmd(0x1013, 0xFF00); // 清除电能
     if(ret) {
-        ret = sentRtuCmd(0x1050, mDt->standar);  // 切换成行业标准
+        ret = sentRtuCmd(0x1048, 0x4A53);
+        if(ret) ret = sentRtuCmd(0x1050, mDt->standar);  // 切换成行业标准
     }
 
     return ret;
