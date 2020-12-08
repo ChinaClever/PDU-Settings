@@ -75,7 +75,6 @@ bool Dev_SiCtrl::writeReg(ushort reg, int i, sDataUnit &it, sUnitCfg &unit, int 
     return ret;
 }
 
-
 bool Dev_SiCtrl::setDev()
 {
     bool ret = sentRtuCmd(0x1049, mDt->lines);
