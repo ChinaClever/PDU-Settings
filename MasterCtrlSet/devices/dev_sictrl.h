@@ -11,6 +11,7 @@ public:
     static Dev_SiCtrl *bulid(QObject *parent = nullptr);
 
     bool setDev();
+    bool unClock();
     bool factorySet();
 
     bool setCurTh(int i);
