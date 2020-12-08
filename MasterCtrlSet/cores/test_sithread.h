@@ -10,10 +10,11 @@ class Test_SiThread : public Test_Object
 public:
     static Test_SiThread *bulid(QObject *parent = nullptr);
 
-    bool checkDev();
+    bool setDev();
 
 protected:
     bool readDev();
+    bool checkDev();
     bool checkLine();
     bool volAlarmWrite(int i);
     bool curAlarmWrite(int i);

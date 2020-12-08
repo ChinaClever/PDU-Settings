@@ -25,6 +25,7 @@ void Dev_SiCfg::initType()
     sDevType *ptr = mDt;
     ptr->ac = read("ac", 1).toInt();
     ptr->lines = read("lines", 1).toInt();
+    ptr->series = read("series", 0).toInt();
     ptr->standar = read("standar", 0).toInt();
 }
 
@@ -33,6 +34,7 @@ void Dev_SiCfg::writeType()
     sDevType *ptr = mDt;
     write("ac", ptr->ac);
     write("lines", ptr->lines);
+    write("series", ptr->series);
     write("standar", ptr->standar);
 }
 

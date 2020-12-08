@@ -10,8 +10,8 @@ class Dev_SiCtrl : public Dev_Object
 public:
     static Dev_SiCtrl *bulid(QObject *parent = nullptr);
 
+    bool setDev();
     bool factorySet();
-    bool setModel();
 
     bool setCurTh(int i);
     bool setVolTh(int i);

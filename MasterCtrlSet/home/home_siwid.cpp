@@ -35,16 +35,18 @@ void Home_SiWid::initFunSlot()
 void Home_SiWid::initType()
 {
     sDevType *dt = &(mDev->dt); //设备类型
-    int v = dt->lines-1;
+    int v = dt->lines;
     ui->lineBox->setCurrentIndex(v);
     ui->sBox->setCurrentIndex(dt->standar);
+    ui->curBox->setCurrentIndex(dt->series);
 }
 
 void Home_SiWid::updateType()
 {
     sDevType *dt = &(mDev->dt); //设备类型
-    dt->lines = ui->lineBox->currentIndex()+1;
+    dt->lines = ui->lineBox->currentIndex();
     dt->standar = ui->sBox->currentIndex();
+    dt->series = ui->curBox->currentIndex();
 }
 
 bool Home_SiWid::inputCheck()
