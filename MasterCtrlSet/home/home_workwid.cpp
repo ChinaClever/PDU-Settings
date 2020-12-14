@@ -175,6 +175,11 @@ bool Home_WorkWid::initWid()
 {
     bool ret = initSerial();
     if(ret) {
+        if(mItem->user.isEmpty()) {
+            MsgBox::critical(this, tr("请先填写客户名称！"));
+            return false;
+        }
+
         mPacket->init();
         emit startSig();
         ui->textEdit->clear();

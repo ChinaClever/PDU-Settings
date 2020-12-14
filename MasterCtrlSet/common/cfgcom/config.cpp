@@ -69,14 +69,14 @@ void Cfg::initCfgDev()
 {
     item->addr = read("addr", 1,"Sys").toInt();
     item->modeId = read("modeId", 1,"Sys").toInt();
-    item->user = read("user", "", "User").toString();
+    //item->user = read("user", "", "User").toString();
 }
 
 void Cfg::writeCfgDev()
 {
     write("addr", item->addr, "Sys");
     write("modeId", item->modeId, "Sys");
-    write("user", item->user, "User");
+    //write("user", item->user, "User");
 }
 
 void Cfg::initCnt()
