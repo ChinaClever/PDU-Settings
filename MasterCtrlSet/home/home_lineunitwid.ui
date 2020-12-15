@@ -275,7 +275,7 @@
       <string/>
      </property>
      <property name="suffix">
-      <string>C</string>
+      <string>℃</string>
      </property>
      <property name="decimals">
       <number>0</number>
@@ -328,7 +328,7 @@
       </size>
      </property>
      <property name="suffix">
-      <string>C</string>
+      <string>℃</string>
      </property>
      <property name="decimals">
       <number>0</number>

@@ -123,7 +123,7 @@ bool Test_SiThread::checkLine()
 
         if(line != mDev->data.size) {
             ret = false;
-            mLogs->updatePro(tr("设备相数出错"), ret);
+            mLogs->updatePro(tr("单相两路需先切换至“一路”，再切换到单相交流或者直流"), ret);
         }
     }
 
