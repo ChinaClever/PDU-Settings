@@ -55,6 +55,7 @@ void Test_Logs::saveLogs()
         writeLogs();
         if(mMac.size()) writeMac();
     } else {
+        mLogItems.clear();
         // updatePro(tr("因未创建序列号，日志无法保存！"), false);
     }
 }
