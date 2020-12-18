@@ -80,6 +80,7 @@ void Setup_MainWid::updateCnt()
     ui->allLab->setNum(cnt->all);
     ui->okLab->setNum(cnt->ok);
     ui->errLab->setNum(cnt->err);
+    mItem->user.clear();
 }
 
 void Setup_MainWid::on_resBtn_clicked()

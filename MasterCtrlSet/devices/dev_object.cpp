@@ -37,8 +37,8 @@ void Dev_Object::initUnit(const QString& prefix, sUnitCfg &unit, int f)
         unit.en = read(prefix+"_en", 0).toInt();
         unit.id = read(prefix+"_id", 0).toInt();
     case 1:
-        unit.crMin = read(prefix+"_crMin", 0).toFloat();
-        unit.crMax = read(prefix+"_crMax", 10).toFloat();
+        unit.crMin = read(prefix+"_crmin", 0).toFloat();
+        unit.crMax = read(prefix+"_crmax", 10).toFloat();
         break;
     }
 }
@@ -53,8 +53,8 @@ void Dev_Object::writeUnit(const QString& prefix, sUnitCfg &unit, int f)
         write(prefix+"_en", unit.en);
         write(prefix+"_id", unit.id);
     case 1:
-        write(prefix+"_crMin", QString::number(unit.crMin));
-        write(prefix+"_crMax", QString::number(unit.crMax));
+        write(prefix+"_crmin", QString::number(unit.crMin));
+        write(prefix+"_crmax", QString::number(unit.crMax));
         break;
     }
 }
