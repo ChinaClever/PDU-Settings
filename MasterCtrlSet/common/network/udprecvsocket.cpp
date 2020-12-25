@@ -58,10 +58,11 @@ UdpBaseData *UdpRecvSocket::getData(void)
 {
     UdpBaseData *data = NULL;
 
-    QReadLocker locker(mRecLock); /*获取线程状态*/
+    QWriteLocker locker(mRecLock); /*获取线程状态*/
     int ret = mUdpQueueData->size();
-    if( ret > 0)
+    if( ret > 0) {
         data = mUdpQueueData->dequeue();
+    }
 
     return data;
 }
@@ -88,6 +89,7 @@ bool UdpRecvSocket::dataReceived(void)
             if(rtn > 0) {
                 if(data->datagram.size() < 1024) { /*数据最长不超过1024*/
                     QWriteLocker locker(mRecLock);
+                    QStringList list = QString(data->datagram).split(";");
                     mUdpQueueData->enqueue(data);
                 }
             }
@@ -107,6 +109,6 @@ void UdpRecvSocket::run(void)
     isRun = true;
     while(isRun) {
         ret = dataReceived();
-        if(!ret) msleep(1);
+        if(!ret) usleep(1);
     }
 }

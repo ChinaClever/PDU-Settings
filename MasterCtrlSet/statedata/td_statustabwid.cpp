@@ -49,7 +49,7 @@ void Td_StatusTabWid::appendItem()
 
 void Td_StatusTabWid::timeoutDone()
 {
-    if(mPro->item.size())
+    while(mPro->item.size())
         appendItem();
 }
 

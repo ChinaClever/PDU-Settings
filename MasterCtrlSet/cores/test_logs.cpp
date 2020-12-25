@@ -105,7 +105,7 @@ void Test_Logs::writeLogs()
 
 bool Test_Logs::updatePro(const QString &str, bool pass, int sec)
 {       
-    if(mPro->step < Test_Over) {
+    if(mPro->step < Test_Over){
         appendLogItem(str, pass);
         mPacket->updatePro(str, pass, sec);
     }

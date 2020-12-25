@@ -68,7 +68,7 @@ void Home_WorkWid::setTextColor()
 
 void Home_WorkWid::insertText()
 {
-    if(mPro->status.size()) {
+    while(mPro->status.size()) {
         setTextColor();
         QString str = QString::number(mId++) + "、"+ mPro->status.first() + "\n";
         ui->textEdit->insertPlainText(str);
@@ -163,7 +163,6 @@ bool Home_WorkWid::initSerial()
         mId = 1;
         mItem->sn.clear();
         mItem->dev_type.clear();
-        mPro->step = Test_Start;
     } else {
         MsgBox::critical(this, tr("请先打开串口")); return ret;
     }
@@ -183,6 +182,7 @@ bool Home_WorkWid::initWid()
         mPacket->init();
         emit startSig();
         ui->textEdit->clear();
+        mPro->step = Test_Start;
         ui->groupBox_4->setEnabled(false);
     }
 

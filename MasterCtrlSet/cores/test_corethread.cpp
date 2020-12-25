@@ -21,7 +21,7 @@ void Test_CoreThread::initFunSlot()
 bool Test_CoreThread::checkNet()
 {
     QString str = tr("检测设备网络");
-    bool ret = cm_pingNet("192.168.1.163");
+    bool ret = cm_pingNet("192.168.1.168");
     if(ret) {
         str += tr("正常");
     } else {
@@ -33,7 +33,7 @@ bool Test_CoreThread::checkNet()
 
 bool Test_CoreThread::startProcess()
 {
-    int sec = 15;
+    int sec = 350;
     QString exe = "ip_web.exe";
     if(MPDU == mItem->modeId) {
         exe = "mpdu_web.exe";
@@ -43,9 +43,10 @@ bool Test_CoreThread::startProcess()
     process.start(exe);
     bool ret = checkNet();
     if(ret) {
-        process.waitForFinished(sec*1000);
+        ret = process.waitForFinished(sec*1000);
     }
     process.close();
+    msleep(100);
 
     return ret;
 }
@@ -64,7 +65,8 @@ void Test_CoreThread::updateMacAddr()
 void Test_CoreThread::workResult(bool res)
 {
     QString str = tr("最终结果");
-    bool ret = mSn->snEnter();
+//    bool ret = mSn->snEnter();
+    bool ret = true;
     if(res&&ret) {
         str += tr("通过");
     } else {
