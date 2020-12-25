@@ -12,10 +12,9 @@ SOURCES +=
 FORMS +=
 
 DISTFILES += \
-    $$PWD/ip_v1.py \
-    $$PWD/ip_v3.py \
-    $$PWD/ip_web.py \
-    $$PWD/main.py
+    $$PWD/main.py \
+    $$PWD/mpdu.py \
+    $$PWD/mpdu_web.py
 
 
 
