@@ -67,7 +67,7 @@ bool Dev_SiCtrl::writeReg(ushort reg, int i, sDataUnit &it, sUnitCfg &unit, int 
         ret = sentRtuCmd(reg++, value); if(!ret) return ret;
     } else reg++;
 
-    value = unit.min * r;;
+    value = unit.min * r;
     if(it.min[i] != value) {
         ret = sentRtuCmd(reg++, value); if(!ret) return ret;
     } else reg++;

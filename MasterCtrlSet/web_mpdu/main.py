@@ -1,15 +1,21 @@
-from pyweb.ip_v1 import  *
-from pyweb.ip_v3 import  *
+from setMonitor.mpdu import  *
+import os
+import socket
 
+
+sock = socket.socket(socket.AF_INET , socket.SOCK_DGRAM)
+dest_ip,dest_port = ('127.0.0.1',10086)
 
 
 if __name__ == '__main__':
-    v = IpWeb.getCfg().get("Cfg", "ip_version")
+    v = MpduWeb.getCfg().get("mCfg", "version")
 
-    if(1 == int(v)):
-        app = IpV1()
-        app.start_fun()
+    if(3 == int(v)):
+        app = Mpdu()
+        app.start_fun(sock , dest_ip , dest_port)
+        app.close()
     else:
-        app = IpV3()
-        app.start_fun()
+        app = Mpdu()
+        app.start_fun(sock , dest_ip , dest_port)
+        app.close()
 
