@@ -83,7 +83,6 @@ void Setup_MainWid::updateCnt()
     ui->allLab->setNum(cnt->all);
     ui->okLab->setNum(cnt->ok);
     ui->errLab->setNum(cnt->err);
-    mItem->user.clear();
 }
 
 void Setup_MainWid::on_resBtn_clicked()
@@ -93,6 +92,7 @@ void Setup_MainWid::on_resBtn_clicked()
         sCount *cnt = &(mItem->cnt);
         cnt->all = cnt->ok = cnt->err = 0;
         updateCnt();
+        mItem->user.clear();
         Cfg::bulid()->writeCnt();
         MsgBox::information(this, tr("计数已重置！"));
     } else {
