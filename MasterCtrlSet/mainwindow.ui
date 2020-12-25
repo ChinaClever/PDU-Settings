@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>主控设置工具</string>
+   <string>一键设置工具</string>
   </property>
   <property name="windowIcon">
    <iconset resource="images/image.qrc">

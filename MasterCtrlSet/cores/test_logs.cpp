@@ -55,7 +55,8 @@ void Test_Logs::saveLogs()
         writeLogs();
         if(mMac.size()) writeMac();
     } else {
-       updatePro(tr("因未创建序列号，日志无法保存！"), false);
+        mLogItems.clear();
+        // updatePro(tr("因未创建序列号，日志无法保存！"), false);
     }
 }
 
@@ -68,7 +69,6 @@ bool Test_Logs::writeLog()
     it.op = user_land_name();
     it.user = mItem->user;
     it.sn = mItem->sn;
-    if(it.sn.isEmpty()) return false;
 
     mItem->cnt.all += 1;
     if(mPro->result != Test_Fail) {
@@ -80,14 +80,17 @@ bool Test_Logs::writeLog()
     }
 
     Cfg::bulid()->writeCnt();
+    if(it.sn.isEmpty()) return false;
     return DbLogs::bulid()->insertItem(it);
 }
 
-void Test_Logs::initItem(sStateItem &it)
+bool Test_Logs::initItem(sStateItem &it)
 {
     it.dev = mItem->dev_type.split("_").first();
     it.user = mItem->user;
     it.sn = mItem->sn;
+
+    return it.sn.size();
 }
 
 void Test_Logs::writeLogs()
@@ -95,8 +98,7 @@ void Test_Logs::writeLogs()
     Db_Tran db;
     for(int i=0; i<mLogItems.size(); ++i) {
         sStateItem it = mLogItems.at(i);
-        initItem(it);
-        DbStates::bulid()->insertItem(it);
+        if(initItem(it)) DbStates::bulid()->insertItem(it);
     }
     mLogItems.clear();
 }

@@ -67,7 +67,7 @@ bool Dev_SiCtrl::writeReg(ushort reg, int i, sDataUnit &it, sUnitCfg &unit, int 
         ret = sentRtuCmd(reg++, value); if(!ret) return ret;
     } else reg++;
 
-    value = unit.min * r;;
+    value = unit.min * r;
     if(it.min[i] != value) {
         ret = sentRtuCmd(reg++, value); if(!ret) return ret;
     } else reg++;
@@ -75,24 +75,26 @@ bool Dev_SiCtrl::writeReg(ushort reg, int i, sDataUnit &it, sUnitCfg &unit, int 
     return ret;
 }
 
-// 表示行业标准 Modbus RTU 模式
-bool Dev_SiCtrl::setModel()
-{
-    sRtuSetItem it;
-    it.addr = mItem->addr;
-    it.fn = 0x06;
-    it.reg = 0x1019;
-    it.data = 1;
 
-    return mModbus->write(it);
+bool Dev_SiCtrl::unClock()
+{    
+    return sentRtuCmd(0x1048, 0x4A53);
+}
+
+bool Dev_SiCtrl::setDev()
+{
+    bool ret = sentRtuCmd(0x1049, mDt->lines);
+    if(ret) ret = sentRtuCmd(0x1051, mDt->series);
+
+    return ret;
 }
 
 bool Dev_SiCtrl::factorySet()
 {
     bool ret = sentRtuCmd(0x1013, 0xFF00); // 清除电能
     if(ret) {
-        if(mDt->standar) // 切换成行业标准
-            ret = setModel();
+        ret = unClock();
+        if(ret) ret = sentRtuCmd(0x1050, mDt->standar);  // 切换成行业标准
     }
 
     return ret;

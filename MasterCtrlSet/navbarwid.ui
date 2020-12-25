@@ -115,7 +115,7 @@
       <string notr="true">color: rgb(255, 255, 255);</string>
      </property>
      <property name="text">
-      <string>设置工具</string>
+      <string>一键设置工具</string>
      </property>
     </widget>
    </item>

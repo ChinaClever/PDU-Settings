@@ -32,7 +32,6 @@ void sDataPacket::init()
     pro->status.clear();
     pro->pass.clear();
     pro->itPass.clear();
-    pro->startTime = QTime::currentTime();
 
     pro->step = Test_Fun;
     pro->result = Test_Info;

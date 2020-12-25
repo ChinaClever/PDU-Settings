@@ -115,13 +115,41 @@ bool Test_SiThread::checkLine()
 {
     bool ret = readDev();
     if(ret) {
-        if(mDev->dt.lines != mDev->data.size) {
+        int line = 3;
+        switch (mDev->dt.lines) {
+        case 0:  case 1: line = 1; break;
+        case 2:  line = 3;  break;
+        }
+
+        if(line != mDev->data.size) {
             ret = false;
-            mLogs->updatePro(tr("设备相数出错"), ret);
+            mLogs->updatePro(tr("单相两路需先切换至“一路”，再切换到单相交流或者直流"), ret);
         }
     }
 
     return ret;
+}
+
+
+bool Test_SiThread::setDev()
+{
+    QString str = tr("解锁设备");
+    bool ret = mCtrl->unClock();
+    if(ret) str += tr("成功");
+    else str += tr("错误");
+
+    ret = mLogs->updatePro(str, ret);
+    if(ret) {
+        str = tr("设备配置信息写入");
+        ret = mCtrl->setDev();
+        if(ret) str += tr("正常");
+        else str += tr("错误");
+
+        ret = mLogs->updatePro(str, ret);
+        if(ret) ret = checkDev();
+    }
+
+    return  ret;
 }
 
 bool Test_SiThread::checkDev()

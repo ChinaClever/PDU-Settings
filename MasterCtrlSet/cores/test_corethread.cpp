@@ -85,7 +85,7 @@ void Test_CoreThread::workDown()
         ret = startProcess();
         if(ret) updateMacAddr();
     } else {
-        ret = mCtrl->checkDev();
+        ret = mCtrl->setDev();
     }
 
     workResult(ret);

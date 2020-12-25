@@ -34,6 +34,9 @@ void Setup_MainWid::initFunSlot()
     timer = new QTimer(this);
     timer->start(3*1000);
     connect(timer, SIGNAL(timeout()),this, SLOT(timeoutDone()));
+
+    QDate buildDate = QLocale(QLocale::English ).toDate( QString(__DATE__).replace("  ", " 0"), "MMM dd yyyy");
+    ui->label_date->setText(buildDate.toString("yyyy-MM-dd"));
 }
 
 
@@ -80,6 +83,7 @@ void Setup_MainWid::updateCnt()
     ui->allLab->setNum(cnt->all);
     ui->okLab->setNum(cnt->ok);
     ui->errLab->setNum(cnt->err);
+    mItem->user.clear();
 }
 
 void Setup_MainWid::on_resBtn_clicked()
