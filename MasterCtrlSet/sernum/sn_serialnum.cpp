@@ -182,7 +182,8 @@ void Sn_SerialNum::writeStatus(bool ret)
 
 bool Sn_SerialNum::snEnter()
 {
-    if((mDt->devType == SI_PDU) &&(mItem->ledSi)) {
+    initDev();
+    if((mItem->modeId == SI_PDU) &&(mItem->ledSi)) {
         mItem->sn.clear(); return true;
     }
 

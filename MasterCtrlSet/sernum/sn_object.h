@@ -9,7 +9,7 @@ class Sn_Object : public QThread
 public:
     explicit Sn_Object(QObject *parent = nullptr);
 
-signals:
+    void initDev();
 
 protected slots:
     virtual void initFunSlot();
