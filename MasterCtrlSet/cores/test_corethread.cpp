@@ -33,7 +33,7 @@ bool Test_CoreThread::checkNet()
 
 bool Test_CoreThread::startProcess()
 {
-    int sec = 350;
+    int sec = 45;
     QString exe = "ip_web.exe";
     if(MPDU == mItem->modeId) {
         exe = "mpdu_web.exe";
@@ -64,9 +64,9 @@ void Test_CoreThread::updateMacAddr()
 
 void Test_CoreThread::workResult(bool res)
 {
-    QString str = tr("最终结果");
-//    bool ret = mSn->snEnter();
     bool ret = true;
+    // bool ret = mSn->snEnter();
+    QString str = tr("最终结果");
     if(res&&ret) {
         str += tr("通过");
     } else {
