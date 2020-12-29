@@ -40,7 +40,7 @@ void Test_NetWork::workDown()
         }
         delete res;
     } else {
-        usleep(1);
+        msleep(1);
     }
 }
 

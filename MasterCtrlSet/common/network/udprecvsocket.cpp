@@ -109,6 +109,6 @@ void UdpRecvSocket::run(void)
     isRun = true;
     while(isRun) {
         ret = dataReceived();
-        if(!ret) usleep(1);
+        if(!ret) msleep(1);
     }
 }
