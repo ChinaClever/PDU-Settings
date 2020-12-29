@@ -32,6 +32,7 @@ void Dev_Mpdu::initType()
     ptr->standar = read("standar", 0).toInt();
     ptr->outputs = read("outputs", 24).toInt();
     ptr->language = read("language", 1).toInt();
+    ptr->versions = read("versions", "").toString();
     ptr->modbus = read("modbus", 0).toInt();
     ptr->mac = read("mac", "").toString();
 }
@@ -46,6 +47,7 @@ void Dev_Mpdu::writeType()
     write("standar", ptr->standar);
     write("outputs", ptr->outputs);
     write("language", ptr->language);
+    write("versions", ptr->versions);
     write("modbus", ptr->modbus);
     write("mac", ptr->mac);
 }

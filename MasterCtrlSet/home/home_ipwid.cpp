@@ -38,7 +38,7 @@ void Home_IpWid::initType()
     int v = dt->lines-1; if(v) v = 1;
     ui->lineBox->setCurrentIndex(v);
 
-    v = dt->versions-1; if(v) v = 1;
+    v = dt->version-1; if(v) v = 1;
     ui->ipTypeBox->setCurrentIndex(v);
 
     ui->logBox->setCurrentIndex(dt->logs);
@@ -61,7 +61,7 @@ void Home_IpWid::updateType()
     if(v) v = 3; else v = 1; dt->lines = v;
 
     v = ui->ipTypeBox->currentIndex()+1;
-    if(v > 1) v = 3; dt->versions = v;
+    if(v > 1) v = 3; dt->version = v;
 
     dt->modbus = ui->ipModeBox->currentIndex();
     dt->standar = ui->sBox->currentIndex();

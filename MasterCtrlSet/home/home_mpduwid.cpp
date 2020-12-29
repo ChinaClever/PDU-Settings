@@ -45,6 +45,7 @@ void Home_MpduWid::initType()
     ui->seriesBox->setCurrentIndex(dt->series-1);
     ui->modbusBox->setCurrentIndex(dt->modbus);
     ui->languageBox->setCurrentIndex(dt->language);
+    ui->versionEdit->setText(dt->versions);
     ui->macEdit->setText(dt->mac);
 }
 
@@ -119,6 +120,7 @@ void Home_MpduWid::updateType()
 
     dt->modbus = ui->modbusBox->currentIndex();
     dt->language = ui->languageBox->currentIndex();
+    dt->versions = ui->versionEdit->text();
     dt->mac = ui->macEdit->text();
 }
 

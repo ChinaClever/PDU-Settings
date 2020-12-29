@@ -93,9 +93,10 @@ struct sDevType
     uchar language;
     uchar modbus;
     uchar standar;
-    uchar versions;
+    uchar version;
     uchar logs;
 
+    QString versions;
     QString mac;
 };
 

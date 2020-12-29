@@ -26,7 +26,7 @@ void Dev_IpCfg::initType()
 {
     sDevType *ptr = mDt;
     ptr->ac = read("ac", 1).toInt();
-    ptr->versions = read("versions", 1).toInt();
+    ptr->version = read("version", 1).toInt();
     ptr->lines = read("lines", 1).toInt();
     ptr->standar = read("standar", 0).toInt();
 
@@ -40,7 +40,7 @@ void Dev_IpCfg::writeType()
 {
     sDevType *ptr = mDt;
     write("ac", ptr->ac);
-    write("versions", ptr->versions);
+    write("version", ptr->version);
     write("lines", ptr->lines);
     write("standar", ptr->standar);
 
