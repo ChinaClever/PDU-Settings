@@ -436,26 +436,10 @@
          </size>
         </property>
         <property name="text">
-         <string>上电延时：</string>
+         <string>传感器盒：</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="3">
-       <widget class="QSpinBox" name="outputSpin_2">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>30</height>
-         </size>
-        </property>
-        <property name="maximum">
-         <number>42</number>
-        </property>
-        <property name="value">
-         <number>0</number>
         </property>
        </widget>
       </item>
@@ -489,6 +473,26 @@
           <height>30</height>
          </size>
         </property>
+       </widget>
+      </item>
+      <item row="4" column="3">
+       <widget class="QComboBox" name="envBox">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>30</height>
+         </size>
+        </property>
+        <item>
+         <property name="text">
+          <string>无</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>有</string>
+         </property>
+        </item>
        </widget>
       </item>
      </layout>

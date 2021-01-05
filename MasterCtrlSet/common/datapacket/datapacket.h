@@ -95,6 +95,7 @@ struct sDevType
     uchar standar;
     uchar version;
     uchar logs;
+    uchar envbox;
 
     QString versions;
     QString mac;

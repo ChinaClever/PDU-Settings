@@ -43,6 +43,7 @@ void Home_MpduWid::initType()
     ui->breakerBox->setCurrentIndex(dt->breaker);
     ui->standardBox->setCurrentIndex(dt->standar);
     ui->seriesBox->setCurrentIndex(dt->series-1);
+    ui->envBox->setCurrentIndex(dt->envbox);
     ui->modbusBox->setCurrentIndex(dt->modbus);
     ui->languageBox->setCurrentIndex(dt->language);
     ui->versionEdit->setText(dt->versions);
@@ -118,6 +119,7 @@ void Home_MpduWid::updateType()
     dt->standar = ui->standardBox->currentIndex();
     dt->series = ui->seriesBox->currentIndex()+1;
 
+    dt->envbox = ui->envBox->currentIndex();
     dt->modbus = ui->modbusBox->currentIndex();
     dt->language = ui->languageBox->currentIndex();
     dt->versions = ui->versionEdit->text();
