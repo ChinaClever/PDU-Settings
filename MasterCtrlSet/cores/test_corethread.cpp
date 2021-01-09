@@ -53,11 +53,10 @@ bool Test_CoreThread::startProcess()
 
 void Test_CoreThread::updateMacAddr()
 {
-    if(mDt->mac.size() > 5) {
-        mLogs->writeMac(mDt->mac);
+    if(mItem->mac.size() > 5) {
+        mLogs->writeMac(mItem->mac);
         MacAddr *mac = MacAddr::bulid();
-        mDt->mac = mac->macAdd(mDt->mac);
-        mObj->setMacAddr();
+        mItem->mac = mac->macAdd(mItem->mac);
     }
 }
 

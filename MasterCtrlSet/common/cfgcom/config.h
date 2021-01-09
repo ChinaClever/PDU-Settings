@@ -37,6 +37,7 @@ struct sCfgItem
     uint devId;
 
     QString sn;
+    QString mac;
     QString user;
     QString dev_type;
 

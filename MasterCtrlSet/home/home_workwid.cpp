@@ -25,7 +25,7 @@ void Home_WorkWid::initLayout()
     QPalette pl = ui->textEdit->palette();
     pl.setBrush(QPalette::Base,QBrush(QColor(255,0,0,0)));
     ui->textEdit->setPalette(pl);
-    ui->userEdit->setPalette(pl);
+    ui->macEdit->setPalette(pl);
     //ui->textEdit->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff ); //垂直滚动条隐藏
     ui->textEdit->setVerticalScrollBarPolicy( Qt::ScrollBarAlwaysOn );//水平滚动条隐藏
 
@@ -83,6 +83,7 @@ void Home_WorkWid::updateCnt()
     ui->okLcd->display(cnt->ok);
     ui->allLcd->display(cnt->all);
     ui->errLcd->display(cnt->err);
+    ui->macEdit->setText(mItem->mac);
 
     QString str = "0";
     if(cnt->all) {

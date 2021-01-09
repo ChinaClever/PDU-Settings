@@ -27,8 +27,6 @@ void Home_MpduWid::initFunSlot()
     mObj = Dev_Mpdu::bulid(this);
     mDev = mObj->getDev();
     initWid();
-
-    connect(mObj, SIGNAL(setMacSig()), this, SLOT(updateMacSlot()));
 }
 
 void Home_MpduWid::initType()
@@ -47,7 +45,6 @@ void Home_MpduWid::initType()
     ui->modbusBox->setCurrentIndex(dt->modbus);
     ui->languageBox->setCurrentIndex(dt->language);
     ui->versionEdit->setText(dt->versions);
-    ui->macEdit->setText(dt->mac);
 }
 
 
@@ -123,15 +120,7 @@ void Home_MpduWid::updateType()
     dt->modbus = ui->modbusBox->currentIndex();
     dt->language = ui->languageBox->currentIndex();
     dt->versions = ui->versionEdit->text();
-    dt->mac = ui->macEdit->text();
 }
-
-
-void Home_MpduWid::updateMacSlot()
-{
-    ui->macEdit->setText(mDev->dt.mac);
-}
-
 
 bool Home_MpduWid::inputCheck()
 {
