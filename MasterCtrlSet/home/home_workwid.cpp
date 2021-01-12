@@ -150,10 +150,10 @@ void Home_WorkWid::updateWid()
 
 void Home_WorkWid::timeoutDone()
 {
+    updateCnt();
     if(mPro->step < Test_End) {
         insertText();
         updateWid();
-        updateCnt();
     }
 }
 
