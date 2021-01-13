@@ -26,8 +26,8 @@ void Home_WorkWid::initLayout()
     pl.setBrush(QPalette::Base,QBrush(QColor(255,0,0,0)));
     ui->textEdit->setPalette(pl);
     ui->macEdit->setPalette(pl);
-    //ui->textEdit->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff ); //垂直滚动条隐藏
-    ui->textEdit->setVerticalScrollBarPolicy( Qt::ScrollBarAlwaysOn );//水平滚动条隐藏
+    //ui->textEdit->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+    //ui->textEdit->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
     QGridLayout *gridLayout = new QGridLayout(this->parentWidget());
     gridLayout->setContentsMargins(0, 7, 0, 0);
