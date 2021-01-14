@@ -40,6 +40,7 @@ protected:
 private slots:
     void timeoutDone();
     void initFunSlot();
+    void saveFunSlot();
     void saveErrSlot();
     void on_setBtn_clicked();
     void on_startBtn_clicked();

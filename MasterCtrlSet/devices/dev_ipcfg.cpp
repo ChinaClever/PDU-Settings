@@ -25,27 +25,27 @@ Dev_IpCfg *Dev_IpCfg::bulid(QObject *parent)
 void Dev_IpCfg::initType()
 {
     sDevType *ptr = mDt;
-    ptr->ac = read("ac", 1).toInt();
-    ptr->version = read("version", 1).toInt();
-    ptr->lines = read("lines", 1).toInt();
-    ptr->standar = read("standar", 0).toInt();
+    ptr->ac = read("ip_ac", 1).toInt();
+    ptr->version = read("ip_version", 1).toInt();
+    ptr->lines = read("ip_lines", 1).toInt();
+    ptr->standar = read("ip_standar", 0).toInt();
 
-    ptr->language = read("language", 1).toInt();
-    ptr->modbus = read("modbus", 0).toInt();
-    ptr->logs = read("logs", 0).toInt();
+    ptr->language = read("ip_language", 1).toInt();
+    ptr->modbus = read("ip_modbus", 0).toInt();
+    ptr->log_en = read("log_en", 0).toInt();
 }
 
 void Dev_IpCfg::writeType()
 {
     sDevType *ptr = mDt;
-    write("ac", ptr->ac);
-    write("version", ptr->version);
-    write("lines", ptr->lines);
-    write("standar", ptr->standar);
+    write("ip_ac", ptr->ac);
+    write("ip_version", ptr->version);
+    write("ip_lines", ptr->lines);
+    write("ip_standar", ptr->standar);
 
-    write("language", ptr->language);
-    write("modbus", ptr->modbus);
-    write("logs", ptr->logs);
+    write("ip_language", ptr->language);
+    write("ip_modbus", ptr->modbus);
+    write("log_en", ptr->log_en);
 }
 
 void Dev_IpCfg::initData()

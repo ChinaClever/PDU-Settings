@@ -1,4 +1,4 @@
-from pyweb.ip_web import  *
+from ctrlset_ip.ip_web import  *
 
 class IpV1(IpWeb):
 
@@ -7,8 +7,7 @@ class IpV1(IpWeb):
         self.setCorrect()
         self.setEle()
         self.setThreshold()
-        time.sleep(1)
-        self.resetFactory()
+        #self.resetFactory()
         self.driver.close()
 
     def setCorrect(self):
@@ -23,8 +22,9 @@ class IpV1(IpWeb):
         if(len(cfg['mac']) > 5) :
             self.setItById("mac1", cfg['mac'])
         self.alertClick("Button3")
+        self.sendtoMainapp("设备后台网页配置成功", 1)
         self.driver.back()
-        time.sleep(1)
+        time.sleep(0.5)
     
     
 

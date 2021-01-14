@@ -94,7 +94,7 @@ struct sDevType
     uchar modbus;
     uchar standar;
     uchar version;
-    uchar logs;
+    uchar log_en;
     uchar envbox;
 
     QString versions;

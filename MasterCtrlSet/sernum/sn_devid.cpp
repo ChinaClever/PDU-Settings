@@ -55,13 +55,12 @@ bool Sn_DevId::readDevId()
     sRtuItem it;
     initReadType(it);
 
+    int len = 0;
     uchar recv[8] = {0};
-    int len = mModbus->read(it, recv);
-    if(!len){ mPacket->delay(1); len = mModbus->read(it, recv); }
-    if(0 == len){
-        bool ret = mModbus->changeBaudRate(); // 自动转变波特泫
-        if(!ret) len = mModbus->read(it, recv);
-        if(!len) mModbus->changeBaudRate();
+    for(int i=0; i<6; ++i) {
+        len = mModbus->read(it, recv);
+        if(len) break; else if(!mPacket->delay(2)) break;
+        if(i>1 && i%2) mModbus->changeBaudRate();
     }
 
     return analysDevType(recv, len);
@@ -73,7 +72,7 @@ bool Sn_DevId::readDevType()
     mItem->dev_type.clear();
 
     QString str = tr("开始读取设备ID！");
-    bool ret = mPacket->updatePro(str, true, 1);
+    bool ret = mPacket->updatePro(str, true, 0);
     if(ret) {
         ret = readDevId();
     }

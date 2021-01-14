@@ -34,14 +34,13 @@ void Home_IpWid::initFunSlot()
 void Home_IpWid::initType()
 {
     sDevType *dt = &(mDev->dt); //设备类型
-    int v = dt->lines-1; if(v) v = 1;
-    ui->lineBox->setCurrentIndex(v);
-
-    v = dt->version-1; if(v) v = 1;
+    int v = dt->version-1; if(v) v = 1;
     ui->ipTypeBox->setCurrentIndex(v);
+    on_ipTypeBox_currentIndexChanged(v);
 
-    ui->logBox->setCurrentIndex(dt->logs);
+    ui->logBox->setCurrentIndex(dt->log_en);
     ui->sBox->setCurrentIndex(dt->standar);
+    ui->lineBox->setCurrentIndex(dt->lines-1);
     ui->ipModeBox->setCurrentIndex(dt->modbus);
     ui->languageBox->setCurrentIndex(dt->language);
 }
@@ -50,15 +49,13 @@ void Home_IpWid::initType()
 void Home_IpWid::updateType()
 {
     sDevType *dt = &(mDev->dt); //设备类型
-    int v = ui->lineBox->currentIndex();
-    if(v) v = 3; else v = 1; dt->lines = v;
-
-    v = ui->ipTypeBox->currentIndex()+1;
+    int v = ui->ipTypeBox->currentIndex()+1;
     if(v > 1) v = 3; dt->version = v;
 
+    dt->lines = ui->lineBox->currentIndex()+1;
     dt->modbus = ui->ipModeBox->currentIndex();
     dt->standar = ui->sBox->currentIndex();
-    dt->logs = ui->logBox->currentIndex();
+    dt->log_en = ui->logBox->currentIndex();
     dt->language = ui->languageBox->currentIndex();
 }
 
@@ -93,4 +90,15 @@ void Home_IpWid::enabledSlot(bool en)
             emit errSig();
         }
     }
+}
+
+void Home_IpWid::on_ipTypeBox_currentIndexChanged(int index)
+{
+    bool res = true;
+    if(index)  res = false;
+
+    ui->sBox->setHidden(res);
+    ui->logBox->setHidden(res);
+    ui->label_8->setHidden(res);
+    ui->label_11->setHidden(res);
 }

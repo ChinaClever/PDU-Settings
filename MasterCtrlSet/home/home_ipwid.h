@@ -31,6 +31,9 @@ public slots:
     void initFunSlot();
     void enabledSlot(bool en);
 
+private slots:
+    void on_ipTypeBox_currentIndexChanged(int index);
+
 private:
     Ui::Home_IpWid *ui;
     Home_LineUnitWid *mUnitWid;

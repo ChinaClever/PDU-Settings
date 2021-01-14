@@ -1,16 +1,16 @@
-from pyweb.ip_web import  *
+from ctrlset_ip.ip_web import  *
 
 class IpV3(IpWeb):
 
     def start_fun(self):
-        self.ip_prefix = 'https://'
+        #self.ip_prefix = 'https://'
         self.login()
         self.setCorrect()
-        self.login()
+        #self.login()
         self.setEle()
         self.setThreshold()
         self.clearLogs()
-        self.resetFactory()
+        #self.resetFactory()
         self.driver.close()
 
     def setTime(self):
@@ -28,6 +28,7 @@ class IpV3(IpWeb):
             self.setSelect("loglist", num)
             self.execJs(jsSheet.format(num))
             time.sleep(1)
+        self.sendtoMainapp("设备日志清除成功", 1)
 
     def setCorrect(self):
         cfg = self.cfgs
@@ -43,8 +44,9 @@ class IpV3(IpWeb):
         if (len(cfg['mac']) > 5):
             self.setItById("mac1", cfg['mac'])
         self.alertClick("Button3")
+        self.sendtoMainapp("设备后台网页配置成功", 1)
         self.driver.back()
-        time.sleep(1)
+
     
 
 

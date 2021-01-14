@@ -27,6 +27,9 @@ void MainWindow::initFunSlot()
 
 void MainWindow::initWid()
 {
+    mNavBarWid = new NavBarWid(ui->barWid);
+    connect(mNavBarWid, SIGNAL(navBarSig(int)), this, SLOT(navBarSlot(int)));
+
     mHomeWid = new Home_MainWid(ui->stackedWid);
     ui->stackedWid->addWidget(mHomeWid);
 
@@ -39,9 +42,6 @@ void MainWindow::initWid()
 
     mLog = new LogMainWid(ui->stackedWid);
     ui->stackedWid->addWidget(mLog);
-
-    mNavBarWid = new NavBarWid(ui->barWid);
-    connect(mNavBarWid, SIGNAL(navBarSig(int)), this, SLOT(navBarSlot(int)));
 }
 
 void MainWindow::navBarSlot(int id)

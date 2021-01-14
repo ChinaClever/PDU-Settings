@@ -23,7 +23,6 @@ void DbStates::createTable()
             "time           VCHAR,"
             "dev            VCHAR,"
             "user           VCHAR,"
-            "op             VCHAR,"
             "sn             VCHAR not null,"
             "result         VCHAR,"
             "memo           VCHAR);";

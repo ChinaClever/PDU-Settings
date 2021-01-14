@@ -12,7 +12,7 @@ Home_WorkWid::Home_WorkWid(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    QTimer::singleShot(150,this,SLOT(initFunSlot()));
+    QTimer::singleShot(450,this,SLOT(initFunSlot()));
 }
 
 Home_WorkWid::~Home_WorkWid()
@@ -203,22 +203,25 @@ void Home_WorkWid::on_startBtn_clicked()
     }
 }
 
+void Home_WorkWid::saveFunSlot()
+{
+    bool en = mCnt % 2;
+    emit enabledSig(en);
+    if(!en) Cfg::bulid()->writeCfgDev();
+}
+
 void Home_WorkWid::on_setBtn_clicked()
 {
     QString str = tr("修改");
     bool en = ++mCnt % 2;
-    if(en) {
-        str = tr("保存");
-    } else {
-        mItem->user = ui->userEdit->text();
-        Cfg::bulid()->writeCfgDev();
-    }
+    if(en) str = tr("保存");
 
-    emit enabledSig(en);
     ui->setBtn->setText(str);
     ui->userEdit->setEnabled(en);
     ui->startBtn->setDisabled(en);
     ui->typeComboBox->setDisabled(en);
+    mItem->user = ui->userEdit->text();
+    QTimer::singleShot(5,this,SLOT(saveFunSlot()));
 }
 
 void Home_WorkWid::saveErrSlot()

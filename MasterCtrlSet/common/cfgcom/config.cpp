@@ -75,6 +75,7 @@ void Cfg::initCfgDev()
 
 void Cfg::writeCfgDev()
 {
+    writeCnt();
     write("addr", item->addr, "Sys");
     write("modeId", item->modeId, "Sys");
     //write("user", item->user, "User");

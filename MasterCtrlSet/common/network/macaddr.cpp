@@ -8,6 +8,7 @@
 #include "common.h"
 #define MAC_ADDR_LEN 6
 
+
 MacAddr::MacAddr()
 {
 
@@ -42,7 +43,7 @@ QByteArray MacAddr::get_mac_array_from_QString(const QString &in)
     QByteArray array;
     unsigned char out[6];
     uint8_t next_ip_separate_symbol_index = 0;
-    uint8_t now_ip_separate_symbol_index = 0;
+    uint8_t now_ip_separate_symbol_index = 0;    
 
     for(uint8_t i=0;i<6;i++){
         next_ip_separate_symbol_index = (i!=5)? (in.indexOf("-",next_ip_separate_symbol_index+1)):(in.length());
@@ -132,11 +133,11 @@ int MacAddr::macToChar(const QString &in, uchar *buf)
 
 QString MacAddr::macAdd(const QString &in)
 {
-    QString ret;
-    quint64 mac = macToInt(in);
+    QString ret = in;
+    quint64 mac = macToInt(ret.replace(":","-"));
     if(mac++ > 0) {
         ret = intToMac(mac);
     }
 
-    return ret;
+    return ret.replace("-",":");
 }
