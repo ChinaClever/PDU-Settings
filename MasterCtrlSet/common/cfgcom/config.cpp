@@ -85,6 +85,7 @@ void Cfg::initCnt()
     item->cnt.all = read("all", 0, "Count").toInt();
     item->cnt.ok = read("ok", 0, "Count").toInt();
     item->cnt.err = read("err", 0, "Count").toInt();
+    item->mac = read("mac", "2C:26:5F:38:00:01","Count").toString();
 }
 
 void Cfg::writeCnt()
@@ -92,6 +93,7 @@ void Cfg::writeCnt()
     write("all", item->cnt.all, "Count");
     write("ok", item->cnt.ok, "Count");
     write("err", item->cnt.err, "Count");
+    write("mac", item->mac, "Count");
 }
 
 

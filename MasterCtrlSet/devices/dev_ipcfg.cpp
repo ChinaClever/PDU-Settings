@@ -33,7 +33,6 @@ void Dev_IpCfg::initType()
     ptr->language = read("language", 1).toInt();
     ptr->modbus = read("modbus", 0).toInt();
     ptr->logs = read("logs", 0).toInt();
-    ptr->mac = read("mac", "").toString();
 }
 
 void Dev_IpCfg::writeType()
@@ -47,7 +46,6 @@ void Dev_IpCfg::writeType()
     write("language", ptr->language);
     write("modbus", ptr->modbus);
     write("logs", ptr->logs);
-    write("mac", ptr->mac);
 }
 
 void Dev_IpCfg::initData()

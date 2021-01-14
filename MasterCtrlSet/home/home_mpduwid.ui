@@ -26,8 +26,8 @@
       <string>MPDU后台参数</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_3">
-      <item row="0" column="0">
-       <widget class="QLabel" name="label">
+      <item row="4" column="0">
+       <widget class="QLabel" name="label_26">
         <property name="minimumSize">
          <size>
           <width>60</width>
@@ -41,31 +41,55 @@
          </size>
         </property>
         <property name="text">
-         <string>相数：</string>
+         <string>版本：</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
         </property>
        </widget>
       </item>
-      <item row="0" column="1">
-       <widget class="QComboBox" name="lineBox">
+      <item row="2" column="0">
+       <widget class="QLabel" name="label_5">
         <property name="minimumSize">
          <size>
-          <width>0</width>
+          <width>60</width>
           <height>30</height>
          </size>
         </property>
-        <item>
-         <property name="text">
-          <string>单相</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>三相</string>
-         </property>
-        </item>
+        <property name="maximumSize">
+         <size>
+          <width>70</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>系列：</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="2">
+       <widget class="QLabel" name="label_4">
+        <property name="minimumSize">
+         <size>
+          <width>60</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>90</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>标准/中性：</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
        </widget>
       </item>
       <item row="0" column="2">
@@ -88,6 +112,46 @@
         <property name="alignment">
          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
         </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QComboBox" name="languageBox">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>30</height>
+         </size>
+        </property>
+        <item>
+         <property name="text">
+          <string>英文</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>中文</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="4" column="3">
+       <widget class="QComboBox" name="envBox">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>30</height>
+         </size>
+        </property>
+        <item>
+         <property name="text">
+          <string>无</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>有</string>
+         </property>
+        </item>
        </widget>
       </item>
       <item row="0" column="3">
@@ -163,25 +227,19 @@
         </item>
        </widget>
       </item>
-      <item row="1" column="2">
-       <widget class="QLabel" name="label_7">
+      <item row="4" column="1">
+       <widget class="QLineEdit" name="versionEdit">
         <property name="minimumSize">
          <size>
-          <width>60</width>
+          <width>0</width>
           <height>30</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>90</width>
+          <width>200</width>
           <height>16777215</height>
          </size>
-        </property>
-        <property name="text">
-         <string>断路器：</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
         </property>
        </widget>
       </item>
@@ -205,8 +263,8 @@
         </item>
        </widget>
       </item>
-      <item row="2" column="0">
-       <widget class="QLabel" name="label_5">
+      <item row="2" column="2">
+       <widget class="QLabel" name="label_8">
         <property name="minimumSize">
          <size>
           <width>60</width>
@@ -215,12 +273,12 @@
         </property>
         <property name="maximumSize">
          <size>
-          <width>70</width>
+          <width>90</width>
           <height>16777215</height>
          </size>
         </property>
         <property name="text">
-         <string>系列：</string>
+         <string>IN/OUT口：</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -257,8 +315,8 @@
         </item>
        </widget>
       </item>
-      <item row="2" column="2">
-       <widget class="QLabel" name="label_8">
+      <item row="4" column="2">
+       <widget class="QLabel" name="label_27">
         <property name="minimumSize">
          <size>
           <width>60</width>
@@ -272,31 +330,33 @@
          </size>
         </property>
         <property name="text">
-         <string>IN/OUT口：</string>
+         <string>传感器盒：</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
         </property>
        </widget>
       </item>
-      <item row="2" column="3">
-       <widget class="QComboBox" name="modbusBox">
+      <item row="0" column="0">
+       <widget class="QLabel" name="label">
         <property name="minimumSize">
          <size>
-          <width>0</width>
+          <width>60</width>
           <height>30</height>
          </size>
         </property>
-        <item>
-         <property name="text">
-          <string>网络一带三</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Modbus</string>
-         </property>
-        </item>
+        <property name="maximumSize">
+         <size>
+          <width>70</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>相数：</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
        </widget>
       </item>
       <item row="3" column="0">
@@ -315,48 +375,6 @@
         </property>
         <property name="text">
          <string>语言：</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="1">
-       <widget class="QComboBox" name="languageBox">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>30</height>
-         </size>
-        </property>
-        <item>
-         <property name="text">
-          <string>英文</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>中文</string>
-         </property>
-        </item>
-       </widget>
-      </item>
-      <item row="3" column="2">
-       <widget class="QLabel" name="label_4">
-        <property name="minimumSize">
-         <size>
-          <width>60</width>
-          <height>30</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>90</width>
-          <height>16777215</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>标准/中性：</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -383,46 +401,8 @@
         </item>
        </widget>
       </item>
-      <item row="4" column="0">
-       <widget class="QLabel" name="label_26">
-        <property name="minimumSize">
-         <size>
-          <width>60</width>
-          <height>30</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>70</width>
-          <height>16777215</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>版本：</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="1">
-       <widget class="QLineEdit" name="versionEdit">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>30</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>200</width>
-          <height>16777215</height>
-         </size>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="2">
-       <widget class="QLabel" name="label_27">
+      <item row="1" column="2">
+       <widget class="QLabel" name="label_7">
         <property name="minimumSize">
          <size>
           <width>60</width>
@@ -436,47 +416,15 @@
          </size>
         </property>
         <property name="text">
-         <string>传感器盒：</string>
+         <string>断路器：</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
         </property>
        </widget>
       </item>
-      <item row="5" column="0">
-       <widget class="QLabel" name="label_9">
-        <property name="minimumSize">
-         <size>
-          <width>60</width>
-          <height>30</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>80</width>
-          <height>16777215</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>Mac地址：</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item row="5" column="1" colspan="3">
-       <widget class="QLineEdit" name="macEdit">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>30</height>
-         </size>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="3">
-       <widget class="QComboBox" name="envBox">
+      <item row="2" column="3">
+       <widget class="QComboBox" name="modbusBox">
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -485,12 +433,32 @@
         </property>
         <item>
          <property name="text">
-          <string>无</string>
+          <string>网络一带三</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>有</string>
+          <string>Modbus</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QComboBox" name="lineBox">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>30</height>
+         </size>
+        </property>
+        <item>
+         <property name="text">
+          <string>单相</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>三相</string>
          </property>
         </item>
        </widget>

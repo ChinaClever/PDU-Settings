@@ -98,7 +98,6 @@ struct sDevType
     uchar envbox;
 
     QString versions;
-    QString mac;
 };
 
 

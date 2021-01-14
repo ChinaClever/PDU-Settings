@@ -29,7 +29,6 @@ void Home_IpWid::initFunSlot()
     mDev = mObj->getDev();
     mUnitWid->init(mDev);
     initType();
-    connect(mObj, SIGNAL(setMacSig()), this, SLOT(updateMacSlot()));
 }
 
 void Home_IpWid::initType()
@@ -45,12 +44,6 @@ void Home_IpWid::initType()
     ui->sBox->setCurrentIndex(dt->standar);
     ui->ipModeBox->setCurrentIndex(dt->modbus);
     ui->languageBox->setCurrentIndex(dt->language);
-    ui->macEdit->setText(dt->mac);
-}
-
-void Home_IpWid::updateMacSlot()
-{
-    ui->macEdit->setText(mDev->dt.mac);
 }
 
 
@@ -67,11 +60,7 @@ void Home_IpWid::updateType()
     dt->standar = ui->sBox->currentIndex();
     dt->logs = ui->logBox->currentIndex();
     dt->language = ui->languageBox->currentIndex();
-    dt->mac = ui->macEdit->text();
 }
-
-
-
 
 bool Home_IpWid::inputCheck()
 {
