@@ -23,13 +23,13 @@ class MpduWeb:
     @staticmethod
     def getCfg():
         cf = configparser.ConfigParser()
-        fn = os.path.expanduser('~') + "/cfg.ini"
+        fn = os.path.expanduser('~') + "/.MasterCtrlSet/cfg.ini"
         cf.read(fn, 'utf-8-sig')  # 读取配置文件，如果写文件的绝对路径，就可以不用os模块
         return cf
 
     def initCfg(self):
         
-        self.cfgs = {'version':1,'user': 'admin', 'pwd': 'admin','ip_addr': '192.168.1.168', 'debug_web':  'correct.html','lines':1,'loops':1,'outputs':24,'standar':0,'series':4,'language':1,'breaker':1,'modbus':1,'vol_min':80,'vol_max':276,'cur_min':0,'cur_crmin':0,'cur_crmax':32,'cur_max':32,'tem_min':0,'tem_max':40,'hum_min':0,'hum_max':99,'output_min':0,'output_crmin':0,'output_crmax':16,'output_max':16,'delay_time':1,'op_1_min':0,'op_1_max':10,'op_1_en':0,'op_1_id':0,'op_1_crmin':0,'op_1_crmax':10,'op_2_min':0,'op_2_max':10,'op_2_en':0,'op_2_id':0,'op_2_crmin':0,'op_2_crmax':10,'op_3_min':0,'op_3_max':10,'op_3_en':0,'op_3_id':0,'op_3_crmin':0,'op_3_crmax':10,'op_4_min':0,'op_4_max':10,'op_4_en':0,'op_4_id':0,'op_4_crmin':0,'op_4_crmax':10,'op_5_min':0,'op_5_max':10,'op_5_en':0,'op_5_id':0,'op_5_crmin':0,'op_5_crmax':10,'op_6_min':0,'op_6_max':10,'op_6_en':0,'op_6_id':0,'op_6_crmin':0,'op_6_crmax':10,'mac':''}
+        self.cfgs = {'versions':'','user': 'admin', 'pwd': 'admin','ip_addr': '192.168.1.168', 'debug_web':  'correct.html','lines':1,'loops':1,'outputs':24,'standar':0,'series':4,'language':1,'breaker':1,'modbus':1,'vol_min':80,'vol_max':276,'cur_min':0,'cur_crmin':0,'cur_crmax':32,'cur_max':32,'tem_min':0,'tem_max':40,'hum_min':0,'hum_max':99,'output_min':0,'output_crmin':0,'output_crmax':16,'output_max':16,'op_1_min':0,'op_1_max':10,'op_1_en':0,'op_1_id':0,'op_1_crmin':0,'op_1_crmax':10,'op_2_min':0,'op_2_max':10,'op_2_en':0,'op_2_id':0,'op_2_crmin':0,'op_2_crmax':10,'op_3_min':0,'op_3_max':10,'op_3_en':0,'op_3_id':0,'op_3_crmin':0,'op_3_crmax':10,'op_4_min':0,'op_4_max':10,'op_4_en':0,'op_4_id':0,'op_4_crmin':0,'op_4_crmax':10,'op_5_min':0,'op_5_max':10,'op_5_en':0,'op_5_id':0,'op_5_crmin':0,'op_5_crmax':10,'op_6_min':0,'op_6_max':10,'op_6_en':0,'op_6_id':0,'op_6_crmin':0,'op_6_crmax':10,'mac':''}
         items = MpduWeb.getCfg().items("mCfg")  # 获取section名为Mysql-Database所对应的全部键值对
         for it in items:
             self.cfgs[it[0]] = it[1]
@@ -39,16 +39,12 @@ class MpduWeb:
         try:
             self.driver.get(ip)
         except WebDriverException:
-            message ='输入IP不正确;0'
-            self.sock.sendto(message.encode('gbk') , (self.ip , self.port))
-            return False
-        message ='输入IP正确;1'
-        self.sock.sendto(message.encode('gbk') , (self.ip , self.port))
+            return 0,'输入IP错误;0'
         self.setItById("name", self.cfgs['user'])
         self.setItById("psd", self.cfgs['pwd'])
         self.execJs("login()")
         time.sleep(1)
-        return True
+        return 1,'输入IP正确;1'
         
         
     def setEle(self):
@@ -105,45 +101,50 @@ class MpduWeb:
         time.sleep(1)
         
     def check(self, ssid , value , parameter):
-        sock = self.sock
-        dest_ip = self.ip
-        dest_port = self.port
         try:
             message =''
             self.driver.find_element_by_id(ssid)
         except NoSuchElementException:
             message =  '网页上找不到{0}ID;'.format(parameter)+str(2)
-            sock.sendto(message.encode('gbk') , (dest_ip , dest_port))
-            return
+            sock.sendto(message.encode('utf-8-sig') , (dest_ip , dest_port))
+            return 2,message
         v = self.driver.find_element_by_id(ssid).get_attribute('value')
         #print(type(v))
+        ret = 1
         if( value != self.driver.find_element_by_id(ssid).get_attribute('value') ):
             message = '设置{0}失败，实际值{1}，期待值{2};'.format(parameter,v,value)+str(0)
+            ret = 0
         else:
             message ='设置{0}成功{1};'.format(parameter,value)+str(1)
-        sock.sendto(message.encode('gbk') , (dest_ip , dest_port))
+        #sock.sendto(message.encode('utf-8-sig') , (dest_ip , dest_port))
+        return ret,message
             
     def checkStr(self, ssid , value , parameter):
-        sock = self.sock
-        dest_ip = self.ip
-        dest_port = self.port
         try:
             message =''
             self.driver.find_element_by_id(ssid)
         except NoSuchElementException:
             message =  '网页上找不到{0}ID;'.format(parameter)+str(2)
-            sock.sendto(message.encode('gbk') , (dest_ip , dest_port))
-            return
+            #sock.sendto(message.encode('utf-8-sig') , (dest_ip , dest_port))
+            return 2,message
         v = self.driver.find_element_by_id(ssid).get_attribute('value')
         if ( isinstance(v,int)):
             v = str(v)
-        
+        ret = 1
         if( value == v ):
             message ='设置{0}成功{1};'.format(parameter,value)+str(1)
         else:
             message = '设置{0}失败，实际值{1}，期待值{2};'.format(parameter,v,value)+str(0)
-        sock.sendto(message.encode('gbk') , (dest_ip , dest_port))
-
+            ret = 0
+        #sock.sendto(message.encode('utf-8-sig') , (dest_ip , dest_port))
+        return ret,message
+        
+    def sendtoMainapp(self, parameter):
+        sock = self.sock
+        dest_ip = self.ip
+        dest_port = self.port
+        message = parameter
+        sock.sendto(message.encode('utf-8-sig') , (dest_ip , dest_port))
 
 
 
