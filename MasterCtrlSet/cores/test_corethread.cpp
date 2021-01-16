@@ -30,7 +30,7 @@ bool Test_CoreThread::checkNet()
 
 bool Test_CoreThread::startProcess()
 {
-    QString exe = "ctrlset_pyweb_";
+    QString exe = "pyweb_ctrlset_";
     if(MPDU == mItem->modeId) {
         exe += "mpdu.exe";
     } else exe += "ip.exe";
@@ -59,19 +59,19 @@ void Test_CoreThread::updateMacAddr()
 void Test_CoreThread::workResult(bool res)
 {
     if(res) res = mSn->snEnter();
-    if(res) mLogs->saveLogs();
-
     QString str = tr("最终结果");
     if(res) str += tr("通过");
     else str += tr("失败");
+
     mLogs->updatePro(str, res, 0);
+    if(res) mLogs->saveLogs();
     mPro->step = Test_Over;
 }
 
 void Test_CoreThread::workDown()
 {
     bool ret = true;
-    mLogs->updatePro(tr("自动设置已启动"), 1, 0);
+    //mLogs->updatePro(tr("自动设置已启动"), 1, 0);
     if(mItem->modeId) {
         ret = startProcess();
         if(ret) updateMacAddr();

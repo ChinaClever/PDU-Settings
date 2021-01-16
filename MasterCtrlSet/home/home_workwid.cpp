@@ -221,7 +221,7 @@ void Home_WorkWid::on_setBtn_clicked()
     ui->startBtn->setDisabled(en);
     ui->typeComboBox->setDisabled(en);
     mItem->user = ui->userEdit->text();
-    QTimer::singleShot(5,this,SLOT(saveFunSlot()));
+    QTimer::singleShot(50,this,SLOT(saveFunSlot()));
 }
 
 void Home_WorkWid::saveErrSlot()

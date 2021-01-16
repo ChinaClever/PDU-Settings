@@ -18,6 +18,7 @@ class IpV1(IpWeb):
         self.setItById("language", int(cfg['ip_language'])+1)
         self.setItById("modbus", cfg['ip_modbus'])
         self.setItById("lcdled", cfg['ip_lines'])
+        self.setItById("ACDC", cfg['ip_ac'])
         self.setItById("horizontal", cfg['lcd_switch'])
         if(len(cfg['mac']) > 5) :
             self.setItById("mac1", cfg['mac'])

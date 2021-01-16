@@ -1,5 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver.support.select import Select
+from selenium.common.exceptions import NoSuchElementException
 import configparser
 import socket
 import time
@@ -20,11 +21,18 @@ class IpWeb:
             self.driver = webdriver.Chrome(executable_path="chromedriver.exe")
 
     def initNetWork(self):
+        hostname = socket.gethostname()  # 获取计算机名称
+        self.dest_ip = socket.gethostbyname(hostname)  # 获取本机IP
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        if "192.168.1." in self.dest_ip:
+            return True
+        else:
+            self.dest_ip = '127.0.0.1'
+            #self.sendtoMainapp("Mac地址错误：" + mac, 0)
 
     def sendtoMainapp(self, parameter, res):
-        message = parameter+";"+str(res)
-        self.sock.sendto(message.encode('utf-8-sig'), ('192.168.1.102', 10086))
+        message = parameter + ";" + str(res)
+        self.sock.sendto(message.encode('utf-8-sig'), (self.dest_ip, 10086))
 
     @staticmethod
     def getCfg():
@@ -39,10 +47,13 @@ class IpWeb:
         self.cfgs = {'ip_version':1,'user': 'admin', 'pwd': 'admin',
                      'ip': '192.168.1.163', 'debug_web':  'correct.html',
                      'ip_lines':1, 'ip_modbus':1, 'ip_language':1, 'lcd_switch':1,
-                     'mac':'', 'log_en':1, 'ip_standard': 0}
+                     'mac':'', 'ip_ac':1, 'log_en':1, 'ip_standard': 0}
         self.cfgs['mac'] = IpWeb.getCfg().get("Count", "mac")
         for it in items:
             self.cfgs[it[0]] = it[1]
+        if int(self.cfgs['ip_lines']) == 0:
+            self.cfgs['ip_lines'] = 1
+            self.cfgs['ip_ac'] = 0
 
     def login(self):
         ip =  self.ip_prefix +self.cfgs['ip']+'/'
@@ -52,7 +63,7 @@ class IpWeb:
         self.setItById("name", user)
         self.setItById("psd", pwd)
         self.execJs("login()")
-        self.sendtoMainapp("网页登陆成功", 1)
+        #self.sendtoMainapp("网页登陆成功", 1)
         time.sleep(1)
 
     def setCur(self, lines, min, max):
@@ -112,9 +123,14 @@ class IpWeb:
         time.sleep(0.5)
 
     def setItById(self, id, v):
-        it = self.driver.find_element_by_id(id)
-        it.clear()
-        it.send_keys(str(v))
+        try:
+            it = self.driver.find_element_by_id(id)
+        except NoSuchElementException:
+            msg = '网页上找不到{0}'.format(id)
+            #self.sendtoMainapp(msg, 0)
+        else:
+            it.clear()
+            it.send_keys(str(v))
 
     def btnClick(self, id):
         self.driver.find_element_by_id(id).click()
@@ -149,7 +165,7 @@ class IpWeb:
             self.divClick(10)
         self.setSelect("order",1)
         self.execJs(jsSheet.format(1))
-        self.sendtoMainapp("设备出厂设置成功", 1)
+        self.sendtoMainapp("设备Web出厂设置成功", 1)
 
 
 

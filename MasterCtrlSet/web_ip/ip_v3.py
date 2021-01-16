@@ -38,6 +38,7 @@ class IpV3(IpWeb):
         self.setItById("language", cfg['ip_language'])
         self.setItById("modbus", cfg['ip_modbus'])
         self.setItById("lcdled", cfg['ip_lines'])
+        self.setItById("ACDC", cfg['ip_ac'])
         self.setItById("standard", cfg['ip_standard'])
         self.setItById("LCDswitch", cfg['lcd_switch'])
         self.setItById("Log_flag", cfg['log_en'])
@@ -46,6 +47,7 @@ class IpV3(IpWeb):
         self.alertClick("Button3")
         self.sendtoMainapp("设备后台网页配置成功", 1)
         self.driver.back()
+        time.sleep(0.5)
 
     
 

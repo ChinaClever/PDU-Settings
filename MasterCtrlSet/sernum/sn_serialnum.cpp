@@ -88,7 +88,7 @@ bool Sn_SerialNum::readSn(sSnItem &itSn)
     sRtuItem itRtu;
     bool ret = false;
     uchar buf[32] = {0};
-    QString str = tr("序列号读取成功");
+    QString str = tr("序列号读取 ");
 
     initDevType(itSn);
     initReadCmd(itRtu);
@@ -96,11 +96,15 @@ bool Sn_SerialNum::readSn(sSnItem &itSn)
     if(8 != len) len = mModbus->read(itRtu, buf);
     if(len == 8) {
         ret = analySn(buf, len, itSn); toSnStr(itSn);
+        if(ret) str += tr("成功");
+        else str +=  tr("错误");
+        mPacket->updatePro(str, true);
     } else {
         str = tr("读序列号未返数据长度错误 %1").arg(len);
+        mPacket->updatePro(str, false);
     }
 
-    return mPacket->updatePro(str, ret);
+    return ret;
 }
 
 
@@ -186,7 +190,7 @@ bool Sn_SerialNum::snEnter()
     bool ret = mTypeId->readDevType();
     if(ret) {
         ret = readSn(mSnItem);
-        if(!ret) {
+        if(!ret && mSnItem.sn.size()) {
             ret = writeSn(mSnItem);
             writeStatus(ret);
         }
