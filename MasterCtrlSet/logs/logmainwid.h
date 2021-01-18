@@ -23,6 +23,7 @@ private slots:
 private:
     Ui::LogMainWid *ui;
     LogComWid *mLogWid;
+    LogComWid *mMacWid;
     LogComWid *mStatusWid;
 };
 
