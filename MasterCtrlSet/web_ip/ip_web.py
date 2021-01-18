@@ -63,27 +63,29 @@ class IpWeb:
         self.setItById("name", user)
         self.setItById("psd", pwd)
         self.execJs("login()")
-        #self.sendtoMainapp("网页登陆成功", 1)
+        self.sendtoMainapp("网页登陆成功", 1)
         time.sleep(1)
 
     def setCur(self, lines, min, max):
+        p = '电流阈值'
         size = lines
         if(size == 2):
             lines = 3
         for num in range(1, lines+1):
             if(size == 2 and num == 2):
                 max = int((int(max)+1)//2)
-            self.setItById("min" + str(num), int(min))
-            self.setItById("max" + str(num), int(max))
+            self.setItById("min" + str(num), int(min), p)
+            self.setItById("max" + str(num), int(max), p)
             self.execJs("setlimit({0})".format(num))
 
     def setVol(self, lines, min, max):
+        p = '电压阈值'
         size = lines
         if(size == 2):
             lines = 3
         for num in range(4, lines+4):
-            self.setItById("min" + str(num), min)
-            self.setItById("max" + str(num), max)
+            self.setItById("min" + str(num), min, p)
+            self.setItById("max" + str(num), max, p)
             self.execJs("setlimit({0})".format(num))
 
     def setEnv(self):
@@ -91,11 +93,15 @@ class IpWeb:
         temMax = self.cfgs['tem_max']
         humMin = self.cfgs['hum_min']
         humMax = self.cfgs['hum_max']
-        self.setItById("min7", temMin)
-        self.setItById("max7", temMax)
+
+        p = '温度阈值'
+        self.setItById("min7", temMin, p)
+        self.setItById("max7", temMax, p)
         self.execJs("setlimit(7)")
-        self.setItById("min8", humMin)
-        self.setItById("max8", humMax)
+
+        p = '湿度阈值'
+        self.setItById("min8", humMin, p)
+        self.setItById("max8", humMax, p)
         self.execJs("setlimit(8)")
         
     def setEle(self):
@@ -122,7 +128,7 @@ class IpWeb:
         Select(it).select_by_index(v)
         time.sleep(0.5)
 
-    def setItById(self, id, v):
+    def setItById(self, id, v, parameter):
         try:
             it = self.driver.find_element_by_id(id)
         except NoSuchElementException:
@@ -131,6 +137,8 @@ class IpWeb:
         else:
             it.clear()
             it.send_keys(str(v))
+            msg = '设置{0} {1}：{2}'.format(parameter, id, v)
+            self.sendtoMainapp(msg, 1)
 
     def btnClick(self, id):
         self.driver.find_element_by_id(id).click()

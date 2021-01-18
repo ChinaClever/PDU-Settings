@@ -16,6 +16,7 @@ class IpV3(IpWeb):
     def setTime(self):
         self.divClick(8)
         self.execJsAlert("check_time()")
+        self.sendtoMainapp("设置设备时间", 1)
 
     def clearLogs(self):
         en = self.cfgs['log_en']
@@ -35,15 +36,15 @@ class IpV3(IpWeb):
         ip = self.ip_prefix + cfg['ip'] + '/correct.html'
         self.driver.get(ip); time.sleep(1)
         self.driver.switch_to.default_content()
-        self.setItById("language", cfg['ip_language'])
-        self.setItById("modbus", cfg['ip_modbus'])
-        self.setItById("lcdled", cfg['ip_lines'])
-        self.setItById("ACDC", cfg['ip_ac'])
-        self.setItById("standard", cfg['ip_standard'])
-        self.setItById("LCDswitch", cfg['lcd_switch'])
-        self.setItById("Log_flag", cfg['log_en'])
+        self.setItById("language", cfg['ip_language'], '设备语言')
+        self.setItById("modbus", cfg['ip_modbus'], '设备模式')
+        self.setItById("lcdled", cfg['ip_lines'], '设备相数')
+        self.setItById("ACDC", cfg['ip_ac'], '交直流')
+        self.setItById("standard", cfg['ip_standard'], '标准中性')
+        self.setItById("LCDswitch", cfg['lcd_switch'], '新旧屏')
+        self.setItById("Log_flag", cfg['log_en'], '日志功能')
         if (len(cfg['mac']) > 5):
-            self.setItById("mac1", cfg['mac'])
+            self.setItById("mac1", cfg['mac'], 'Mac地址')
         self.alertClick("Button3")
         self.sendtoMainapp("设备后台网页配置成功", 1)
         self.driver.back()

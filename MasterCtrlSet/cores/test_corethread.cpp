@@ -71,7 +71,7 @@ void Test_CoreThread::workResult(bool res)
 void Test_CoreThread::workDown()
 {
     bool ret = true;
-    //mLogs->updatePro(tr("自动设置已启动"), 1, 0);
+    mLogs->updatePro(tr("自动设置已启动"));
     if(mItem->modeId) {
         ret = startProcess();
         if(ret) updateMacAddr();
