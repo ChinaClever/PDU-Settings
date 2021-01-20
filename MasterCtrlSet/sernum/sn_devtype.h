@@ -11,6 +11,7 @@ public:
 
 protected:
     QString getDevStr(uint id);
+    QString getMpdu(uint id);
 
 };
 
