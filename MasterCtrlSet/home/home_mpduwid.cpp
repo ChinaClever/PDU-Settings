@@ -29,97 +29,15 @@ void Home_MpduWid::initFunSlot()
     initWid();
 }
 
-void Home_MpduWid::initType()
-{
-    sDevType *dt = &(mDev->dt); //设备类型
-    int v = dt->lines-1; if(v) v = 1;
-    ui->lineBox->setCurrentIndex(v);
-    v = dt->loops-1; if(v>4) v = 4;
-    ui->loopBox->setCurrentIndex(v);
-
-    ui->outputSpin->setValue(dt->outputs);
-    ui->breakerBox->setCurrentIndex(dt->breaker);
-    ui->standardBox->setCurrentIndex(dt->standar);
-    ui->seriesBox->setCurrentIndex(dt->series-1);
-    ui->envBox->setCurrentIndex(dt->envbox);
-    ui->modbusBox->setCurrentIndex(dt->modbus);
-    ui->languageBox->setCurrentIndex(dt->language);
-    ui->versionEdit->setText(dt->versions);
-}
-
-
-void Home_MpduWid::initData()
-{
-    sObjCfg *obj = &(mDev->cfg);
-    ui->outputMinSpin->setValue(obj->output.min);
-    ui->outputMaxSpin->setValue(obj->output.max);
-    ui->outputCrMinSpin->setValue(obj->output.crMin);
-    ui->outputCrMaxSpin->setValue(obj->output.crMax);
-
-    ui->curMinSpin->setValue(obj->cur.min);
-    ui->curMaxSpin->setValue(obj->cur.max);
-    ui->curCrMinSpin->setValue(obj->cur.crMin);
-    ui->curCrMaxSpin->setValue(obj->cur.crMax);
-
-    ui->volMinSpin->setValue(obj->vol.min);
-    ui->volMaxSpin->setValue(obj->vol.max);
-
-    ui->temMinSpin->setValue(obj->tem.min);
-    ui->temMaxSpin->setValue(obj->tem.max);
-
-    ui->humMinSpin->setValue(obj->hum.min);
-    ui->humMaxSpin->setValue(obj->hum.max);
-}
-
-
 void Home_MpduWid::initWid()
 {
-    initType();
-    initData();
-}
+    QString str = tr("MPDU后台参数");
+    mParamWid = new Home_MpduParamWid(ui->tabWidget);
+    ui->tabWidget->addTab(mParamWid, str);
 
-
-void Home_MpduWid::updateData()
-{
-    sObjCfg *obj = &(mDev->cfg);
-    obj->output.min = ui->outputMinSpin->value();
-    obj->output.max = ui->outputMaxSpin->value();
-    obj->output.crMin = ui->outputCrMinSpin->value();
-    obj->output.crMax = ui->outputCrMaxSpin->value();
-
-    obj->cur.min = ui->curMinSpin->value();
-    obj->cur.max = ui->curMaxSpin->value();
-    obj->cur.crMin = ui->curCrMinSpin->value();
-    obj->cur.crMax = ui->curCrMaxSpin->value();
-
-    obj->vol.min = ui->volMinSpin->value();
-    obj->vol.max = ui->volMaxSpin->value();
-
-    obj->tem.min = ui->temMinSpin->value();
-    obj->tem.max = ui->temMaxSpin->value();
-    obj->hum.min = ui->humMinSpin->value();
-    obj->hum.max = ui->humMaxSpin->value();
-}
-
-
-void Home_MpduWid::updateType()
-{
-    sDevType *dt = &(mDev->dt); //设备类型
-    int v = ui->lineBox->currentIndex();
-    if(v) v = 3; else v = 1; dt->lines = v;
-
-    v = ui->loopBox->currentIndex()+1;
-    if(v > 4) v = 6; dt->loops = v;
-
-    dt->outputs = ui->outputSpin->value();
-    dt->breaker = ui->breakerBox->currentIndex();
-    dt->standar = ui->standardBox->currentIndex();
-    dt->series = ui->seriesBox->currentIndex()+1;
-
-    dt->envbox = ui->envBox->currentIndex();
-    dt->modbus = ui->modbusBox->currentIndex();
-    dt->language = ui->languageBox->currentIndex();
-    dt->versions = ui->versionEdit->text();
+    str = tr("MPDU报警参数");
+    mAlarmWid = new Home_MpduAlarmWid(ui->tabWidget);
+    ui->tabWidget->addTab(mAlarmWid, str);
 }
 
 bool Home_MpduWid::inputCheck()
@@ -133,8 +51,8 @@ bool Home_MpduWid::dataSave()
 {
     bool ret = inputCheck();
     if(ret) {
-        updateType();
-        updateData();
+        mParamWid->updateType();
+        mAlarmWid->updateData();
     }
 
     return ret;

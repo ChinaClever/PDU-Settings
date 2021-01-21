@@ -96,6 +96,11 @@ struct sDevType
     uchar version;
     uchar log_en;
     uchar envbox;
+    uchar boards;
+    uchar level;
+    uchar mpdu_ver;
+    uchar board[3];
+    uchar loop[6];
 
     QString versions;
 };

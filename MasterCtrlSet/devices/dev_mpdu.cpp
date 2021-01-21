@@ -35,6 +35,12 @@ void Dev_Mpdu::initType()
     ptr->versions = read("versions", "").toString();
     ptr->envbox = read("envbox", 0).toInt();
     ptr->modbus = read("modbus", 0).toInt();
+    ptr->boards = read("boards", 3).toInt();
+    ptr->level = read("level", 0).toInt();
+    ptr->mpdu_ver = read("mpdu_ver", 1).toInt();
+
+    for(int i=0; i<6; ++i) ptr->loop[i] = read(QString("loop_%1").arg(i+1), 8).toInt();
+    for(int i=0; i<3; ++i) ptr->board[i] = read(QString("board_%1").arg(i+1), 8).toInt();
 }
 
 void Dev_Mpdu::writeType()
@@ -50,6 +56,12 @@ void Dev_Mpdu::writeType()
     write("versions", ptr->versions);
     write("envbox", ptr->envbox);
     write("modbus", ptr->modbus);
+    write("boards", ptr->boards);
+    write("level", ptr->level);
+    write("mpdu_ver", ptr->mpdu_ver);
+
+    for(int i=0; i<6; ++i) write(QString("loop_%1").arg(i+1), ptr->loop[i]);
+    for(int i=0; i<3; ++i) write(QString("board_%1").arg(i+1), ptr->board[i]);
 }
 
 void Dev_Mpdu::initData()
