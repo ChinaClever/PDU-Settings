@@ -12,7 +12,7 @@ SOURCES +=
 FORMS +=
 
 DISTFILES += \
-    $$PWD/main.py \
+    $$PWD/main.pyw \
     $$PWD/mpdu.py \
     $$PWD/mpdu2.py \
     $$PWD/mpdu_web.py

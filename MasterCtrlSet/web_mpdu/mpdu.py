@@ -44,12 +44,10 @@ class Mpdu(MpduWeb):
         ListMessage = []
         ListMessage.append('报警日志清除失败;0')
         ListMessage.append('操作日志清除失败;0')
+        self.divClick(6)
+        time.sleep(1)
         for num in range(0, 2):
             self.execJs(jsSheet.format(num))
-            self.driver.refresh()
-            time.sleep(2)
-            self.divClick(6)
-            time.sleep(1)
             self.driver.find_element_by_id('biao{0}'.format(num+1)).click()
             time.sleep(1)
             tt = self.driver.find_element_by_id('evenlognum').text
@@ -61,7 +59,6 @@ class Mpdu(MpduWeb):
             self.sendtoMainapp(message)
             
     def close(self):
-        time.sleep(3)
         print(datetime.datetime.now())
         self.driver.close()
 
@@ -95,7 +92,7 @@ class Mpdu(MpduWeb):
             v = strMac
         jsSheet1 = 'var level = document.getElementById("level").value;var claerset = createXmlRequest();claerset.onreadystatechange = setmac;ajaxget(claerset, \"/correct?a=\" +{set} +\"&b=\"+{type} +\"&c=\"+{language} + \"&d=\"+\"{mac1}\" + \"&e=\"+{breaker} + \"&f=\"+ {serial} + \"&g=\"+ {neutral}+\"&h=\"+{LineN}+\"&i=\"+{CircuitN} + \"&j=\"+{OutputN} + \"&k=\"+{level} +\"&\");'.format(set=int(1),type = cfg['series'] , language = cfg['language'] , mac1 = v , breaker = cfg['breaker'] , serial = cfg['modbus'] , neutral = cfg['standar'] , LineN = cfg['lines'] , CircuitN = cfg['loops'] , OutputN = cfg['outputs'] , level = str(0))
         self.execJs(jsSheet1)
-        time.sleep(5)
+        time.sleep(0.35)
 
     def setCorrect2(self):
         cfg = self.cfgs
@@ -119,7 +116,7 @@ class Mpdu(MpduWeb):
         
         jsSheet = 'var claerlimit = createXmlRequest();claerlimit.onreadystatechange = setdatlimit;ajaxget(claerlimit, \"/alllimit?a=\" +{limit1}+\"&b=\"+{limit2} +\"&c=\"+{limit3} + \"&d=\"+{limit4}+\"&e=\"+{limit5} +\"&f=\"+{limit6} + \"&g=\"+{limit7}+\"&h=\"+{limit8} +\"&i=\"+{limit9} + \"&j=\"+{limit10}+\"&k=\"+{limit11} + \"&l=\"+{limit12} +\"&m=\"+{limit13} + \"&n=\"+{limit14} +\"&\");'.format( limit1 = cfg['vol_min'] , limit2 = cfg['vol_max'] , limit3 = int(cfg['cur_min'])*10 , limit4 = int(cfg['cur_max'])*10 ,limit5 = cfg['tem_min'] , limit6 = cfg['tem_max'],limit7 = cfg['hum_min'] , limit8 = cfg['hum_max'] ,limit9 = int(cfg['output_min'])*10 , limit10 = int(cfg['output_crmin'])*10 , limit11 = int(cfg['output_crmax'])*10 , limit12 = int(cfg['output_max'])*10 , limit13 = int(cfg['cur_crmin'])*10 , limit14 = int(cfg['cur_crmax'])*10)
         self.execJs(jsSheet)
-        time.sleep(1)
+        time.sleep(0.25)
         
     def checkCorrectHtml(self):
         cfg = self.cfgs
@@ -199,9 +196,9 @@ class Mpdu(MpduWeb):
     def checkTitleBar2(self):
         cfg = self.cfgs
         self.divClick(2)
-        time.sleep(1)
+        time.sleep(0.35)
         self.driver.find_element_by_id("titlebar2").click()
-        time.sleep(1)
+        time.sleep(0.35)
         
         line , loop = 1 , int(cfg['loops'])
         list=[]
@@ -319,9 +316,9 @@ class Mpdu(MpduWeb):
     def checkTitleBar3(self , opLists):
         cfg = self.cfgs
         self.divClick(2)
-        time.sleep(1)
+        time.sleep(0.35)
         self.driver.find_element_by_id("titlebar3").click()
-        time.sleep(1)
+        time.sleep(0.35)
         
         op = cfg['outputs']
         if( int(cfg['series']) == 2 or int(cfg['series']) == 4):#输出位
@@ -352,7 +349,7 @@ class Mpdu(MpduWeb):
                                 totalms = 0
                             jsSheet = 'xmlset = createXmlRequest();xmlset.onreadystatechange = setdata;ajaxget(xmlset, \"/setunitlimit?a=\" + {action} + \"&b=\" + {min} + \"&c=\" + {xmin} + \"&d=\" + {xmax}+ \"&e=\" + {max}+ \"&f=\" + {ms} +  \"&\");'.format( action = i , min = opLists[j][2]*10 , xmin = opLists[j][3]*10 , xmax = opLists[j][4]*10 , max = opLists[j][5]*10 , ms = totalms)
                             self.execJs(jsSheet)
-                            time.sleep(1)
+                            time.sleep(0.25)
                     j+=1
                     
                 
@@ -387,7 +384,7 @@ class Mpdu(MpduWeb):
             self.setItById("totalms", 1)
             jsSheet = 'var ms = parseFloat(document.getElementById(\"totalms\").value);var xmlset = createXmlRequest();xmlset.onreadystatechange = setdata;ajaxget(xmlset, \"/settime?a=\" + ms + \"&\");'
             self.execJs(jsSheet)
-            time.sleep(1)
+            time.sleep(0.35)
             self.checkDelayTime(op)
             
     def checkDelayTime(self , op):
@@ -449,29 +446,25 @@ class Mpdu(MpduWeb):
     def clearEnergy(self):
         cfg = self.cfgs#Tenergy1Tenergy2Tenergy3
         self.divClick(2)#Cenergy1
-        time.sleep(1)
+        time.sleep(0.35)
         self.driver.find_element_by_id("titlebar4").click()
-        time.sleep(1)
+        time.sleep(0.35)
         
         jsSheet = 'var claerset = createXmlRequest();claerset.onreadystatechange = clearrec;ajaxget(claerset, \"/setenergy?a=\" + {0}+\"&\");'
         for i in range(1 , 4):
             self.execJs(jsSheet.format(i))
-        time.sleep(1)
-        self.driver.refresh()
-        self.divClick(2)#Cenergy1
-        time.sleep(1)
         self.driver.find_element_by_id("titlebar4").click()
-        time.sleep(1)
+        time.sleep(0.35)
         self.checkEnergy()
         
     def setTime(self):
         self.divClick(4)
-        time.sleep(1)
+        time.sleep(0.35)
         self.driver.find_element_by_id("biao6").click()
-        time.sleep(1)
+        time.sleep(0.35)
         jsSheet = 'var b = loctime.innerHTML;var g = parseInt(b.substr(8, 2), 10);var f = parseInt(b.substr(3, 2), 10);var a = parseInt(b.substr(0, 2), 10);var d = parseInt(b.substr(11, 2), 10);var e = parseInt(b.substr(14, 2), 10);var c = parseInt(b.substr(17, 2), 10);if (g.length < 2) {g = \"0\" + g}if (f.length < 2) {f = \"0\" + f}if (a.length < 2) {a = \"0\" + a}if (d.length < 2) {d = \"0\" + d}if (e.length < 2) {e = \"0\" + e}if (c.length < 2) {c = \"0\" + c}var xmlset = createXmlRequest();xmlset.onreadystatechange = setdata;ajaxget(xmlset, \"/setdtime?a=\" + g + \"&b=\" + f + \"&c=\" + a + \"&d=\" + d + \"&e=\" + e + \"&f=\" + c + \"&\")'
         self.execJs(jsSheet)
-        time.sleep(1)
+        time.sleep(0.25)
         self.sendtoMainapp("设置时间成功;1" )
     
     def opThreshold(self):

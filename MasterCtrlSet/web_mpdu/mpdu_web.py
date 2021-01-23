@@ -57,22 +57,22 @@ class MpduWeb:
     def setSelect(self, id, v):
         it = self.driver.find_element_by_id(id)
         Select(it).select_by_index(v)
-        time.sleep(1)
+        time.sleep(0.5)
 
     def setItById(self, id, v):
         it = self.driver.find_element_by_id(id)
         it.clear()
         it.send_keys(str(v))
-        time.sleep(1)
+        time.sleep(0.5)
 
     def btnClick(self, id):
         self.driver.find_element_by_id(id).click()
-        time.sleep(1)
+        time.sleep(0.5)
 
     def alertClick(self, id):
         self.btnClick(id)
         self.driver.switch_to.alert.accept()
-        time.sleep(1)
+        time.sleep(0.35)
 
     def divClick(self, id):
         self.driver.switch_to.default_content()
@@ -81,12 +81,12 @@ class MpduWeb:
 
     def execJs(self, js):
         self.driver.execute_script(js)
-        time.sleep(1)
+        time.sleep(0.35)
 
     def execJsAlert(self, js):
         self.execJs(js)
         self.driver.switch_to.alert.accept()
-        time.sleep(1)
+        time.sleep(0.5)
         
     def resetFactory(self):
         v = self.cfgs['version']
