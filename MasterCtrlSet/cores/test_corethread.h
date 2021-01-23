@@ -25,6 +25,7 @@ private:
     Sn_SerialNum *mSn;
     Test_SiThread *mCtrl;
     Test_NetWork *mRead;
+    QProcess *mProcess;
 };
 
 #endif // TEST_CORETHREAD_H

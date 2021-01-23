@@ -101,7 +101,7 @@ void Home_MpduParamWid::on_boardSpin_valueChanged(int arg1)
 {
     bool en = true;
     for(int i=0; i<3; ++i) {
-        if(i < arg1) en = false; else en = true;
+        if(i < arg1) en = false; else {en = true; mBoards[i]->setValue(0);}
         mBoards[i]->setHidden(en);
     }
 }
@@ -111,7 +111,7 @@ void Home_MpduParamWid::on_loopBox_currentIndexChanged(int index)
     bool en = true;
     if(index >= 4) index++;
     for(int i=0; i<6; ++i) {
-        if(i > index) en = true; else en = false;
+        if(i > index){en = true; mLoops[i]->setValue(0);} else en = false;
         mLoops[i]->setHidden(en);
     }
 }

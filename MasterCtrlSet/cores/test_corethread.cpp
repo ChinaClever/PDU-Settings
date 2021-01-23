@@ -16,6 +16,7 @@ void Test_CoreThread::initFunSlot()
     mRead = Test_NetWork::bulid(this);
     mCtrl = Test_SiThread::bulid(this);
     mSn = Sn_SerialNum::bulid(this);
+    mProcess = new QProcess(this);
 }
 
 bool Test_CoreThread::checkNet()
@@ -35,13 +36,12 @@ bool Test_CoreThread::startProcess()
         exe += "mpdu.exe";
     } else exe += "ip.exe";
 
-    QProcess process(this);
-    process.start(exe);
+    mProcess->start(exe);
     bool ret = checkNet();
     if(ret) {
-        ret = process.waitForFinished(100*1000);
+        ret = mProcess->waitForFinished(100*1000);
     }
-    process.close();
+    mProcess->close();
 
     return ret;
 }
