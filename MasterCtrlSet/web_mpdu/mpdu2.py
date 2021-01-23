@@ -1,8 +1,8 @@
 from ctrlset_mpdu.mpdu_web import  *
 import datetime
 
-class Mpdu(MpduWeb):
-       
+class Mpdu2(MpduWeb):
+
     def start_fun(self , sock , dest_ip , dest_port):
         cfg = self.cfgs
         self.ip_prefix = 'http://'
@@ -18,6 +18,7 @@ class Mpdu(MpduWeb):
         if(intRet == 0):
             return
         
+            
         opLists = self.opThreshold()
         opLists.sort()
         
@@ -36,8 +37,8 @@ class Mpdu(MpduWeb):
         self.clearEnergy()
         self.setTime()
         self.clearLogs()
-    
-
+        
+        
     def clearLogs(self):
         jsSheet = 'var xmlset = createXmlRequest();xmlset.onreadystatechange = setdata;ajaxget(xmlset, \"/setlclear?a=\" + {0} + \"&\");'
         flag = False
@@ -74,16 +75,9 @@ class Mpdu(MpduWeb):
         
         self.driver.switch_to.default_content()
     
+    
     def setCorrect1(self):
         cfg = self.cfgs
-        #self.setItById("LineN", cfg['lines'])
-        #self.setItById("CircuitN", cfg['loops'])
-        #self.setItById("OutputN", cfg['outputs'])
-        #self.setItById("neutral", cfg['standar'])
-        #self.setItById("type", cfg['series'])
-        #self.setItById("language", cfg['language'])
-        #self.setItById("breaker", cfg['breaker'])
-        #self.setItById("serial", cfg['modbus'])
         if (len(cfg['mac']) > 5  ):#NoSuchElementException
             strMac =  cfg['mac']
         try:
@@ -93,46 +87,70 @@ class Mpdu(MpduWeb):
         v = self.driver.find_element_by_id('mac1').get_attribute('value')
         if( (v == '' or v == 'FF:FF:FF:FF:FF:FF' or v == 'ff:ff:ff:ff:ff:ff') and len(cfg['mac']) > 5):
             v = strMac
-        jsSheet1 = 'var level = document.getElementById("level").value;var claerset = createXmlRequest();claerset.onreadystatechange = setmac;ajaxget(claerset, \"/correct?a=\" +{set} +\"&b=\"+{type} +\"&c=\"+{language} + \"&d=\"+\"{mac1}\" + \"&e=\"+{breaker} + \"&f=\"+ {serial} + \"&g=\"+ {neutral}+\"&h=\"+{LineN}+\"&i=\"+{CircuitN} + \"&j=\"+{OutputN} + \"&k=\"+{level} +\"&\");'.format(set=int(1),type = cfg['series'] , language = cfg['language'] , mac1 = v , breaker = cfg['breaker'] , serial = cfg['modbus'] , neutral = cfg['standar'] , LineN = cfg['lines'] , CircuitN = cfg['loops'] , OutputN = cfg['outputs'] , level = str(0))
+        jsSheet1 = 'var claerset = createXmlRequest();claerset.onreadystatechange = setmac;ajaxget(claerset, \"/correct?a=\" +{set}+\"&b=\"+{type} +\"&c=\"+{language} + \"&d=\"+\"{mac1}\" + \"&e=\"+{lines} + \"&f=\"+{boards} + \"&g=\"+{breaker} + \"&h=\"+{loops} + \"&i=\"+{loop_1}+ \"&j=\"+{loop_2} + \"&k=\"+{loop_3} + \"&l=\"+{serial} + \"&m=\"+{neutral} + \"&n=\"+{board_1} + \"&u=\"+{board_2} + \"&v=\"+{board_3} + \"&w=\"+{sensorbox} + \"&x=\"+{VerticalLevel}+ \"&y=\"+{level} + \"&z=\"+ {LeLcdSw} + \"&aa=\"+ {loop_4} + \"&ab=\"+ {loop_5} + \"&ac=\"+ {loop_6} + \"&\");'.format(set=int(1),type = cfg['series'] , language = cfg['language'] , mac1 = v , lines = cfg['lines'] , boards = cfg['boards'] , breaker = cfg['breaker'] , loops = cfg['loops'] , loop_1 = cfg['loop_1'] ,   loop_2 = cfg['loop_2'] , loop_3 = cfg['loop_3'] , serial = cfg['modbus'] , neutral = cfg['standar'] , board_1 = cfg['board_1'] ,   board_2 = cfg['board_2'] , board_3 = cfg['board_3'] , sensorbox = cfg['envbox'] , VerticalLevel = cfg['level'] , level = cfg['level'] , LeLcdSw = str(0) , loop_4 = cfg['loop_4'] , loop_5 = cfg['loop_5'] , loop_6 = cfg['loop_6'])
         self.execJs(jsSheet1)
-        time.sleep(5)
+        time.sleep(3)
+        self.driver.back()
+        self.divClick(7)
+        time.sleep(1)
+        self.driver.find_element_by_id("biao1").click()
+        time.sleep(1)
+        jsSheet1 = 'var xmlset = createXmlRequest();xmlset.onreadystatechange = setdata;ajaxget(xmlset, \"/setsys?a=\" + 0 + \"&\");'
+        self.execJs(jsSheet1)
+        time.sleep(1)
+        
 
     def setCorrect2(self):
         cfg = self.cfgs
-        #self.setItById("Tvmin", cfg['vol_min'])
-        #self.setItById("Tvmax", cfg['vol_max'])
-        #self.setItById("Tcmin", cfg['cur_min'])
-        #self.setItById("Tcxmin", cfg['cur_crmin'])
-        #self.setItById("Tcxmax", cfg['cur_crmax'])
-        #self.setItById("Tcmax", cfg['cur_max'])
-        #self.setItById("Temmin", cfg['tem_min'])
-        #self.setItById("Temmax", cfg['tem_max'])
-
-        #self.setItById("Hummin", cfg['hum_min'])
-        #self.setItById("Hummax", cfg['hum_max'])
-        #self.setItById("min", cfg['output_min'])
-        #self.setItById("xmin", cfg['output_crmin'])
-        #self.setItById("xmax", cfg['output_crmax'])
-        #self.setItById("max", cfg['output_max'])
         
-        #var limit1 = document.getElementById(\"Tvmin\").value;var limit2 = document.getElementById(\"Tvmax\").value;var limit3 = document.getElementById(\"Tcmin\").value*10;var limit4 = document.getElementById(\"Tcmax\").value*10;var limit5 = document.getElementById(\"Temmin\").value;var limit6 = document.getElementById(\"Temmax\").value;var limit7 = document.getElementById(\"Hummin\").value;var limit8 = document.getElementById(\"Hummax\").value;var limit9 = document.getElementById(\"min\").value*10;var limit10 = document.getElementById(\"xmin\").value*10;var limit11 = document.getElementById(\"xmax\").value*10;var limit12 = document.getElementById(\"max\").value*10;var limit13 = document.getElementById(\"Tcxmin\").value*10;var limit14 = document.getElementById(\"Tcxmax\").value*10;
-        
-        jsSheet = 'var claerlimit = createXmlRequest();claerlimit.onreadystatechange = setdatlimit;ajaxget(claerlimit, \"/alllimit?a=\" +{limit1}+\"&b=\"+{limit2} +\"&c=\"+{limit3} + \"&d=\"+{limit4}+\"&e=\"+{limit5} +\"&f=\"+{limit6} + \"&g=\"+{limit7}+\"&h=\"+{limit8} +\"&i=\"+{limit9} + \"&j=\"+{limit10}+\"&k=\"+{limit11} + \"&l=\"+{limit12} +\"&m=\"+{limit13} + \"&n=\"+{limit14} +\"&\");'.format( limit1 = cfg['vol_min'] , limit2 = cfg['vol_max'] , limit3 = int(cfg['cur_min'])*10 , limit4 = int(cfg['cur_max'])*10 ,limit5 = cfg['tem_min'] , limit6 = cfg['tem_max'],limit7 = cfg['hum_min'] , limit8 = cfg['hum_max'] ,limit9 = int(cfg['output_min'])*10 , limit10 = int(cfg['output_crmin'])*10 , limit11 = int(cfg['output_crmax'])*10 , limit12 = int(cfg['output_max'])*10 , limit13 = int(cfg['cur_crmin'])*10 , limit14 = int(cfg['cur_crmax'])*10)
+        jsSheet = 'var claerlimit = createXmlRequest();claerlimit.onreadystatechange = setdatlimit;ajaxget(claerlimit, \"/alllimit?a=\" +{limit1}+\"&b=\"+{limit2} +\"&c=\"+{limit3} + \"&d=\"+{limit4}+\"&e=\"+{limit5} +\"&f=\"+{limit6} + \"&g=\"+{limit7}+\"&h=\"+{limit8} +\"&i=\"+{limit9} + \"&j=\"+{limit10}+\"&k=\"+{limit11} + \"&l=\"+{limit12} +\"&m=\"+{limit13} + \"&n=\"+{limit14} +\"&\");'.format( limit1 = int(cfg['vol_min'])*10 , limit2 = int(cfg['vol_max'])*10 , limit3 = int(cfg['cur_min'])*100 , limit4 = int(cfg['cur_max'])*100 ,limit5 = int(cfg['tem_min']) , limit6 = int(cfg['tem_max']),limit7 = int(cfg['hum_min']) , limit8 = int(cfg['hum_max']) ,limit9 = int(cfg['output_min'])*100 , limit10 = int(cfg['output_crmin'])*100 , limit11 = int(cfg['output_crmax'])*100 , limit12 = int(cfg['output_max'])*100 , limit13 = int(cfg['cur_crmin'])*100 , limit14 = int(cfg['cur_crmax'])*100)
         self.execJs(jsSheet)
         time.sleep(1)
         
     def checkCorrectHtml(self):
         cfg = self.cfgs
-        status , message = self.check( 'LineN' , cfg['lines'] , '相数')
+        status , message = self.check( 'line1' , cfg['lines'] , '相数')
         self.sendtoMainapp(message)
         
-        status , message = self.check( 'CircuitN' , cfg['loops'] , '回路')
+        status , message = self.check( 'line2' , cfg['boards'] , '执行板数')
         self.sendtoMainapp(message)
         
-        status , message = self.check( 'OutputN' , cfg['outputs'] , '输出位' )
+        status , message = self.check( 'line8' , cfg['board_1'] , '第1块执行板输出位数')
+        self.sendtoMainapp(message)
+        status , message = self.check( 'line9' , cfg['board_2'] , '第2块执行板输出位数')
+        self.sendtoMainapp(message)
+        status , message = self.check( 'line10' , cfg['board_3'] , '第3块执行板输出位数')
+        self.sendtoMainapp(message)
+        
+        status , message = self.check( 'line4' , cfg['loops'] , '回路数')
+        self.sendtoMainapp(message)
+        
+        status , message = self.check( 'line5' , cfg['loop_1'] , '第1回路输出位数')
+        self.sendtoMainapp(message)
+        status , message = self.check( 'line6' , cfg['loop_2'] , '第2回路输出位数')
+        self.sendtoMainapp(message)
+        status , message = self.check( 'line7' , cfg['loop_3'] , '第3回路输出位数')
+        self.sendtoMainapp(message)
+        status , message = self.check( 'cuit1' , cfg['loop_4'] , '第4回路输出位数')
+        self.sendtoMainapp(message)
+        status , message = self.check( 'cuit2' , cfg['loop_5'] , '第5回路输出位数')
+        self.sendtoMainapp(message)
+        status , message = self.check( 'cuit3' , cfg['loop_6'] , '第6回路输出位数')
+        self.sendtoMainapp(message)
+        
+        status , message = self.check( 'line3' , cfg['breaker'] , '带不带断路器')
+        self.sendtoMainapp(message)
+        
+        status , message = self.check( 'VerticalLevel' , cfg['level'] , '垂直/水平')
         self.sendtoMainapp(message)
         
         status , message = self.check( 'neutral' , cfg['standar'] , '标准/中性')
+        self.sendtoMainapp(message)
+        
+        status , message = self.check( 'serial' , cfg['modbus'] , 'IN/OUT级联方式')
+        self.sendtoMainapp(message)
+        
+        status , message = self.check( 'sensorbox' , cfg['envbox'] , '带不带传感器盒子')
         self.sendtoMainapp(message)
         
         status , message = self.check( 'type' , cfg['series'] , '系列')
@@ -141,56 +159,9 @@ class Mpdu(MpduWeb):
         status , message = self.check( 'language' , cfg['language'] , '中英文')
         self.sendtoMainapp(message)
         
-        status , message = self.check( 'breaker' , cfg['breaker'] , '断路器')
-        self.sendtoMainapp(message)
-        
-        status , message = self.check( 'serial' , cfg['modbus'] , 'IN/OUT级联方式')
-        self.sendtoMainapp(message)
-        
         if (len(cfg['mac']) > 5  ):
             status , message = self.checkStr( 'mac1' , cfg['mac'] , 'mac地址')
             self.sendtoMainapp(message)
-        #status , message = self.check( 'Tvmin' , cfg['vol_min'] , '总电压最小值')
-        #self.sendtoMainapp(message)
-        
-        #status , message = self.check( 'Tvmax' , cfg['vol_max'] , '总电压最大值')
-        #self.sendtoMainapp(message)
-        
-        #status , message = self.check( 'Tcmin' , cfg['cur_min'] , '总电流最小值')
-        #self.sendtoMainapp(message)
-        
-        #status , message = self.check( 'Tcxmin' , cfg['cur_crmin'] , '总电流下临界值')
-        #self.sendtoMainapp(message)
-        
-        #status , message = self.check( 'Tcxmax' , cfg['cur_crmax'] , '总电流上临界值' )
-        #self.sendtoMainapp(message)
-        
-        #status , message = self.check( 'Tcmax' , cfg['cur_max'] , '总电流最大值')
-        #self.sendtoMainapp(message)
-
-        #status , message = self.check( 'Temmin' , cfg['tem_min'] , '温度最小值')
-        #self.sendtoMainapp(message)
-        
-        #status , message = self.check( 'Temmax' , cfg['tem_max'] , '温度最大值')
-        #self.sendtoMainapp(message)
-        
-        #status , message = self.check( 'Hummin' , cfg['hum_min'] , '湿度最小值')
-        #self.sendtoMainapp(message)
-        
-        #status , message = self.check( 'Hummax' , cfg['hum_max'] , '湿度最大值')
-        #self.sendtoMainapp(message)
-        
-        #status , message = self.check( 'min' , cfg['output_min'] , '输出位电流最小值')
-        #self.sendtoMainapp(message)
-        
-        #status , message = self.check( 'xmin' , cfg['output_crmin'] , '输出位电流下临界值')
-        #self.sendtoMainapp(message)
-        
-        #status , message = self.check( 'xmax' , cfg['output_crmax'] , '输出位电流上临界值')
-        #self.sendtoMainapp(message)
-        
-        #status , message = self.check( 'max' , cfg['output_max'] , '输出位电流最大值')
-        #self.sendtoMainapp(message)
         
         self.driver.back()
         
@@ -203,14 +174,27 @@ class Mpdu(MpduWeb):
         self.driver.find_element_by_id("titlebar2").click()
         time.sleep(1)
         
-        line , loop = 1 , int(cfg['loops'])
+        self.checkTcur()
+        
+        self.checkTvol()
+        
+        self.checkTem()
+      
+        self.checkHum()
+        
+        if( int(cfg['envbox']) == 1):
+            self.checkEnvBoxTem()
+      
+            self.checkEnvBoxHum()
+            
+    
+    def checkTcur(self):
+        cfg = self.cfgs
+        line = int(cfg['lines'])
         list=[]
         cfgStr = []
         outputStr = []
-        if( int(cfg['lines']) == 1 and int(cfg['loops']) == 1 ):
-            line = 1
-        else:
-            line = 3
+       
         for i in range(1 , line+1):
             list.append('Tcmin{0}'.format(i))
             list.append('Txcmin{0}'.format(i))
@@ -220,28 +204,20 @@ class Mpdu(MpduWeb):
             cfgStr.append('cur_crmin')
             cfgStr.append('cur_crmax')
             cfgStr.append('cur_max')
-            if( loop != 2 ):
-                outputStr.append('L{0}总电流最小值'.format(i))
-                outputStr.append('L{0}总电流下临界值'.format(i))
-                outputStr.append('L{0}总电流上临界值'.format(i))
-                outputStr.append('L{0}总电流最大值'.format(i))
-            else:
-                if( i != 1 ):
-                    outputStr.append('L{0}总电流最小值'.format(i))
-                    outputStr.append('L{0}总电流下临界值'.format(i))
-                    outputStr.append('L{0}总电流上临界值'.format(i))
-                    outputStr.append('L{0}总电流最大值'.format(i))
-                else:
-                    outputStr.append('C{0}总电流最小值'.format(i-1))
-                    outputStr.append('C{0}总电流下临界值'.format(i-1))
-                    outputStr.append('C{0}总电流上临界值'.format(i-1))
-                    outputStr.append('C{0}总电流最大值'.format(i-1))
+            outputStr.append('L{0}总电流最小值'.format(i))
+            outputStr.append('L{0}总电流下临界值'.format(i))
+            outputStr.append('L{0}总电流上临界值'.format(i))
+            outputStr.append('L{0}总电流最大值'.format(i))
                     
         self.checkAndSendTitleBar3(list , cfgStr , outputStr , 1)
-        list.clear()
-        cfgStr.clear()
-        outputStr.clear()
-        
+    
+    def checkTvol(self):
+        cfg = self.cfgs
+        line = int(cfg['lines'])
+        list=[]
+        cfgStr = []
+        outputStr = []
+       
         for i in range(1 , line+1):
             list.append('Tvmin{0}'.format(i))
             list.append('Tvmax{0}'.format(i))
@@ -250,10 +226,12 @@ class Mpdu(MpduWeb):
             outputStr.append('L{0}总电压最小值'.format(i))
             outputStr.append('L{0}总电压最大值'.format(i))
         self.checkAndSendTitleBar3(list , cfgStr , outputStr , 2)
-        list.clear()
-        cfgStr.clear()
-        outputStr.clear()
         
+    def checkTem(self):
+        list=[]
+        cfgStr = []
+        outputStr = []
+       
         for i in range(1 , 2+1):
             list.append('Temmin{0}'.format(i))
             list.append('Temmax{0}'.format(i))
@@ -263,10 +241,12 @@ class Mpdu(MpduWeb):
             outputStr.append('温度{0}最大值'.format(i))
             
         self.checkAndSendTitleBar3(list , cfgStr , outputStr , 3)
-        list.clear()
-        cfgStr.clear()
-        outputStr.clear()
         
+    def checkHum(self):
+        list=[]
+        cfgStr = []
+        outputStr = []
+       
         for i in range(1 , 2+1):
             list.append('Hummin{0}'.format(i))
             list.append('Hummax{0}'.format(i))
@@ -276,10 +256,37 @@ class Mpdu(MpduWeb):
             outputStr.append('湿度{0}最大值'.format(i))
             
         self.checkAndSendTitleBar3(list , cfgStr , outputStr , 4)
-        list.clear()
-        cfgStr.clear()
-        outputStr.clear()
-    
+        
+    def checkEnvBoxTem(self):
+        list=[]
+        cfgStr = []
+        outputStr = []
+       
+        for i in range(1 , 2+1):
+            list.append('boxtemmin{0}'.format(i))
+            list.append('boxtemmax{0}'.format(i))
+            cfgStr.append('tem_min')
+            cfgStr.append('tem_max')
+            outputStr.append('温度{0}最小值'.format(i+2))
+            outputStr.append('温度{0}最大值'.format(i+2))
+            
+        self.checkAndSendTitleBar3(list , cfgStr , outputStr , 5)
+        
+    def checkEnvBoxHum(self):
+        list=[]
+        cfgStr = []
+        outputStr = []
+       
+        for i in range(1 , 2+1):
+            list.append('boxhummin{0}'.format(i))
+            list.append('boxhummax{0}'.format(i))
+            cfgStr.append('hum_min')
+            cfgStr.append('hum_max')
+            outputStr.append('湿度{0}最小值'.format(i+2))
+            outputStr.append('湿度{0}最大值'.format(i+2))
+            
+        self.checkAndSendTitleBar3(list , cfgStr , outputStr , 6)
+        
 
     def checkAndSendTitleBar3(self , list , cfgStr , outputStr , case):
         cfg = self.cfgs
@@ -287,7 +294,6 @@ class Mpdu(MpduWeb):
         statusList = []
         messageList = []
         for x,y,z in zz:
-            #Tvmin = self.driver.find_element_by_id(x).get_attribute('value')
             status , message = self.checkStr( x , cfg[y] , z)
             statusList.append(status)
             messageList.append(message)
@@ -313,6 +319,12 @@ class Mpdu(MpduWeb):
             elif( case == 4):
                 self.sendtoMainapp("设置湿度最小值成功;1" )
                 self.sendtoMainapp("设置湿度最大值成功;1" )
+            elif( case == 5):
+                self.sendtoMainapp("设置传感器盒子温度最小值成功;1" )
+                self.sendtoMainapp("设置传感器盒子温度最大值成功;1" )
+            elif( case == 6):
+                self.sendtoMainapp("设置传感器盒子湿度最小值成功;1" )
+                self.sendtoMainapp("设置传感器盒子湿度最大值成功;1" )
         statusList.clear()
         messageList.clear()
             
@@ -385,12 +397,16 @@ class Mpdu(MpduWeb):
                 self.sock.sendto(message.encode('utf-8') , (self.ip , self.port))
                 return
             self.setItById("totalms", 1)
-            jsSheet = 'var ms = parseFloat(document.getElementById(\"totalms\").value);var xmlset = createXmlRequest();xmlset.onreadystatechange = setdata;ajaxget(xmlset, \"/settime?a=\" + ms + \"&\");'
+            jsSheet = 'slave = document.getElementById(\"slave\").value;var ms = parseFloat(document.getElementById(\"totalms\").value) ;var xmlset2 = createXmlRequest();xmlset2.onreadystatechange = setdata2;ajaxget(xmlset2, \"/settime?a=\" + slave + \"&b=\" + ms  + \"&\");'
             self.execJs(jsSheet)
-            time.sleep(1)
             self.checkDelayTime(op)
             
     def checkDelayTime(self , op):
+        self.driver.refresh()
+        self.divClick(2)
+        time.sleep(1)
+        self.driver.find_element_by_id("titlebar3").click()
+        time.sleep(1)
         statusList = []
         messageList = []
         for i in range(1 , int(op)+1):
@@ -453,7 +469,7 @@ class Mpdu(MpduWeb):
         self.driver.find_element_by_id("titlebar4").click()
         time.sleep(1)
         
-        jsSheet = 'var claerset = createXmlRequest();claerset.onreadystatechange = clearrec;ajaxget(claerset, \"/setenergy?a=\" + {0}+\"&\");'
+        jsSheet = 'var slave1 = document.getElementById(\"slave\").value;var claerset = createXmlRequest();claerset.onreadystatechange = clearrec;ajaxget(claerset, \"/setenergy?a=\" + slave1 + \"&b=\" + {0}+\"&\");'
         for i in range(1 , 4):
             self.execJs(jsSheet.format(i))
         time.sleep(1)
