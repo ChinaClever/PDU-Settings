@@ -171,6 +171,24 @@ class MpduWeb:
         except UnexpectedAlertPresentException:
             message = '登陆失败，账号密码错误;0'
             return 0,message
+            
+    def macAddrCheck(self , ssid , value , parameter):
+        try:
+            message =''
+            self.driver.find_element_by_id(ssid)
+        except NoSuchElementException:
+            message =  '网页上找不到{0}ID;'.format(parameter)+str(2)
+            #sock.sendto(message.encode('utf-8-sig') , (dest_ip , dest_port))
+            return 2,message
+        v = self.driver.find_element_by_id(ssid).get_attribute('value')
+        ret = 1
+        if( "2C:26:5F:" in v ):
+            message ='设置{0}成功{1};'.format(parameter,value)+str(1)
+        else:
+            message = '设置{0}失败，实际值{1}，期待值{2};'.format(parameter,v,value)+str(0)
+            ret = 0
+        #sock.sendto(message.encode('utf-8-sig') , (dest_ip , dest_port))
+        return ret,message
 
 
 

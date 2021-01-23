@@ -145,49 +145,8 @@ class Mpdu(MpduWeb):
         self.sendtoMainapp(message)
         
         if (len(cfg['mac']) > 5  ):
-            status , message = self.checkStr( 'mac1' , cfg['mac'] , 'mac地址')
+            status , message = self.macAddrCheck( 'mac1' , cfg['mac'] , 'mac地址')
             self.sendtoMainapp(message)
-        #status , message = self.check( 'Tvmin' , cfg['vol_min'] , '总电压最小值')
-        #self.sendtoMainapp(message)
-        
-        #status , message = self.check( 'Tvmax' , cfg['vol_max'] , '总电压最大值')
-        #self.sendtoMainapp(message)
-        
-        #status , message = self.check( 'Tcmin' , cfg['cur_min'] , '总电流最小值')
-        #self.sendtoMainapp(message)
-        
-        #status , message = self.check( 'Tcxmin' , cfg['cur_crmin'] , '总电流下临界值')
-        #self.sendtoMainapp(message)
-        
-        #status , message = self.check( 'Tcxmax' , cfg['cur_crmax'] , '总电流上临界值' )
-        #self.sendtoMainapp(message)
-        
-        #status , message = self.check( 'Tcmax' , cfg['cur_max'] , '总电流最大值')
-        #self.sendtoMainapp(message)
-
-        #status , message = self.check( 'Temmin' , cfg['tem_min'] , '温度最小值')
-        #self.sendtoMainapp(message)
-        
-        #status , message = self.check( 'Temmax' , cfg['tem_max'] , '温度最大值')
-        #self.sendtoMainapp(message)
-        
-        #status , message = self.check( 'Hummin' , cfg['hum_min'] , '湿度最小值')
-        #self.sendtoMainapp(message)
-        
-        #status , message = self.check( 'Hummax' , cfg['hum_max'] , '湿度最大值')
-        #self.sendtoMainapp(message)
-        
-        #status , message = self.check( 'min' , cfg['output_min'] , '输出位电流最小值')
-        #self.sendtoMainapp(message)
-        
-        #status , message = self.check( 'xmin' , cfg['output_crmin'] , '输出位电流下临界值')
-        #self.sendtoMainapp(message)
-        
-        #status , message = self.check( 'xmax' , cfg['output_crmax'] , '输出位电流上临界值')
-        #self.sendtoMainapp(message)
-        
-        #status , message = self.check( 'max' , cfg['output_max'] , '输出位电流最大值')
-        #self.sendtoMainapp(message)
         
         self.driver.back()
         

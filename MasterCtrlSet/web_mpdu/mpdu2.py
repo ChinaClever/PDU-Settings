@@ -40,7 +40,7 @@ class Mpdu2(MpduWeb):
         
         
     def clearLogs(self):
-        jsSheet = 'var xmlset = createXmlRequest();xmlset.onreadystatechange = setdata;ajaxget(xmlset, \"/setlclear?a=\" + {0} + \"&\");'
+        jsSheet = 'var xmlset = createXmlRequest();xmlset.onreadystatechange = setdata;var clearUrl = Encryption(\"/setlclear\");ajaxget(xmlset, clearUrl + \"?a=\" + {0} + \"&\")'
         flag = False
         ListMessage = []
         ListMessage.append('报警日志清除失败;0')
@@ -49,6 +49,7 @@ class Mpdu2(MpduWeb):
         time.sleep(1)
         for num in range(0, 2):
             self.execJs(jsSheet.format(num))
+            time.sleep(0.35)
             self.driver.find_element_by_id('biao{0}'.format(num+1)).click()
             time.sleep(1)
             tt = self.driver.find_element_by_id('evenlognum').text
@@ -156,7 +157,7 @@ class Mpdu2(MpduWeb):
         self.sendtoMainapp(message)
         
         if (len(cfg['mac']) > 5  ):
-            status , message = self.checkStr( 'mac1' , cfg['mac'] , 'mac地址')
+            status , message = self.macAddrCheck( 'mac1' , cfg['mac'] , 'mac地址')
             self.sendtoMainapp(message)
         
         self.driver.back()
