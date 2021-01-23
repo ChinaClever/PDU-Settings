@@ -88,7 +88,7 @@ bool Sn_SerialNum::readSn(sSnItem &itSn)
     sRtuItem itRtu;
     bool ret = false;
     uchar buf[32] = {0};
-    QString str = tr("序列号读取 ");
+    QString str = tr("序列号读取");
 
     initDevType(itSn);
     initReadCmd(itRtu);
@@ -97,7 +97,7 @@ bool Sn_SerialNum::readSn(sSnItem &itSn)
     if(len == 8) {
         ret = analySn(buf, len, itSn); toSnStr(itSn);
         if(ret) str += tr("成功");
-        else str +=  tr("错误");
+        else str += tr("错误: %1").arg(itSn.sn);
         mPacket->updatePro(str, true);
     } else {
         str = tr("读序列号未返数据长度错误 %1").arg(len);
@@ -169,13 +169,14 @@ bool Sn_SerialNum::writeSn(sSnItem &itSn)
 
 void Sn_SerialNum::writeStatus(bool ret)
 {
-    QString str = tr("已写入序列号");
+    QString str = tr("已写入序列号：");
     if(ret) {
         Cfg::bulid()->setCurrentNum();
     } else {
-        str = tr("序列号写入失败");
+        str = tr("序列号写入失败: ");
         mItem->currentNum -= 1;
     }
+    str += mSnItem.sn;
 
     mPacket->updatePro(str, ret);
 }

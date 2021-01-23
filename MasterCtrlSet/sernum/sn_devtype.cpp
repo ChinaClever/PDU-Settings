@@ -28,7 +28,7 @@ QString Sn_DevType::getMpdu(uint id)
     if(2 == (id >> 12)) {
         str += "MPDU主控";
         if((id >> 11) & 1) str += "_二期"; else str += "_一期";
-        if((id >> 12) & 1) str += "_三相"; else str += "_单相";
+        if((id >> 10) & 1) str += "_三相"; else str += "_单相";
         str += QObject::tr("_%1回路").arg((id >> 6) & 0xF);
         str += QObject::tr("_%1输出位").arg(id & 0x3F);
     }
