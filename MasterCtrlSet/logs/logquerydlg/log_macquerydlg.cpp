@@ -34,11 +34,8 @@ QString Log_MacQueryDlg::getCmd()
     str = ui->macEdit->text();
     if(!str.isEmpty()) cmd += QString(" and mac like '%%1%'").arg(str);
 
-    int ret = ui->devCmb->currentIndex();
-    if(ret) {
-        str = ui->devCmb->currentText();
-        cmd += QString(" and dev like '%%1%'").arg(str);
-    }
+    str = ui->devtypeEdit->text();
+    if(!str.isEmpty()) cmd += QString(" and dev like '%%1%'").arg(str);
 
     return cmd;
 }
