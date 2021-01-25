@@ -242,12 +242,12 @@
     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
    </property>
   </widget>
-  <widget class="QComboBox" name="devCmb">
+  <widget class="QLineEdit" name="macEdit">
    <property name="geometry">
     <rect>
      <x>140</x>
-     <y>230</y>
-     <width>191</width>
+     <y>350</y>
+     <width>211</width>
      <height>31</height>
     </rect>
    </property>
@@ -260,42 +260,12 @@
    <property name="styleSheet">
     <string notr="true"/>
    </property>
-   <item>
-    <property name="text">
-     <string>所有类型</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>IP-PDU</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>MPDU</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>RPDU</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>ZPDU</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>ATS</string>
-    </property>
-   </item>
   </widget>
-  <widget class="QLineEdit" name="macEdit">
+  <widget class="QLineEdit" name="devtypeEdit">
    <property name="geometry">
     <rect>
      <x>140</x>
-     <y>350</y>
+     <y>230</y>
      <width>211</width>
      <height>31</height>
     </rect>
