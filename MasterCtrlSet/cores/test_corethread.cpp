@@ -33,8 +33,8 @@ bool Test_CoreThread::startProcess()
 {
     QString exe = "pyweb_ctrlset_";
     if(MPDU == mItem->modeId) {
-        exe += "mpdu.exe";
-    } else exe += "ip.exe";
+        exe += "mpdu.run";
+    } else exe += "ip.run";
 
     mProcess->start(exe);
     bool ret = checkNet();
