@@ -107,7 +107,6 @@ bool Sn_SerialNum::readSn(sSnItem &itSn)
     return ret;
 }
 
-
 void Sn_SerialNum::initWriteCmd(sRtuSetItems &item, uchar *data, int len)
 {
     item.addr = mItem->addr;
@@ -121,7 +120,6 @@ void Sn_SerialNum::initWriteCmd(sRtuSetItems &item, uchar *data, int len)
     }
 }
 
-
 void Sn_SerialNum::createSn(sSnItem &it)
 {
     int k = 0;
@@ -134,7 +132,6 @@ void Sn_SerialNum::createSn(sSnItem &it)
     it.num = ++(mItem->currentNum);
     it.pc = mItem->pcNum;
 }
-
 
 int Sn_SerialNum::toSnData(sSnItem &it, uchar *data)
 {
