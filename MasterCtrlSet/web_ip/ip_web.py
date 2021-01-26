@@ -60,9 +60,10 @@ class IpWeb:
         user = self.cfgs['user']
         pwd = self.cfgs['pwd']
         self.driver.get(ip)
-        self.setItById("name", user)
-        self.setItById("psd", pwd)
-        self.execJs("login()")
+        time.sleep(0.35)
+        self.setItById("name", user , '账号')
+        self.setItById("psd", pwd , '密码')        
+        self.execJs('login()')
         self.sendtoMainapp("网页登陆成功", 1)
         time.sleep(1)
 
