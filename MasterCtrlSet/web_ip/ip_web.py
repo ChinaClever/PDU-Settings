@@ -60,7 +60,7 @@ class IpWeb:
         user = self.cfgs['user']
         pwd = self.cfgs['pwd']
         self.driver.get(ip)
-        time.sleep(0.35)
+        time.sleep(0.35); time.sleep(0.35)
         self.setItById("name", user , '账号')
         self.setItById("psd", pwd , '密码')        
         self.execJs('login()')
