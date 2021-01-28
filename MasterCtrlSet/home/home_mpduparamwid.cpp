@@ -153,3 +153,12 @@ bool Home_MpduParamWid::loopCheck()
     if(v != res) ret = false;
     return ret;
 }
+
+void Home_MpduParamWid::on_outputSpin_valueChanged(int arg1)
+{
+    int v = ui->boardSpin->value();
+    on_boardSpin_valueChanged(v);
+
+    v = ui->loopBox->currentIndex();
+    on_loopBox_currentIndexChanged(v);
+}
