@@ -15,7 +15,6 @@ Home_MpduParamWid::~Home_MpduParamWid()
     delete ui;
 }
 
-
 void Home_MpduParamWid::initFunSlot()
 {
     mItem = Cfg::bulid()->item;
