@@ -17,6 +17,8 @@ public:
     ~Home_MpduParamWid();
 
     void updateType();
+    bool loopCheck();
+    bool outputCheck();
 
 protected:
     void initType();
