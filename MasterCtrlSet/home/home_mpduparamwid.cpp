@@ -154,7 +154,7 @@ bool Home_MpduParamWid::loopCheck()
     return ret;
 }
 
-void Home_MpduParamWid::on_outputSpin_valueChanged(int arg1)
+void Home_MpduParamWid::on_outputSpin_valueChanged(int)
 {
     int v = ui->boardSpin->value();
     on_boardSpin_valueChanged(v);
