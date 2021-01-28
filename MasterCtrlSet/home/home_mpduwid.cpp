@@ -42,9 +42,17 @@ void Home_MpduWid::initWid()
 
 bool Home_MpduWid::inputCheck()
 {
+    QString str;
+    bool ret = mParamWid->loopCheck();
+    if(!ret) str += tr("每个回路输出位数量出错！\n");
+    ret = mParamWid->outputCheck();
+    if(!ret) str += tr("每块板输出位数量出错！\n");
+    if(!str.isEmpty()) {
+        MsgBox::critical(this, str);
+        ret = false;
+    }
 
-
-    return true;
+    return ret;
 }
 
 bool Home_MpduWid::dataSave()
