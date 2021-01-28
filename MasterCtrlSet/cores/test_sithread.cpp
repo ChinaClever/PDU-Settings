@@ -117,7 +117,8 @@ bool Test_SiThread::checkLine()
     if(ret) {
         int line = 3;
         switch (mDev->dt.lines) {
-        case 0:  case 1: line = 1; break;
+        case 0:  line = 1; break;
+        case 1: line = 1; break;
         case 2:  line = 3;  break;
         }
 
@@ -135,16 +136,12 @@ bool Test_SiThread::setDev()
 {
     QString str = tr("解锁设备");
     bool ret = mCtrl->unClock();
-    if(ret) str += tr("成功");
-    else str += tr("错误");
-
+    if(ret) str += tr("成功"); else str += tr("错误");
     ret = mLogs->updatePro(str, ret);
     if(ret) {
         str = tr("设备配置信息写入");
         ret = mCtrl->setDev();
-        if(ret) str += tr("正常");
-        else str += tr("错误");
-
+        if(ret) str += tr("正常"); else str += tr("错误");
         ret = mLogs->updatePro(str, ret);
         if(ret) ret = checkDev();
     }
@@ -154,11 +151,11 @@ bool Test_SiThread::setDev()
 
 bool Test_SiThread::checkDev()
 {
-    bool ret = checkLine();
-    if(ret)  {
-        ret = setAlarm();
-        if(ret) ret = clearEle();
-    }
+    //bool ret = checkLine();
+    //if(ret)  {
+    bool ret = setAlarm();
+    if(ret) ret = clearEle();
+    //}
 
     return ret;
 }
