@@ -14,7 +14,7 @@ public:
 
 protected:
     bool readDev();
-    bool checkDev();
+    bool setData();
     bool checkLine();
     bool volAlarmWrite(int i);
     bool curAlarmWrite(int i);

@@ -100,14 +100,13 @@ bool Test_SiThread::clearEle()
 
 bool Test_SiThread::readDev()
 {
+    bool ret = true;
     QString str = tr("开始读取设备信息");
-    bool ret = mRtu->readPduData();
-    if(ret) {
-        str += tr("正常");
-    } else {
-        str += tr("错误");
+    for(int i=0; i<5; ++i) {
+        ret = mRtu->readPduData(); if(ret) break;
+        Rtu_Modbus::bulid(this)->get()->changeBaudRate();
     }
-
+    if(ret) str += tr("正常"); else str += tr("错误");
     return  mLogs->updatePro(str, ret);
 }
 
@@ -131,8 +130,7 @@ bool Test_SiThread::checkLine()
     return ret;
 }
 
-
-bool Test_SiThread::setDev()
+bool Test_SiThread::setData()
 {
     QString str = tr("解锁设备");
     bool ret = mCtrl->unClock();
@@ -143,19 +141,24 @@ bool Test_SiThread::setDev()
         ret = mCtrl->setDev();
         if(ret) str += tr("正常"); else str += tr("错误");
         ret = mLogs->updatePro(str, ret);
-        if(ret) ret = checkDev();
     }
 
     return  ret;
 }
 
-bool Test_SiThread::checkDev()
+
+bool Test_SiThread::setDev()
 {
-    //bool ret = checkLine();
-    //if(ret)  {
-    bool ret = setAlarm();
+    bool ret = readDev();
+    if(ret) ret = setData();
+    if(ret) ret = setAlarm();
     if(ret) ret = clearEle();
-    //}
+
+   // if(ret) {
+        // ret = checkLine();
+     //   ret = setAlarm();
+     //   if(ret) ret = clearEle();
+   // }
 
     return ret;
 }

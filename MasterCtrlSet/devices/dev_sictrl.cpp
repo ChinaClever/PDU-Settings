@@ -94,7 +94,12 @@ bool Dev_SiCtrl::factorySet()
     bool ret = sentRtuCmd(0x1013, 0xFF00); // 清除电能
     if(ret) {
         ret = unClock();
-        if(ret) ret = sentRtuCmd(0x1050, mDt->standar);  // 切换成行业标准
+        if(ret) {
+            ret = sentRtuCmd(0x1050, mDt->standar);  // 切换成行业标准
+            qDebug() << "BBBBBBBBBBBBB" << ret;
+        } else qDebug() << "AAAAAAAAAAAAAA";
+    } else {
+        qDebug() << "CCCCCCCCCCCC";
     }
 
     return ret;
