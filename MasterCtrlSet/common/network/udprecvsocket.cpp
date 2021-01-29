@@ -81,7 +81,6 @@ bool UdpRecvSocket::dataReceived(void)
         UdpBaseData *data = new UdpBaseData();
         if(data) {
             data->datagram.resize(mUdpSocket->pendingDatagramSize()); //让datagram 的大小为等待处理的数据报的大小，这样才能接收到完整的数据
-
             int rtn = mUdpSocket->readDatagram(data->datagram.data(),
                                                data->datagram.size(),
                                                &data->addr,
@@ -89,7 +88,6 @@ bool UdpRecvSocket::dataReceived(void)
             if(rtn > 0) {
                 if(data->datagram.size() < 1024) { /*数据最长不超过1024*/
                     QWriteLocker locker(mRecLock);
-                    QStringList list = QString(data->datagram).split(";");
                     mUdpQueueData->enqueue(data);
                 }
             }
@@ -104,11 +102,9 @@ bool UdpRecvSocket::dataReceived(void)
 
 void UdpRecvSocket::run(void)
 {
-    bool ret = true;
-
     isRun = true;
     while(isRun) {
-        ret = dataReceived();
-        if(!ret) msleep(1);
+        dataReceived();
+        msleep(1);
     }
 }
