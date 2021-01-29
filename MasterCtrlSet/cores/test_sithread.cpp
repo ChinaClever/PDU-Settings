@@ -66,8 +66,7 @@ bool Test_SiThread::envAlarmWrite()
 bool Test_SiThread::writeAlarmTh()
 {
     bool ret = true;
-    int size = mDt->lines;
-    if(size > 1) size = 3;
+    int size = mDev->data.size;
 
     for(int i=0; i<size; ++i) {
         ret = curAlarmWrite(i); if(!ret) break;

@@ -85,24 +85,14 @@ bool Dev_SiCtrl::setDev()
 {
     bool ret = sentRtuCmd(0x1049, mDt->lines);
     if(ret) ret = sentRtuCmd(0x1051, mDt->series);
+    if(ret) ret = sentRtuCmd(0x1050, mDt->standar);
 
     return ret;
 }
 
 bool Dev_SiCtrl::factorySet()
 {
-    bool ret = sentRtuCmd(0x1013, 0xFF00); // 清除电能
-    if(ret) {
-        ret = unClock();
-        if(ret) {
-            ret = sentRtuCmd(0x1050, mDt->standar);  // 切换成行业标准
-            qDebug() << "BBBBBBBBBBBBB" << ret;
-        } else qDebug() << "AAAAAAAAAAAAAA";
-    } else {
-        qDebug() << "CCCCCCCCCCCC";
-    }
-
-    return ret;
+    return sentRtuCmd(0x1013, 0x00F0); // 清除电能
 }
 
 bool Dev_SiCtrl::sentRtuCmd(ushort reg, ushort value)

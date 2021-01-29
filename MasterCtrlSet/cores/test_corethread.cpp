@@ -58,13 +58,12 @@ void Test_CoreThread::updateMacAddr()
 
 void Test_CoreThread::workResult(bool res)
 {
-    if(res) res = mSn->snEnter();
+    bool ret = mSn->snEnter();
     QString str = tr("最终结果");
-    if(res) str += tr("通过");
-    else str += tr("失败");
+    if(res&&ret) str += tr("通过"); else str += tr("失败");
 
-    mLogs->updatePro(str, res, 0);
-    if(res) mLogs->saveLogs();
+    mLogs->updatePro(str, res);
+    mLogs->saveLogs();
     mPro->step = Test_Over;
 }
 
