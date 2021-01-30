@@ -161,3 +161,24 @@ void Home_MpduParamWid::on_outputSpin_valueChanged(int)
     v = ui->loopBox->currentIndex();
     on_loopBox_currentIndexChanged(v);
 }
+
+void Home_MpduParamWid::setItemEnable(int id, int en)
+{
+    QModelIndex index = ui->loopBox->model()->index(id, 0);
+    ui->loopBox->model()->setData(index, QVariant(en), Qt::UserRole - 1);
+}
+
+void Home_MpduParamWid::on_lineBox_currentIndexChanged(int index)
+{
+    for(int i=0; i<5; ++i) setItemEnable(i, 1|32);
+    if(index) {
+        setItemEnable(0, 0);
+        setItemEnable(1, 0);
+        setItemEnable(3, 0);
+        ui->loopBox->setCurrentIndex(2);
+    } else {
+        setItemEnable(2, 0);
+        setItemEnable(4, 0);
+        ui->loopBox->setCurrentIndex(0);
+    }
+}
