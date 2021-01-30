@@ -36,6 +36,7 @@ bool Test_CoreThread::startProcess()
         exe += "mpdu.exe";
     } else exe += "ip.exe";
 
+    mRead->mac = true;
     mProcess->start(exe);
     bool ret = checkNet();
     if(ret) {
@@ -79,7 +80,7 @@ void Test_CoreThread::workDown()
     mLogs->updatePro(tr("自动设置已启动"));
     if(mItem->modeId) {
         ret = startProcess();
-        if(ret) updateMacAddr();
+        if(ret && mRead->mac) updateMacAddr();
     } else {
         ret = mCtrl->setDev();
     }

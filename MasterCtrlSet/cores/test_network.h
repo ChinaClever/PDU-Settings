@@ -10,7 +10,7 @@ class Test_NetWork : public Test_Object
     explicit Test_NetWork(QObject *parent = nullptr);
 public:
     static Test_NetWork *bulid(QObject *parent = nullptr);
-
+    bool mac;
 protected:
     void run();
     void workDown();
