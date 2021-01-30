@@ -23,6 +23,7 @@ public:
 protected:
     void initType();
     void initWid();
+    void setItemEnable(int id, int en);
 
 protected slots:
     void initFunSlot();
@@ -32,6 +33,7 @@ private slots:
     void on_boardSpin_valueChanged(int arg1);
     void on_verBox_currentIndexChanged(int index);
     void on_loopBox_currentIndexChanged(int index);
+    void on_lineBox_currentIndexChanged(int index);
 
 private:
     Ui::Home_MpduParamWid *ui;
