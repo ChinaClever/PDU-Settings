@@ -36,6 +36,7 @@ void Test_NetWork::workDown()
             bool pass = list.last().toInt();
             mLogs->updatePro(str, pass, 0);
         } else {
+            if(QString(res->datagram).contains("MAC-1")) mac = false; else
             qDebug() <<"Test_NetWork workDown err" << list.size();
         }
         delete res;
