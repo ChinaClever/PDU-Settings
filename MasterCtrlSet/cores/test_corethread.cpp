@@ -43,7 +43,6 @@ bool Test_CoreThread::startProcess()
         ret = mProcess->waitForFinished(120*1000);
     }
     mProcess->close();
-
     return mLogs->updatePro(tr("网页设置功能退出"), ret);
 }
 

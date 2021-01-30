@@ -59,8 +59,10 @@ class Mpdu(MpduWeb):
             self.sendtoMainapp(message)
             
     def close(self):
-        print(datetime.datetime.now())
-        self.driver.close()
+        time.sleep(1.5)
+        #print(datetime.datetime.now())
+        self.driver.quit()
+        
 
     def changetocorrect(self):
         cfg = self.cfgs
@@ -88,8 +90,10 @@ class Mpdu(MpduWeb):
         except NoSuchElementException:
             return
         v = self.driver.find_element_by_id('mac1').get_attribute('value')
-        if( (v == '' or v == 'FF:FF:FF:FF:FF:FF' or v == 'ff:ff:ff:ff:ff:ff') and len(cfg['mac']) > 5):
+        if( '2C:26:5F:' not in v):
             v = strMac
+        else:
+            self.sendtoMainapp('MAC-1')
         jsSheet1 = 'var level = document.getElementById("level").value;var claerset = createXmlRequest();claerset.onreadystatechange = setmac;ajaxget(claerset, \"/correct?a=\" +{set} +\"&b=\"+{type} +\"&c=\"+{language} + \"&d=\"+\"{mac1}\" + \"&e=\"+{breaker} + \"&f=\"+ {serial} + \"&g=\"+ {neutral}+\"&h=\"+{LineN}+\"&i=\"+{CircuitN} + \"&j=\"+{OutputN} + \"&k=\"+{level} +\"&\");'.format(set=int(1),type = cfg['series'] , language = cfg['language'] , mac1 = v , breaker = cfg['breaker'] , serial = cfg['modbus'] , neutral = cfg['standar'] , LineN = cfg['lines'] , CircuitN = cfg['loops'] , OutputN = cfg['outputs'] , level = str(0))
         self.execJs(jsSheet1)
         time.sleep(0.35)
@@ -405,15 +409,17 @@ class Mpdu(MpduWeb):
     def clearEnergy(self):
         cfg = self.cfgs#Tenergy1Tenergy2Tenergy3
         self.divClick(2)#Cenergy1
-        time.sleep(0.35)
+        time.sleep(0.5)
         self.driver.find_element_by_id("titlebar4").click()
-        time.sleep(0.35)
+        time.sleep(0.5)
         
         jsSheet = 'var claerset = createXmlRequest();claerset.onreadystatechange = clearrec;ajaxget(claerset, \"/setenergy?a=\" + {0}+\"&\");'
         for i in range(1 , 4):
             self.execJs(jsSheet.format(i))
+            time.sleep(1)
+        time.sleep(1)
         self.driver.find_element_by_id("titlebar4").click()
-        time.sleep(0.35)
+        time.sleep(1)
         self.checkEnergy()
         
     def setTime(self):

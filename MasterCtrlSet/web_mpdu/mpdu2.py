@@ -13,6 +13,10 @@ class Mpdu2(MpduWeb):
         self.sendtoMainapp(message)
         if(intRet == 0):
             return
+        intRet , message = self.checkVersion()
+        self.sendtoMainapp(message)
+        if(intRet == 0):
+            return
             
         opLists = self.opThreshold()
         opLists.sort()
@@ -22,10 +26,7 @@ class Mpdu2(MpduWeb):
         self.setCorrect1()
         time.sleep(5)
         self.login()
-        intRet , message = self.checkVersion()
-        self.sendtoMainapp(message)
-        if(intRet == 0):
-            return
+        
         
         self.changetocorrect()
         self.checkCorrectHtml()
@@ -61,8 +62,12 @@ class Mpdu2(MpduWeb):
             self.sendtoMainapp(message)
             
     def close(self):
-        print(datetime.datetime.now())
-        self.driver.close()
+        time.sleep(1.5)
+        #print(datetime.datetime.now())
+        self.driver.quit()
+        #os.system('taskkill /im geckodriver.exe /F')
+        #os.system('taskkill /im firefox.exe /F')
+        
 
     def changetocorrect(self):
         cfg = self.cfgs
@@ -83,8 +88,10 @@ class Mpdu2(MpduWeb):
         except NoSuchElementException:
             return
         v = self.driver.find_element_by_id('mac1').get_attribute('value')
-        if( (v == '' or v == 'FF:FF:FF:FF:FF:FF' or v == 'ff:ff:ff:ff:ff:ff') and len(cfg['mac']) > 5):
+        if( '2C:26:5F:' not in v):
             v = strMac
+        else:
+            self.sendtoMainapp('MAC-1')
         jsSheet1 = 'var claerset = createXmlRequest();claerset.onreadystatechange = setmac;ajaxget(claerset, \"/correct?a=\" +{set}+\"&b=\"+{type} +\"&c=\"+{language} + \"&d=\"+\"{mac1}\" + \"&e=\"+{lines} + \"&f=\"+{boards} + \"&g=\"+{breaker} + \"&h=\"+{loops} + \"&i=\"+{loop_1}+ \"&j=\"+{loop_2} + \"&k=\"+{loop_3} + \"&l=\"+{serial} + \"&m=\"+{neutral} + \"&n=\"+{board_1} + \"&u=\"+{board_2} + \"&v=\"+{board_3} + \"&w=\"+{sensorbox} + \"&x=\"+{VerticalLevel}+ \"&y=\"+{level} + \"&z=\"+ {LeLcdSw} + \"&aa=\"+ {loop_4} + \"&ab=\"+ {loop_5} + \"&ac=\"+ {loop_6} + \"&\");'.format(set=int(1),type = cfg['series'] , language = cfg['language'] , mac1 = v , lines = cfg['lines'] , boards = cfg['boards'] , breaker = cfg['breaker'] , loops = cfg['loops'] , loop_1 = cfg['loop_1'] ,   loop_2 = cfg['loop_2'] , loop_3 = cfg['loop_3'] , serial = cfg['modbus'] , neutral = cfg['standar'] , board_1 = cfg['board_1'] ,   board_2 = cfg['board_2'] , board_3 = cfg['board_3'] , sensorbox = cfg['envbox'] , VerticalLevel = cfg['level'] , level = cfg['level'] , LeLcdSw = str(0) , loop_4 = cfg['loop_4'] , loop_5 = cfg['loop_5'] , loop_6 = cfg['loop_6'])
         self.execJs(jsSheet1)
         self.driver.back()
@@ -122,18 +129,25 @@ class Mpdu2(MpduWeb):
         status , message = self.check( 'line4' , cfg['loops'] , '回路数')
         self.sendtoMainapp(message)
         
-        status , message = self.check( 'line5' , cfg['loop_1'] , '第1回路输出位数')
-        self.sendtoMainapp(message)
-        status , message = self.check( 'line6' , cfg['loop_2'] , '第2回路输出位数')
-        self.sendtoMainapp(message)
-        status , message = self.check( 'line7' , cfg['loop_3'] , '第3回路输出位数')
-        self.sendtoMainapp(message)
-        status , message = self.check( 'cuit1' , cfg['loop_4'] , '第4回路输出位数')
-        self.sendtoMainapp(message)
-        status , message = self.check( 'cuit2' , cfg['loop_5'] , '第5回路输出位数')
-        self.sendtoMainapp(message)
-        status , message = self.check( 'cuit3' , cfg['loop_6'] , '第6回路输出位数')
-        self.sendtoMainapp(message)
+        loop = int(cfg['loops'])
+        if( loop >= 1):
+            status , message = self.check( 'line5' , cfg['loop_1'] , '第1回路输出位数')
+            self.sendtoMainapp(message)
+        if( loop >= 2):
+            status , message = self.check( 'line6' , cfg['loop_2'] , '第2回路输出位数')
+            self.sendtoMainapp(message)
+        if( loop >= 3):
+            status , message = self.check( 'line7' , cfg['loop_3'] , '第3回路输出位数')
+            self.sendtoMainapp(message)
+        if( loop >= 4):
+            status , message = self.check( 'cuit1' , cfg['loop_4'] , '第4回路输出位数')
+            self.sendtoMainapp(message)
+        if( loop >= 5):
+            status , message = self.check( 'cuit2' , cfg['loop_5'] , '第5回路输出位数')
+            self.sendtoMainapp(message)
+        if( loop >= 6):
+            status , message = self.check( 'cuit3' , cfg['loop_6'] , '第6回路输出位数')
+            self.sendtoMainapp(message)
         
         status , message = self.check( 'line3' , cfg['breaker'] , '带不带断路器')
         self.sendtoMainapp(message)
@@ -422,11 +436,7 @@ class Mpdu2(MpduWeb):
         cfg = self.cfgs
         statusList = []
         messageList = []
-        line , loop = 1 , cfg['loops']
-        if( cfg['lines'] == 1 and cfg['loops'] == 1 ):
-            line = 1
-        else:
-            line = 3
+        line = int(cfg['lines'])
         for i in range(1 , line+1):
             Tenergy = 'Tenergy{0}'.format(i)
             status = 0
@@ -463,12 +473,15 @@ class Mpdu2(MpduWeb):
         self.driver.find_element_by_id("titlebar4").click()
         time.sleep(0.5)
         
+        #line = int(cfg['lines'])
+        line = 3
         jsSheet = 'var slave1 = document.getElementById(\"slave\").value;var claerset = createXmlRequest();claerset.onreadystatechange = clearrec;ajaxget(claerset, \"/setenergy?a=\" + slave1 + \"&b=\" + {0}+\"&\");'
-        for i in range(1 , 4):
+        for i in range(1,line+1):
             self.execJs(jsSheet.format(i))
-        time.sleep(0.5)
+            time.sleep(1)
+        time.sleep(1)
         self.driver.find_element_by_id("titlebar4").click()
-        time.sleep(0.5)
+        time.sleep(1)
         self.checkEnergy()
         
     def setTime(self):

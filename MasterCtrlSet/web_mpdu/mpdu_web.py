@@ -156,23 +156,19 @@ class MpduWeb:
             time.sleep(5)
             tt = self.driver.find_element_by_xpath('//table[2]/tbody/tr[2]/td[2]')
             #print(tt.text)
-            vStr = []
-            vStr = tt.text.split()
             if( cfg['versions'] == ''):
                 return 2,'软件版本空;2'
                 
-            for vv in vStr:
-                #print(vv)
-                if( vv in cfg['versions']):
-                    continue
-                else:
-                    return 0,'软件版本错误;0'
-            return 1,'软件版本正确;1'
+            if( cfg['versions'] in tt.text):
+                return 1,'软件版本正确;1'
+            else:
+                return 0,'软件版本错误;0'
         except UnexpectedAlertPresentException:
             message = '登陆失败，账号密码错误;0'
             return 0,message
             
     def macAddrCheck(self , ssid , value , parameter):
+        cfg = self.cfgs
         try:
             message =''
             self.driver.find_element_by_id(ssid)
@@ -182,11 +178,10 @@ class MpduWeb:
             return 2,message
         v = self.driver.find_element_by_id(ssid).get_attribute('value')
         ret = 1
-        if( "2C:26:5F:" in v ):
+        if( v == cfg['mac']):
             message ='设置{0}成功{1};'.format(parameter,value)+str(1)
         else:
-            message = '设置{0}失败，实际值{1}，期待值{2};'.format(parameter,v,value)+str(0)
-            ret = 0
+            message = '没有设置{0}，实际值{1}，当前值{2};'.format(parameter,v,cfg['mac'])+str(1)
         #sock.sendto(message.encode('utf-8-sig') , (dest_ip , dest_port))
         return ret,message
 
