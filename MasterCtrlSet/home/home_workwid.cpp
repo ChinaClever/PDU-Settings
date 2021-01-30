@@ -44,6 +44,8 @@ void Home_WorkWid::initFunSlot()
     mPro = mPacket->getPro();
     mItem = Cfg::bulid()->item;
     mPro->step = Test_End;
+    int cnt = MacAddr::bulid()->macCnt(mItem->mac);
+    ui->macCntLab->setNum(cnt);
 
     initLayout();
     initTypeComboBox();
@@ -129,6 +131,8 @@ void Home_WorkWid::updateResult()
     ui->timeLab->setStyleSheet(style);
     ui->groupBox_4->setEnabled(true);
     ui->startBtn->setText(tr("开始设置"));
+    int cnt = MacAddr::bulid()->macCnt(mItem->mac);
+    ui->macCntLab->setNum(cnt);
 }
 
 void Home_WorkWid::updateWid()

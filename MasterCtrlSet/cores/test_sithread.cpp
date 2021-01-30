@@ -66,8 +66,7 @@ bool Test_SiThread::envAlarmWrite()
 bool Test_SiThread::writeAlarmTh()
 {
     bool ret = true;
-    int size = mDt->lines;
-    if(size > 1) size = 3;
+    int size = mDev->data.size;
 
     for(int i=0; i<size; ++i) {
         ret = curAlarmWrite(i); if(!ret) break;
@@ -100,14 +99,13 @@ bool Test_SiThread::clearEle()
 
 bool Test_SiThread::readDev()
 {
+    bool ret = true;
     QString str = tr("开始读取设备信息");
-    bool ret = mRtu->readPduData();
-    if(ret) {
-        str += tr("正常");
-    } else {
-        str += tr("错误");
+    for(int i=0; i<5; ++i) {
+        ret = mRtu->readPduData(); if(ret) break;
+        Rtu_Modbus::bulid(this)->get()->changeBaudRate();
     }
-
+    if(ret) str += tr("正常"); else str += tr("错误");
     return  mLogs->updatePro(str, ret);
 }
 
@@ -117,7 +115,8 @@ bool Test_SiThread::checkLine()
     if(ret) {
         int line = 3;
         switch (mDev->dt.lines) {
-        case 0:  case 1: line = 1; break;
+        case 0:  line = 1; break;
+        case 1: line = 1; break;
         case 2:  line = 3;  break;
         }
 
@@ -130,35 +129,35 @@ bool Test_SiThread::checkLine()
     return ret;
 }
 
-
-bool Test_SiThread::setDev()
+bool Test_SiThread::setData()
 {
     QString str = tr("解锁设备");
     bool ret = mCtrl->unClock();
-    if(ret) str += tr("成功");
-    else str += tr("错误");
-
+    if(ret) str += tr("成功"); else str += tr("错误");
     ret = mLogs->updatePro(str, ret);
     if(ret) {
         str = tr("设备配置信息写入");
         ret = mCtrl->setDev();
-        if(ret) str += tr("正常");
-        else str += tr("错误");
-
+        if(ret) str += tr("正常"); else str += tr("错误");
         ret = mLogs->updatePro(str, ret);
-        if(ret) ret = checkDev();
     }
 
     return  ret;
 }
 
-bool Test_SiThread::checkDev()
+
+bool Test_SiThread::setDev()
 {
-    bool ret = checkLine();
-    if(ret)  {
-        ret = setAlarm();
-        if(ret) ret = clearEle();
-    }
+    bool ret = readDev();
+    if(ret) ret = setData();
+    if(ret) ret = setAlarm();
+    if(ret) ret = clearEle();
+
+   // if(ret) {
+        // ret = checkLine();
+     //   ret = setAlarm();
+     //   if(ret) ret = clearEle();
+   // }
 
     return ret;
 }

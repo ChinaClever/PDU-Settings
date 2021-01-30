@@ -11,6 +11,7 @@ public:
 
     QString macAdd(const QString &in);
     int macToChar(const QString &in, uchar *buf);
+    int macCnt(const QString &in);
 
 protected:
     QString intToMac(quint64 v);

@@ -15,7 +15,6 @@ Home_MpduParamWid::~Home_MpduParamWid()
     delete ui;
 }
 
-
 void Home_MpduParamWid::initFunSlot()
 {
     mItem = Cfg::bulid()->item;
@@ -100,8 +99,15 @@ void Home_MpduParamWid::on_verBox_currentIndexChanged(int index)
 void Home_MpduParamWid::on_boardSpin_valueChanged(int arg1)
 {
     bool en = true;
+    int v = ui->outputSpin->value() / arg1;
     for(int i=0; i<3; ++i) {
-        if(i < arg1) en = false; else {en = true; mBoards[i]->setValue(0);}
+        if(i < arg1) {
+            en = false;
+            mBoards[i]->setValue(v);
+        } else {
+            en = true;
+            mBoards[i]->setValue(0);
+        }
         mBoards[i]->setHidden(en);
     }
 }
@@ -110,8 +116,48 @@ void Home_MpduParamWid::on_loopBox_currentIndexChanged(int index)
 {
     bool en = true;
     if(index >= 4) index++;
+    int v = ui->outputSpin->value() / (index+1);
     for(int i=0; i<6; ++i) {
-        if(i > index){en = true; mLoops[i]->setValue(0);} else en = false;
+        if(i > index) {
+            en = true;
+            mLoops[i]->setValue(0);
+        } else {
+            en = false;
+            mLoops[i]->setValue(v);
+        }
         mLoops[i]->setHidden(en);
     }
+}
+
+bool Home_MpduParamWid::outputCheck()
+{
+    int res = 0;
+    bool ret = true;
+    int v = ui->outputSpin->value();
+    for(int i=0; i<3; ++i) {
+        res += mBoards[i]->value();
+    }
+    if(v != res) ret = false;
+    return ret;
+}
+
+bool Home_MpduParamWid::loopCheck()
+{
+    int res = 0;
+    bool ret = true;
+    int v = ui->outputSpin->value();
+    for(int i=0; i<6; ++i) {
+        res += mLoops[i]->value();
+    }
+    if(v != res) ret = false;
+    return ret;
+}
+
+void Home_MpduParamWid::on_outputSpin_valueChanged(int)
+{
+    int v = ui->boardSpin->value();
+    on_boardSpin_valueChanged(v);
+
+    v = ui->loopBox->currentIndex();
+    on_loopBox_currentIndexChanged(v);
 }

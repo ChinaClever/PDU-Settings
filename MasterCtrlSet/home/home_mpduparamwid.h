@@ -17,6 +17,8 @@ public:
     ~Home_MpduParamWid();
 
     void updateType();
+    bool loopCheck();
+    bool outputCheck();
 
 protected:
     void initType();
@@ -26,8 +28,9 @@ protected slots:
     void initFunSlot();
 
 private slots:
-    void on_verBox_currentIndexChanged(int index);
+    void on_outputSpin_valueChanged(int);
     void on_boardSpin_valueChanged(int arg1);
+    void on_verBox_currentIndexChanged(int index);
     void on_loopBox_currentIndexChanged(int index);
 
 private:

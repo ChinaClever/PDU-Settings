@@ -55,7 +55,7 @@ bool sDataPacket::updatePro(const QString &str, bool pass, int sec)
 bool sDataPacket::delay(int s)
 {
     bool ret = true;
-    for(int i=0; i<2*s; ++i) {
+    for(int i=0; i<s; ++i) {
         if((pro->step < Test_Over)  || (pro->step > Test_End)){
             QThread::msleep(100);
         } else {
