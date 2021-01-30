@@ -33,17 +33,17 @@ bool Test_CoreThread::startProcess()
 {
     QString exe = "pyweb_ctrlset_";
     if(MPDU == mItem->modeId) {
-        exe += "mpdu.run";
-    } else exe += "ip.run";
+        exe += "mpdu.exe";
+    } else exe += "ip.exe";
 
     mProcess->start(exe);
     bool ret = checkNet();
     if(ret) {
-        ret = mProcess->waitForFinished(100*1000);
+        ret = mProcess->waitForFinished(120*1000);
     }
     mProcess->close();
 
-    return ret;
+    return mLogs->updatePro(tr("网页设置功能退出"), ret);
 }
 
 void Test_CoreThread::updateMacAddr()
@@ -58,9 +58,15 @@ void Test_CoreThread::updateMacAddr()
 
 void Test_CoreThread::workResult(bool res)
 {
-    bool ret = mSn->snEnter();
+    res = mSn->snEnter();
     QString str = tr("最终结果");
-    if(res&&ret) str += tr("通过"); else str += tr("失败");
+    if(mPro->result != Test_Fail) {
+        res = true;
+        str += tr("通过");
+    } else {
+        res = false;
+        str += tr("失败");
+    }
 
     mLogs->updatePro(str, res);
     mLogs->saveLogs();
