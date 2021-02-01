@@ -58,7 +58,7 @@ void Test_CoreThread::updateMacAddr()
 
 void Test_CoreThread::workResult(bool res)
 {
-    res = mSn->snEnter();
+    if(mItem->enSn)mSn->snEnter();
     QString str = tr("最终结果");
     if(mPro->result != Test_Fail) {
         res = true;
@@ -76,6 +76,7 @@ void Test_CoreThread::workResult(bool res)
 void Test_CoreThread::workDown()
 {
     bool ret = true;
+    mItem->sn.clear();
     mLogs->updatePro(tr("自动设置已启动"));
     if(mItem->modeId) {
         ret = startProcess();

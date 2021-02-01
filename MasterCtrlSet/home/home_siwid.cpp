@@ -47,7 +47,6 @@ void Home_SiWid::updateType()
     dt->lines = ui->lineBox->currentIndex();
     dt->standar = ui->sBox->currentIndex();
     dt->series = ui->curBox->currentIndex();
-    mItem->ledSi = ui->ledCheck->isChecked();
 }
 
 bool Home_SiWid::inputCheck()

@@ -48,7 +48,7 @@ struct sCfgItem
     sCount cnt;
     int logCount;
 
-    bool ledSi;
+    bool enSn;
     uchar pcNum;
     ushort currentNum;
     SerialPort *com;
