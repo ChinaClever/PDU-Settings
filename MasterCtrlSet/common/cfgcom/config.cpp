@@ -70,7 +70,7 @@ void Cfg::initCfgDev()
     item->ledSi = false;
     item->addr = read("addr", 1,"Sys").toInt();
     item->modeId = read("modeId", 1,"Sys").toInt();
-    //item->user = read("user", "", "User").toString();
+    item->user = read("user", "", "User").toString();
 }
 
 void Cfg::writeCfgDev()
@@ -78,11 +78,12 @@ void Cfg::writeCfgDev()
     writeCnt();
     write("addr", item->addr, "Sys");
     write("modeId", item->modeId, "Sys");
-    //write("user", item->user, "User");
+    write("user", item->user, "User");
 }
 
 void Cfg::initCnt()
 {
+    item->cnt.cnt = read("cnt", 0, "Count").toInt();
     item->cnt.all = read("all", 0, "Count").toInt();
     item->cnt.ok = read("ok", 0, "Count").toInt();
     item->cnt.err = read("err", 0, "Count").toInt();
@@ -91,10 +92,12 @@ void Cfg::initCnt()
 
 void Cfg::writeCnt()
 {
+    write("cnt", item->cnt.cnt, "Count");
     write("all", item->cnt.all, "Count");
     write("ok", item->cnt.ok, "Count");
     write("err", item->cnt.err, "Count");
     write("mac", item->mac, "Count");
+    write("user", item->user, "User");
 }
 
 

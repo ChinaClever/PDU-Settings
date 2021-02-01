@@ -70,6 +70,7 @@ bool Test_Logs::writeLog()
     it.user = mItem->user;
     it.sn = mItem->sn;
 
+    mItem->cnt.cnt--;
     mItem->cnt.all += 1;
     if(mPro->result != Test_Fail) {
         it.result = tr("通过");

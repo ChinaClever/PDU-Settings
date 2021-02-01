@@ -44,8 +44,10 @@ void Home_WorkWid::initFunSlot()
     mPro = mPacket->getPro();
     mItem = Cfg::bulid()->item;
     mPro->step = Test_End;
-    int cnt = MacAddr::bulid()->macCnt(mItem->mac);
+    int cnt = MacAddr::bulid()->macCnt(mItem->startMac, mItem->mac);
     ui->macCntLab->setNum(cnt);
+    ui->cntSpin->setValue(mItem->cnt.cnt);
+    ui->userEdit->setText(mItem->user);
 
     initLayout();
     initTypeComboBox();
@@ -131,8 +133,13 @@ void Home_WorkWid::updateResult()
     ui->timeLab->setStyleSheet(style);
     ui->groupBox_4->setEnabled(true);
     ui->startBtn->setText(tr("开始设置"));
-    int cnt = MacAddr::bulid()->macCnt(mItem->mac);
+    ui->cntSpin->setValue(mItem->cnt.cnt);
+    int cnt = MacAddr::bulid()->macCnt(mItem->startMac, mItem->mac);
     ui->macCntLab->setNum(cnt);
+    if(mItem->cnt.cnt < 1) {
+        mItem->user.clear();
+        ui->userEdit->setText(mItem->user);
+    }
 }
 
 void Home_WorkWid::updateWid()
@@ -180,8 +187,10 @@ bool Home_WorkWid::initWid()
     bool ret = initSerial();
     if(ret) {
         if(mItem->user.isEmpty()) {
-            MsgBox::critical(this, tr("请先填写客户名称！"));
-            return false;
+            MsgBox::critical(this, tr("请先填写客户名称！")); return false;
+        }
+        if(mItem->cnt.cnt < 1) {
+            MsgBox::critical(this, tr("请先填写订单剩余数量！")); return false;
         }
 
         mPacket->init();
@@ -221,10 +230,18 @@ void Home_WorkWid::on_setBtn_clicked()
     if(en) str = tr("保存");
 
     ui->setBtn->setText(str);
+    ui->cntSpin->setEnabled(en);
     ui->userEdit->setEnabled(en);
     ui->startBtn->setDisabled(en);
     ui->typeComboBox->setDisabled(en);
-    mItem->user = ui->userEdit->text();
+    mItem->cnt.cnt = ui->cntSpin->value();
+    if(mItem->user != ui->userEdit->text()) {
+        mItem->user = ui->userEdit->text();
+        sCount *cnt = &(mItem->cnt);
+        cnt->all = cnt->ok = cnt->err = 0;
+        Cfg::bulid()->writeCnt();
+    }
+
     QTimer::singleShot(50,this,SLOT(saveFunSlot()));
 }
 
@@ -258,4 +275,5 @@ void Home_WorkWid::initTypeComboBox()
     ui->typeComboBox->setCurrentIndex(index);
     emit typeSig(index);
 }
+
 

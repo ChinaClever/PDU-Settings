@@ -142,10 +142,11 @@ QString MacAddr::macAdd(const QString &in)
     return ret.replace("-",":");
 }
 
-int MacAddr::macCnt(const QString &in)
+int MacAddr::macCnt(const QString &start, const QString &end)
 {
-    quint64 res = macToInt("2C-26-5F-38-00-01");
-    QString mac = QString(in).replace(":","-");
+    QString mac = QString(start).replace(":","-");
+    quint64 res = macToInt(mac);
+    mac = QString(end).replace(":","-");
     int ret = macToInt(mac) - res;
     return ret;
 }

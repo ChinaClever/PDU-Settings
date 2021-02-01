@@ -11,7 +11,7 @@ class IpV3(IpWeb):
         self.setThreshold()
         self.clearLogs()
         #self.resetFactory()
-        self.driver.close()
+        self.driver.quit()
 
     def setTime(self):
         self.divClick(8)

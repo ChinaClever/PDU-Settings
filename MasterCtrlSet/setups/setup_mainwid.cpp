@@ -6,6 +6,7 @@
 #include "setup_mainwid.h"
 #include "ui_setup_mainwid.h"
 #include "versiondlg.h"
+#include "macaddr.h"
 
 Setup_MainWid::Setup_MainWid(QWidget *parent) :
     QWidget(parent),
@@ -31,6 +32,7 @@ void Setup_MainWid::initFunSlot()
     ui->stackedWid->addWidget(mUserWid);
     QTimer::singleShot(2*1000,this,SLOT(checkPcNumSlot()));
 
+    initMac();
     timer = new QTimer(this);
     timer->start(3*1000);
     connect(timer, SIGNAL(timeout()),this, SLOT(timeoutDone()));
@@ -58,6 +60,23 @@ void Setup_MainWid::initSerial()
     mItem->com = mComWid->initSerialPort(tr("PDU"));
 }
 
+void Setup_MainWid::initMac()
+{
+    mItem->startMac = "2C-26-5F-38-00-01";
+    mItem->endMac = "2C-26-5F-3B-FF-FF";
+    if(mItem->pcNum > 1) {
+        mItem->startMac = "2C-26-5F-3C-00-01";
+        mItem->endMac = "2C-26-5F-3F-FF-FF";
+    }
+    ui->startMacLab->setText(mItem->startMac);
+    ui->endMacLab->setText(mItem->endMac);
+    int cnt = MacAddr::bulid()->macCnt(mItem->startMac, mItem->mac);
+    int res = MacAddr::bulid()->macCnt(mItem->mac, mItem->endMac);
+    if((cnt < 0) || res < 0) {
+        mItem->mac =  mItem->startMac;
+    }
+    updateMac();
+}
 
 void Setup_MainWid::initLogCount()
 {
@@ -77,29 +96,11 @@ void Setup_MainWid::writeLogCount()
     Cfg::bulid()->write("log_count", arg1, "Sys");
 }
 
-void Setup_MainWid::updateCnt()
+void Setup_MainWid::updateMac()
 {
-    sCount *cnt = &(mItem->cnt);
-    ui->allLab->setNum(cnt->all);
-    ui->okLab->setNum(cnt->ok);
-    ui->errLab->setNum(cnt->err);
+    int ret =  MacAddr::bulid()->macCnt(mItem->mac, mItem->endMac);
+    ui->cntMacLab->setNum(ret);
 }
-
-void Setup_MainWid::on_resBtn_clicked()
-{
-    bool ret = usr_land_jur();
-    if(ret) {
-        sCount *cnt = &(mItem->cnt);
-        cnt->all = cnt->ok = cnt->err = 0;
-        updateCnt();
-        mItem->user.clear();
-        Cfg::bulid()->writeCnt();
-        MsgBox::information(this, tr("计数已重置！"));
-    } else {
-        MsgBox::critical(this, tr("你无权进行此操作"));
-    }
-}
-
 
 void Setup_MainWid::initPcNum()
 {
@@ -110,12 +111,10 @@ void Setup_MainWid::initPcNum()
     ui->pcNumSpin->setValue(value);
 }
 
-
-
 void Setup_MainWid::writePcNum()
 {
     int arg1 = ui->pcNumSpin->value();
-    mItem->pcNum = arg1;
+    mItem->pcNum = arg1; initMac();
     Cfg::bulid()->write("pc_num", arg1, "Sys");
 }
 
@@ -134,6 +133,7 @@ void Setup_MainWid::on_pcBtn_clicked()
         ret = false;
         writePcNum();
         writeLogCount();
+        Cfg::bulid()->writeCnt();
     } else {
         str = tr("保存");
     }
@@ -151,5 +151,6 @@ void Setup_MainWid::on_verBtn_clicked()
 
 void Setup_MainWid::timeoutDone()
 {
-    updateCnt();
+    updateMac();
 }
+

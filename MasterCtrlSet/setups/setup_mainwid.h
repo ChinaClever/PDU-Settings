@@ -17,23 +17,21 @@ public:
     ~Setup_MainWid();
 
 protected:
+    void initMac();
     void initSerial();
-    void updateCnt();
+    void updateMac();
 
     void initLogCount();
     void writeLogCount();
     void initPcNum();
-    void writePcNum();
+    void writePcNum();    
 
 protected slots:
     void timeoutDone();
     void initFunSlot();
     void checkPcNumSlot();
     void on_pcBtn_clicked();
-
-private slots:
     void on_verBtn_clicked();
-    void on_resBtn_clicked();
 
 private:
     Ui::Setup_MainWid *ui;
