@@ -23,8 +23,9 @@ enum eDevTypes {
  */
 struct sCount
 {
-    sCount() {all=ok=err =0;}
+    sCount() {all=ok=err=cnt=0;}
 
+    int cnt;
     int all;
     int ok;
     int err;
@@ -40,6 +41,9 @@ struct sCfgItem
     QString mac;
     QString user;
     QString dev_type;
+
+    QString startMac;
+    QString endMac;
 
     sCount cnt;
     int logCount;
