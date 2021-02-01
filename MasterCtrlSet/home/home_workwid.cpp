@@ -276,4 +276,7 @@ void Home_WorkWid::initTypeComboBox()
     emit typeSig(index);
 }
 
-
+void Home_WorkWid::on_snCheckBox_clicked(bool checked)
+{
+    mItem->enSn = checked;
+}

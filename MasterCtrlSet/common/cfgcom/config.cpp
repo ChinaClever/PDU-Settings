@@ -67,7 +67,7 @@ void Cfg::initCurrentNum()
 
 void Cfg::initCfgDev()
 {
-    item->ledSi = false;
+    item->enSn = true;
     item->addr = read("addr", 1,"Sys").toInt();
     item->modeId = read("modeId", 1,"Sys").toInt();
     item->user = read("user", "", "User").toString();
