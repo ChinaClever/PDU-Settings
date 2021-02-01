@@ -62,11 +62,11 @@ void Setup_MainWid::initSerial()
 
 void Setup_MainWid::initMac()
 {
-    mItem->startMac = "2C-26-5F-38-00-01";
-    mItem->endMac = "2C-26-5F-3B-FF-FF";
+    mItem->startMac = "2C:26:5F:38:00:01";
+    mItem->endMac = "2C:26:5F:3B:FF:FF";
     if(mItem->pcNum > 1) {
-        mItem->startMac = "2C-26-5F-3C-00-01";
-        mItem->endMac = "2C-26-5F-3F-FF-FF";
+        mItem->startMac = "2C:26:5F:3C:00:01";
+        mItem->endMac = "2C:26:5F:3F:FF:FF";
     }
     ui->startMacLab->setText(mItem->startMac);
     ui->endMacLab->setText(mItem->endMac);
