@@ -139,8 +139,9 @@ void Setup_MainWid::on_pcBtn_clicked()
     }
 
     ui->pcBtn->setText(str);
-    ui->pcNumSpin->setEnabled(ret);
     ui->logCountSpin->setEnabled(ret);
+    if(mItem->pcNum) ret = false;
+    ui->pcNumSpin->setEnabled(ret);
 }
 
 void Setup_MainWid::on_verBtn_clicked()
