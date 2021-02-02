@@ -893,7 +893,7 @@
            </font>
           </property>
           <property name="text">
-           <string>无论带不带传感器盒子，都默认为不带</string>
+           <string>如果带传感器盒子，需要手动设置及其阈值</string>
           </property>
          </widget>
         </item>
