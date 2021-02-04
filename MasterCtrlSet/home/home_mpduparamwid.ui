@@ -66,7 +66,7 @@
        <number>0</number>
       </property>
       <item row="0" column="0">
-       <widget class="QLabel" name="label_13">
+       <widget class="QLabel" name="label_1">
         <property name="minimumSize">
          <size>
           <width>60</width>
@@ -95,9 +95,20 @@
           <height>30</height>
          </size>
         </property>
-        <property name="currentIndex">
-         <number>1</number>
+        <property name="maximumSize">
+         <size>
+          <width>200</width>
+          <height>16777215</height>
+         </size>
         </property>
+        <property name="currentIndex">
+         <number>0</number>
+        </property>
+        <item>
+         <property name="text">
+          <string>华为</string>
+         </property>
+        </item>
         <item>
          <property name="text">
           <string>一期</string>
@@ -111,7 +122,7 @@
        </widget>
       </item>
       <item row="0" column="2">
-       <widget class="QLabel" name="label_26">
+       <widget class="QLabel" name="label_2">
         <property name="minimumSize">
          <size>
           <width>60</width>
@@ -149,7 +160,7 @@
        </widget>
       </item>
       <item row="1" column="0">
-       <widget class="QLabel" name="label">
+       <widget class="QLabel" name="label_3">
         <property name="minimumSize">
          <size>
           <width>60</width>
@@ -191,7 +202,7 @@
        </widget>
       </item>
       <item row="1" column="2">
-       <widget class="QLabel" name="label_3">
+       <widget class="QLabel" name="label_4">
         <property name="minimumSize">
          <size>
           <width>60</width>
@@ -229,7 +240,7 @@
        </widget>
       </item>
       <item row="2" column="0">
-       <widget class="QLabel" name="label_2">
+       <widget class="QLabel" name="label_5">
         <property name="minimumSize">
          <size>
           <width>60</width>
@@ -289,7 +300,7 @@
        </widget>
       </item>
       <item row="2" column="2">
-       <widget class="QLabel" name="label_7">
+       <widget class="QLabel" name="label_6">
         <property name="minimumSize">
          <size>
           <width>60</width>
@@ -331,7 +342,7 @@
        </widget>
       </item>
       <item row="3" column="0">
-       <widget class="QLabel" name="label_5">
+       <widget class="QLabel" name="label_7">
         <property name="minimumSize">
          <size>
           <width>60</width>
@@ -430,7 +441,7 @@
        </widget>
       </item>
       <item row="4" column="0">
-       <widget class="QLabel" name="label_6">
+       <widget class="QLabel" name="label_9">
         <property name="minimumSize">
          <size>
           <width>60</width>
@@ -472,7 +483,7 @@
        </widget>
       </item>
       <item row="4" column="2">
-       <widget class="QLabel" name="label_4">
+       <widget class="QLabel" name="label_10">
         <property name="minimumSize">
          <size>
           <width>60</width>
@@ -531,7 +542,7 @@
       <item row="0" column="0">
        <layout class="QHBoxLayout" name="horizontalLayout_4">
         <item>
-         <widget class="QLabel" name="label_9">
+         <widget class="QLabel" name="label_91">
           <property name="minimumSize">
            <size>
             <width>140</width>
@@ -575,7 +586,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QLabel" name="label_10">
+         <widget class="QLabel" name="label_100">
           <property name="minimumSize">
            <size>
             <width>60</width>
@@ -887,6 +898,12 @@
         </item>
         <item>
          <widget class="QLabel" name="label_14">
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>30</height>
+           </size>
+          </property>
           <property name="font">
            <font>
             <pointsize>9</pointsize>
