@@ -94,7 +94,6 @@ void Home_MpduParamWid::updateType()
 
 void Home_MpduParamWid::setItHidden(bool hidden)
 {
-    //ui->versionEdit->setHidden(hidden);
     ui->lineBox->setHidden(hidden);
     ui->outputSpin->setHidden(hidden);
     ui->loopBox->setHidden(hidden);
@@ -102,7 +101,6 @@ void Home_MpduParamWid::setItHidden(bool hidden)
     ui->modbusBox->setHidden(hidden);
     ui->standardBox->setHidden(hidden);
 
-    //ui->label_2->setHidden(hidden);
     ui->label_3->setHidden(hidden);
     ui->label_4->setHidden(hidden);
     ui->label_5->setHidden(hidden);
