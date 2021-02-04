@@ -24,6 +24,7 @@ protected:
     void initType();
     void initWid();
     void setItemEnable(int id, int en);
+    void setItHidden(bool hidden);
 
 protected slots:
     void initFunSlot();

@@ -60,6 +60,7 @@ void Home_MpduParamWid::initType()
     ui->versionEdit->setText(dt->versions);
     ui->boardSpin->setValue(dt->boards);
 
+    on_verBox_currentIndexChanged(dt->mpdu_ver);
     for(int i=0; i<6; ++i) mLoops[i]->setValue(dt->loop[i]);
     for(int i=0; i<3; ++i) mBoards[i]->setValue(dt->board[i]);
 }
@@ -91,9 +92,31 @@ void Home_MpduParamWid::updateType()
     for(int i=0; i<3; ++i) dt->board[i] = mBoards[i]->value();
 }
 
+void Home_MpduParamWid::setItHidden(bool hidden)
+{
+    ui->versionEdit->setHidden(hidden);
+    ui->lineBox->setHidden(hidden);
+    ui->outputSpin->setHidden(hidden);
+    ui->loopBox->setHidden(hidden);
+    ui->breakerBox->setHidden(hidden);
+    ui->modbusBox->setHidden(hidden);
+    ui->standardBox->setHidden(hidden);
+
+    ui->label_2->setHidden(hidden);
+    ui->label_3->setHidden(hidden);
+    ui->label_4->setHidden(hidden);
+    ui->label_5->setHidden(hidden);
+    ui->label_6->setHidden(hidden);
+    ui->label_8->setHidden(hidden);
+    ui->label_10->setHidden(hidden);
+}
+
 void Home_MpduParamWid::on_verBox_currentIndexChanged(int index)
 {
-    ui->groupBox_2->setHidden(!index);
+    bool hidden = true;
+    if(index) hidden = false; setItHidden(hidden);
+    if(1 == index) hidden = true;
+     ui->groupBox_2->setHidden(hidden);
 }
 
 void Home_MpduParamWid::on_boardSpin_valueChanged(int arg1)
