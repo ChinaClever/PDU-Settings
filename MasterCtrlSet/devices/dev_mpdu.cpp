@@ -37,7 +37,7 @@ void Dev_Mpdu::initType()
     ptr->modbus = read("modbus", 0).toInt();
     ptr->boards = read("boards", 3).toInt();
     ptr->level = read("level", 0).toInt();
-    ptr->mpdu_ver = read("mpdu_ver", 1).toInt();
+    ptr->mpdu_ver = read("mpdu_ver", 2).toInt();
 
     for(int i=0; i<6; ++i) ptr->loop[i] = read(QString("loop_%1").arg(i+1), 8).toInt();
     for(int i=0; i<3; ++i) ptr->board[i] = read(QString("board_%1").arg(i+1), 8).toInt();
