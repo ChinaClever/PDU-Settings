@@ -159,7 +159,7 @@ class MpduWeb:
             if( cfg['versions'] == ''):
                 return 2,'软件版本空;2'
                 
-            if( cfg['versions'] in tt.text):
+            if( cfg['versions'] in tt.text and len(str(cfg['versions'])) > 2 ):
                 return 1,'软件版本正确;1'
             else:
                 return 0,'软件版本错误;0'
