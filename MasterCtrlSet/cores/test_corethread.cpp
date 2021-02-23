@@ -29,19 +29,24 @@ bool Test_CoreThread::checkNet()
     return mLogs->updatePro(str, ret);
 }
 
+
+
 bool Test_CoreThread::startProcess()
 {
     QString exe = "pyweb_ctrlset_";
-    if(MPDU == mItem->modeId) {
-        exe += "mpdu.exe";
-    } else exe += "ip.exe";
+    switch (mItem->modeId) {
+    case IP_PDU:  exe += "ip"; break;
+    case MPDU:  exe += "mpdu"; break;
+    case ZPDU:  exe += "zpdu"; break;
+    case RPDU:  exe += "rpdu"; break;
+    case ATS:  exe += "ats"; break;
+    }
 
+    exe += ".exe";
     mRead->mac = true;
     mProcess->start(exe);
     bool ret = checkNet();
-    if(ret) {
-        ret = mProcess->waitForFinished(120*1000);
-    }
+    if(ret) ret = mProcess->waitForFinished(120*1000);
     mProcess->close();
 
     return mLogs->updatePro(tr("网页设置功能退出"), ret);

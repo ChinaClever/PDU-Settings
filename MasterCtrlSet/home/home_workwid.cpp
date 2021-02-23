@@ -266,10 +266,20 @@ void Home_WorkWid::on_typeComboBox_currentIndexChanged(int index)
 
 void Home_WorkWid::initTypeComboBox()
 {
-    int index = mItem->modeId;
     bool en = false;
-    if(index < 2) en = true;
-    ui->outputBtn->setHidden(en);
+    int index = mItem->modeId;
+    mItem->enSn = ui->snCheckBox->isChecked();
+    if(index > MPDU) {
+        en = true;
+        mItem->enSn = false;
+        ui->outputBtn->setHidden(en);
+    } else if(index == MPDU) {
+        ui->outputBtn->setHidden(false);
+    } else {
+        ui->outputBtn->setHidden(true);
+    }
+    ui->setBtn->setHidden(en);
+    ui->snCheckBox->setHidden(en);
 
     mSetOpDlg->updateIndex(index);
     ui->typeComboBox->setCurrentIndex(index);
