@@ -42,4 +42,13 @@ void Home_MainWid::initWid()
     ui->tabWidget->addTab(mMpduWid, tr("MPDU参数设置"));
     connect(mMpduWid, SIGNAL(errSig()), mWorkWid, SLOT(errSlot()));
     connect(mWorkWid, SIGNAL(enabledSig(bool)), mMpduWid, SLOT(enabledSlot(bool)));
+
+    mZpduWid = new Home_ZpduWid(ui->tabWidget);
+    ui->tabWidget->addTab(mZpduWid, tr("ZPDU参数设置"));
+
+    mRpduWid = new Home_RpduWid(ui->tabWidget);
+    ui->tabWidget->addTab(mRpduWid, tr("RPDU参数设置"));
+
+    mAtsWid = new Home_AtsWid(ui->tabWidget);
+    ui->tabWidget->addTab(mAtsWid, tr("ATS-PDU参数设置"));
 }

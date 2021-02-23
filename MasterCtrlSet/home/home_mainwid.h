@@ -24,10 +24,13 @@ protected:
 
 private:
     Ui::Home_MainWid *ui;
-    Home_WorkWid *mWorkWid;
-    Home_MpduWid *mMpduWid;
     Home_IpWid *mIpWid;
     Home_SiWid *mSiWid;
+    Home_WorkWid *mWorkWid;
+    Home_MpduWid *mMpduWid;
+    Home_ZpduWid *mZpduWid;
+    Home_RpduWid *mRpduWid;
+    Home_AtsWid *mAtsWid;
 };
 
 #endif // HOME_MAINWID_H
