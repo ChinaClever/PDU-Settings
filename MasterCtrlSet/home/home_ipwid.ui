@@ -38,6 +38,9 @@
       <string>IP-PDU后台参数设置区</string>
      </property>
      <layout class="QGridLayout" name="gridLayout">
+      <property name="verticalSpacing">
+       <number>0</number>
+      </property>
       <item row="0" column="1">
        <widget class="QComboBox" name="ipTypeBox">
         <property name="minimumSize">

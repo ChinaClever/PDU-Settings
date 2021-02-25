@@ -2,7 +2,7 @@
 #define HOME_WORKWID_H
 
 #include <QWidget>
-#include "home_mpduwid.h"
+#include "home_atswid.h"
 #include "test_corethread.h"
 
 namespace Ui {

@@ -158,6 +158,8 @@ public:
     sDevData *getIp() {return ip;}
     sDevData *getMpdu() {return mpdu;}
     sDevData *getZpdu() {return zpdu;}
+    sDevData *getRpdu() {return rpdu;}
+    sDevData *getAts() {return ats;}
     sProgress *getPro() {return pro;}
 
     bool updatePro(const QString &str, bool pass=true, int sec=1);
@@ -167,6 +169,8 @@ private:
     sDevData *ip;
     sDevData *mpdu;
     sDevData *zpdu;
+    sDevData *rpdu;
+    sDevData *ats;
     sProgress *pro;
 };
 
