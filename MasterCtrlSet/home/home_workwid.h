@@ -46,7 +46,6 @@ private slots:
     void on_startBtn_clicked();
     void on_outputBtn_clicked();
     void on_typeComboBox_currentIndexChanged(int index);
-
     void on_snCheckBox_clicked(bool checked);
 
 public slots:

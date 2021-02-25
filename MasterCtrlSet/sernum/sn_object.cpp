@@ -14,6 +14,7 @@ Sn_Object::Sn_Object(QObject *parent) : QThread(parent)
 void Sn_Object::initFunSlot()
 {
     mModbus = Rtu_Modbus::bulid(this)->get();
+    if(!mModbus) QTimer::singleShot(150,this,SLOT(initFunSlot()));
 }
 
 void Sn_Object::initDev()
