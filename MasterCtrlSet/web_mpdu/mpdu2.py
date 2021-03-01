@@ -525,4 +525,3 @@ class Mpdu2(MpduWeb):
                 lists[index].append(int(cfg[max]))
                 index += 1
         return lists
-            

@@ -84,10 +84,12 @@ void Test_CoreThread::workResult(bool res)
     mLogs->updatePro(str, res);
     mLogs->saveLogs();
     mPro->step = Test_Over;
+    qDebug()<<"over"<<endl;
 }
 
 void Test_CoreThread::workDown()
 {
+    qDebug()<<"workDown"<<endl;
     bool ret = true;
     mItem->sn.clear();
     mLogs->updatePro(tr("自动设置已启动"));
@@ -105,6 +107,7 @@ void Test_CoreThread::run()
 {
     if(isRun) return;
     isRun = true;
+
     updateDev();
     workDown();
     isRun = false;

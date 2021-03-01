@@ -13,7 +13,7 @@ class Rpdu(RpduWeb):
         self.sendtoMainapp(message)
         if(intRet == 0):
             return
-        
+
         time.sleep(1)
         self.changetocorrect()
         self.setCorrect1()
@@ -42,7 +42,8 @@ class Rpdu(RpduWeb):
     
     def setCorrect1(self):
         cfg = self.cfgs
-        time.sleep(3) 
+        time.sleep(3)
+
         if (len(cfg['mac']) > 5  ):#NoSuchElementException
             strMac =  cfg['mac']
         try:

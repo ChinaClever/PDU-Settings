@@ -59,7 +59,7 @@ class Ats(AtsWeb):
             
         else:
             self.sendtoMainapp('MAC-1')
-        
+
         #time.sleep(0.35)
         #self.driver.back()
         #self.divClick(9)
@@ -76,4 +76,4 @@ class Ats(AtsWeb):
             self.sendtoMainapp(message)
         
         self.driver.back()
-            
+

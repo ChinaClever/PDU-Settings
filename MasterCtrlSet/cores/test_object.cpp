@@ -24,6 +24,7 @@ Test_Object::~Test_Object()
 
 void Test_Object::updateDev()
 {
+    qDebug()<<"updateDev"<<endl;
     switch (mItem->modeId) {
     case SI_PDU: mObj = Dev_SiCfg::bulid(this); break;
     case IP_PDU: mObj = Dev_IpCfg::bulid(this); break;

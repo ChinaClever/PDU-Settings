@@ -58,7 +58,6 @@ class Zpdu(ZpduWeb):
                 return
         else:
             self.sendtoMainapp('MAC-1')
-        
 
     def checkId(self , id):
         try:
