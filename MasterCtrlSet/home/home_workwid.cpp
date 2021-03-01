@@ -12,7 +12,7 @@ Home_WorkWid::Home_WorkWid(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    QTimer::singleShot(450,this,SLOT(initFunSlot()));
+    QTimer::singleShot(250,this,SLOT(initFunSlot()));
 }
 
 Home_WorkWid::~Home_WorkWid()
@@ -170,11 +170,17 @@ void Home_WorkWid::timeoutDone()
 
 bool Home_WorkWid::initSerial()
 {
-    bool ret = mItem->com->isOpened();
+    bool ret = true;
+    if(mItem->modeId <= MPDU) {
+        ret = mItem->com->isOpened();
+        mItem->dev_type.clear();
+    } else {
+         mItem->dev_type = ui->typeComboBox->currentText();
+    }
+
     if(ret){
         mId = 1;
         mItem->sn.clear();
-        mItem->dev_type.clear();
     } else {
         MsgBox::critical(this, tr("请先打开串口")); return ret;
     }
@@ -278,7 +284,7 @@ void Home_WorkWid::initTypeComboBox()
     } else {
         ui->outputBtn->setHidden(true);
     }
-    ui->setBtn->setHidden(en);
+    //ui->setBtn->setHidden(en);
     ui->snCheckBox->setHidden(en);
 
     mSetOpDlg->updateIndex(index);

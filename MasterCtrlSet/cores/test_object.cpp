@@ -30,6 +30,9 @@ void Test_Object::updateDev()
     case MPDU: mObj = Dev_Mpdu::bulid(this); break;
     }
 
-    mDev = mObj->getDev();
-    mDt = &(mDev->dt);
+    if(mObj != NULL)
+    {
+        mDev = mObj->getDev();
+        mDt = &(mDev->dt);
+    }
 }

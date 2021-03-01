@@ -62,6 +62,8 @@ class MpduHuawei(MpduWeb):
         time.sleep(1.5)
         #print(datetime.datetime.now())
         self.driver.quit()
+        #print(datetime.datetime.now())
+        time.sleep(3)
         
 
     def changetocorrect(self):
