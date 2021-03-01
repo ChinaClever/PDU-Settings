@@ -44,10 +44,10 @@ bool Test_CoreThread::startProcess()
 
     exe += ".exe";
     mRead->mac = true;
+    mProcess->close();
     mProcess->start(exe);
     bool ret = checkNet();
     if(ret) ret = mProcess->waitForFinished(120*1000);
-    mProcess->close();
 
     return mLogs->updatePro(tr("网页设置功能退出"), ret);
 }
