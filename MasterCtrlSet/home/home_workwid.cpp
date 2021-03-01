@@ -295,5 +295,5 @@ void Home_WorkWid::initTypeComboBox()
 void Home_WorkWid::on_snCheckBox_clicked(bool checked)
 {
     mItem->enSn = checked;
-    if(!checked) MsgBox::information(this, tr("你已选择不创建序列号"));
+    if(!checked) MsgBox::information(this, tr("你已选择不创建序列号，程序不会记录日志"));
 }
