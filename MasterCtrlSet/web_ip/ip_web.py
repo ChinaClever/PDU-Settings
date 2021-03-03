@@ -59,12 +59,12 @@ class IpWeb:
         ip =  self.ip_prefix +self.cfgs['ip']+'/'
         user = self.cfgs['user']
         pwd = self.cfgs['pwd']
-        self.driver.get(ip); time.sleep(0.35)
-        self.setItById("name", user, '账号')
+        self.driver.get(ip); time.sleep(0.45)
+        self.setItById("name", user,'账号')
         self.setItById("psd", pwd, '密码')
-        self.execJs('login()')
+        self.execJs("login()")
         self.sendtoMainapp("网页登陆成功", 1)
-        time.sleep(1)
+        time.sleep(1.2)
 
     def setCur(self, lines, min, max):
         p = '电流阈值'
@@ -156,7 +156,7 @@ class IpWeb:
 
     def execJs(self, js):
         self.driver.execute_script(js)
-        time.sleep(0.35)
+        time.sleep(0.45)
 
     def execJsAlert(self, js):
         self.execJs(js)
