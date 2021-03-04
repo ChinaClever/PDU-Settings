@@ -721,12 +721,17 @@
         </item>
         <item>
          <property name="text">
-          <string>RPDU</string>
+          <string>ATS</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>ATS</string>
+          <string>标准RPDU</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>西蒙RPDU</string>
          </property>
         </item>
        </widget>
