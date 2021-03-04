@@ -1,6 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.support.select import Select
 from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import ElementNotInteractableException
 import configparser
 import socket
 import time
@@ -59,12 +60,13 @@ class IpWeb:
         ip =  self.ip_prefix +self.cfgs['ip']+'/'
         user = self.cfgs['user']
         pwd = self.cfgs['pwd']
-        self.driver.get(ip); time.sleep(0.45)
-        self.setItById("name", user,'账号')
-        self.setItById("psd", pwd, '密码')
-        self.execJs("login()")
+        self.driver.get(ip)
+        time.sleep(0.35)
+        self.setItById("name", user , '账号')
+        self.setItById("psd", pwd , '密码')        
+        self.execJs('login()')
         self.sendtoMainapp("网页登陆成功", 1)
-        time.sleep(1.2)
+        time.sleep(1)
 
     def setCur(self, lines, min, max):
         p = '电流阈值'
@@ -131,14 +133,16 @@ class IpWeb:
     def setItById(self, id, v, parameter):
         try:
             it = self.driver.find_element_by_id(id)
-        except NoSuchElementException:
+        except:
             msg = '网页上找不到{0}'.format(id)
             #self.sendtoMainapp(msg, 0)
+            return
         else:
-            it.clear()
-            it.send_keys(str(v))
-            msg = '设置{0} {1}：{2}'.format(parameter, id, v)
-            self.sendtoMainapp(msg, 1)
+            if it.is_displayed():
+                it.clear()
+                it.send_keys(str(v))
+                msg = '设置{0} {1}：{2}'.format(parameter, id, v)
+                self.sendtoMainapp(msg, 1)
 
     def btnClick(self, id):
         self.driver.find_element_by_id(id).click()
@@ -156,7 +160,7 @@ class IpWeb:
 
     def execJs(self, js):
         self.driver.execute_script(js)
-        time.sleep(0.45)
+        time.sleep(0.35)
 
     def execJsAlert(self, js):
         self.execJs(js)
