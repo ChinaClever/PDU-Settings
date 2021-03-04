@@ -130,6 +130,7 @@ class IpWeb:
 
     def setItById(self, id, v, parameter):
         try:
+            time.sleep(0.1)
             it = self.driver.find_element_by_id(id)
         except NoSuchElementException:
             msg = '网页上找不到{0}'.format(id)
