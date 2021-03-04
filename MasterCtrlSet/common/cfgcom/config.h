@@ -8,8 +8,9 @@ enum eDevTypes {
     IP_PDU,
     MPDU,
     ZPDU,
-    RPDU,
     ATS,
+    RPDU,
+    XRPDU,
 
     AC = 1, // 交流
     DC,     // 直流
