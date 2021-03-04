@@ -134,7 +134,7 @@ bool Test_SiThread::setData()
     bool ret = true;
     if(mItem->enSn) {
         QString str = tr("解锁设备");
-        ret = mCtrl->unClock();
+        ret = mCtrl->unClock(); if(!ret) return true;  ////////===========
         if(ret) str += tr("成功"); else str += tr("错误");
         ret = mLogs->updatePro(str, ret);
         if(ret) {
