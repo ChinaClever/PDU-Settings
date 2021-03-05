@@ -50,10 +50,10 @@ bool Test_Logs::appendLogItem(const QString &str, bool pass)
 
 void Test_Logs::saveLogs()
 {
+    if(mMac.size()) writeMac();
     bool ret = writeLog();
     if(ret) {
-        writeLogs();
-        if(mMac.size()) writeMac();
+        writeLogs();        
     } else {
         // updatePro(tr("因未创建序列号，日志无法保存！"), false);
     }

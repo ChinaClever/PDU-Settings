@@ -8,6 +8,9 @@ enum eDevTypes {
     IP_PDU,
     MPDU,
     ZPDU,
+    ATS,
+    RPDU,
+    XRPDU,
 
     AC = 1, // 交流
     DC,     // 直流
@@ -79,6 +82,7 @@ public:
     QVariant read(const QString &key, const QVariant &v = QVariant(), const QString &g="cfg");
 
 protected:
+    void initMac();
     void initCnt();
     bool getDate();
     void setDate();

@@ -23,19 +23,19 @@ Dev_SiCfg *Dev_SiCfg::bulid(QObject *parent)
 void Dev_SiCfg::initType()
 {
     sDevType *ptr = mDt;
-    ptr->ac = read("ac", 1).toInt();
-    ptr->lines = read("lines", 1).toInt();
-    ptr->series = read("series", 0).toInt();
-    ptr->standar = read("standar", 0).toInt();
+    ptr->ac = read("si_ac", 1).toInt();
+    ptr->lines = read("si_lines", 1).toInt();
+    ptr->series = read("si_series", 0).toInt();
+    ptr->standar = read("si_standar", 0).toInt();
 }
 
 void Dev_SiCfg::writeType()
 {
     sDevType *ptr = mDt;
-    write("ac", ptr->ac);
-    write("lines", ptr->lines);
-    write("series", ptr->series);
-    write("standar", ptr->standar);
+    write("si_ac", ptr->ac);
+    write("si_lines", ptr->lines);
+    write("si_series", ptr->series);
+    write("si_standar", ptr->standar);
 }
 
 void Dev_SiCfg::initData()

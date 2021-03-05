@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1002</width>
-    <height>272</height>
+    <height>279</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -712,6 +712,26 @@
         <item>
          <property name="text">
           <string>MPDU</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>ZPDU</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>ATS</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>标准RPDU</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>西蒙RPDU</string>
          </property>
         </item>
        </widget>

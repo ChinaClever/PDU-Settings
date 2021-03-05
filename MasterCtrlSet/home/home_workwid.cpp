@@ -12,7 +12,7 @@ Home_WorkWid::Home_WorkWid(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    QTimer::singleShot(450,this,SLOT(initFunSlot()));
+    QTimer::singleShot(250,this,SLOT(initFunSlot()));
 }
 
 Home_WorkWid::~Home_WorkWid()
@@ -170,11 +170,17 @@ void Home_WorkWid::timeoutDone()
 
 bool Home_WorkWid::initSerial()
 {
-    bool ret = mItem->com->isOpened();
+    bool ret = true;
+    if(mItem->modeId <= MPDU) {
+        ret = mItem->com->isOpened();
+        mItem->dev_type.clear();
+    } else {
+         mItem->dev_type = ui->typeComboBox->currentText();
+    }
+
     if(ret){
         mId = 1;
         mItem->sn.clear();
-        mItem->dev_type.clear();
     } else {
         MsgBox::critical(this, tr("请先打开串口")); return ret;
     }
@@ -266,10 +272,20 @@ void Home_WorkWid::on_typeComboBox_currentIndexChanged(int index)
 
 void Home_WorkWid::initTypeComboBox()
 {
-    int index = mItem->modeId;
     bool en = false;
-    if(index < 2) en = true;
-    ui->outputBtn->setHidden(en);
+    int index = mItem->modeId;
+    mItem->enSn = ui->snCheckBox->isChecked();
+    if(index > MPDU) {
+        en = true;
+        mItem->enSn = false;
+        ui->outputBtn->setHidden(en);
+    } else if(index == MPDU) {
+        ui->outputBtn->setHidden(false);
+    } else {
+        ui->outputBtn->setHidden(true);
+    }
+    ui->setBtn->setHidden(en);
+    ui->snCheckBox->setHidden(en);
 
     mSetOpDlg->updateIndex(index);
     ui->typeComboBox->setCurrentIndex(index);
@@ -279,4 +295,5 @@ void Home_WorkWid::initTypeComboBox()
 void Home_WorkWid::on_snCheckBox_clicked(bool checked)
 {
     mItem->enSn = checked;
+    if(!checked) MsgBox::information(this, tr("你已选择不创建序列号"));
 }

@@ -48,7 +48,7 @@ class IpWeb:
                      'ip': '192.168.1.163', 'debug_web':  'correct.html',
                      'ip_lines':1, 'ip_modbus':1, 'ip_language':1, 'lcd_switch':1,
                      'mac':'', 'ip_ac':1, 'log_en':1, 'ip_standard': 0}
-        self.cfgs['mac'] = IpWeb.getCfg().get("Count", "mac")
+        self.cfgs['mac'] = IpWeb.getCfg().get("Mac", "mac")
         for it in items:
             self.cfgs[it[0]] = it[1]
         if int(self.cfgs['ip_lines']) == 0:
@@ -59,12 +59,12 @@ class IpWeb:
         ip =  self.ip_prefix +self.cfgs['ip']+'/'
         user = self.cfgs['user']
         pwd = self.cfgs['pwd']
-        self.driver.get(ip); time.sleep(0.35)
-        self.setItById("name", user, '账号')
+        self.driver.get(ip); time.sleep(0.45)
+        self.setItById("name", user,'账号')
         self.setItById("psd", pwd, '密码')
-        self.execJs('login()')
+        self.execJs("login()")
         self.sendtoMainapp("网页登陆成功", 1)
-        time.sleep(1)
+        time.sleep(1.2)
 
     def setCur(self, lines, min, max):
         p = '电流阈值'
@@ -130,6 +130,7 @@ class IpWeb:
 
     def setItById(self, id, v, parameter):
         try:
+            time.sleep(0.1)
             it = self.driver.find_element_by_id(id)
         except NoSuchElementException:
             msg = '网页上找不到{0}'.format(id)
@@ -156,7 +157,7 @@ class IpWeb:
 
     def execJs(self, js):
         self.driver.execute_script(js)
-        time.sleep(0.35)
+        time.sleep(0.45)
 
     def execJsAlert(self, js):
         self.execJs(js)

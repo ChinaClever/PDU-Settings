@@ -7,7 +7,7 @@
 
 Dev_Object::Dev_Object(QObject *parent) : QThread(parent)
 {
-    QTimer::singleShot(850,this,SLOT(initFunSlot()));
+    QTimer::singleShot(150,this,SLOT(initFunSlot()));
     mPacket = sDataPacket::bulid();
     mItem = Cfg::bulid()->item;
     mPro = mPacket->getPro();
@@ -19,6 +19,7 @@ Dev_Object::Dev_Object(QObject *parent) : QThread(parent)
 void Dev_Object::initFunSlot()
 {
     mModbus = Rtu_Modbus::bulid(this)->get();
+    if(!mModbus) QTimer::singleShot(150,this,SLOT(initFunSlot()));
 }
 
 void Dev_Object::initUnit(const QString& prefix, sUnitCfg &unit, int f)
