@@ -101,6 +101,7 @@ struct sDevType
     uchar mpdu_ver;
     uchar board[3];
     uchar loop[6];
+    uchar ip_lcd;
 
     QString versions;
 };

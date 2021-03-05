@@ -175,7 +175,14 @@ bool Home_WorkWid::initSerial()
         ret = mItem->com->isOpened();
         mItem->dev_type.clear();
     } else {
-         mItem->dev_type = ui->typeComboBox->currentText();
+        mItem->dev_type = ui->typeComboBox->currentText();
+    }
+
+    if(mItem->modeId) {
+        int res =  MacAddr::bulid()->macCnt(mItem->mac, mItem->endMac);
+        if((res <= 0) && mItem->modeId) {
+            MsgBox::critical(this, tr("MAC地址已用完，无法继续使用")); return false;
+        }
     }
 
     if(ret){
