@@ -70,11 +70,15 @@ bool Test_Logs::writeLog()
     it.user = mItem->user;
     it.sn = mItem->sn;
 
-    mItem->cnt.cnt--;
     mItem->cnt.all += 1;
     if(mPro->result != Test_Fail) {
         it.result = tr("通过");
         mItem->cnt.ok += 1;
+        mItem->cnt.cnt--;
+        if(!mItem->cnt.cnt)  {
+            mItem->user.clear();
+            Cfg::bulid()->write("user", mItem->user, "User");
+        }
     } else {
         mItem->cnt.err += 1;
         it.result = tr("失败");

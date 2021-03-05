@@ -107,6 +107,7 @@ class IpWeb:
     def setLcdDir(self):
         dir = self.cfgs['ip_lcd']
         self.setSelect("dir", dir)
+        self.setSelect("slave", 1)
         self.alertClick("lang_5")
 
     def setEle(self):
