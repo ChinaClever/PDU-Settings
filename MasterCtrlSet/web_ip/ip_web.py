@@ -48,7 +48,7 @@ class IpWeb:
                      'ip': '192.168.1.163', 'debug_web':  'correct.html',
                      'ip_lines':1, 'ip_modbus':1, 'ip_language':1, 'lcd_switch':1,
                      'mac':'', 'ip_ac':1, 'log_en':1, 'ip_standard': 0}
-        self.cfgs['mac'] = IpWeb.getCfg().get("Count", "mac")
+        self.cfgs['mac'] = IpWeb.getCfg().get("Mac", "mac")
         for it in items:
             self.cfgs[it[0]] = it[1]
         if int(self.cfgs['ip_lines']) == 0:

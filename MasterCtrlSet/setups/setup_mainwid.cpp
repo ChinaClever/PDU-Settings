@@ -62,19 +62,8 @@ void Setup_MainWid::initSerial()
 
 void Setup_MainWid::initMac()
 {
-    mItem->startMac = "2C:26:5F:38:00:01";
-    mItem->endMac = "2C:26:5F:3B:FF:FF";
-    if(mItem->pcNum > 1) {
-        mItem->startMac = "2C:26:5F:3C:00:01";
-        mItem->endMac = "2C:26:5F:3F:FF:FF";
-    }
     ui->startMacLab->setText(mItem->startMac);
     ui->endMacLab->setText(mItem->endMac);
-    int cnt = MacAddr::bulid()->macCnt(mItem->startMac, mItem->mac);
-    int res = MacAddr::bulid()->macCnt(mItem->mac, mItem->endMac);
-    if((cnt < 0) || res < 0) {
-        mItem->mac =  mItem->startMac;
-    }
     updateMac();
 }
 
@@ -114,7 +103,7 @@ void Setup_MainWid::initPcNum()
 void Setup_MainWid::writePcNum()
 {
     int arg1 = ui->pcNumSpin->value();
-    mItem->pcNum = arg1; initMac();
+    mItem->pcNum = arg1;
     Cfg::bulid()->write("pc_num", arg1, "Sys");
 }
 

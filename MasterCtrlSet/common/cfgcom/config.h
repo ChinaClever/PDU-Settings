@@ -82,6 +82,7 @@ public:
     QVariant read(const QString &key, const QVariant &v = QVariant(), const QString &g="cfg");
 
 protected:
+    void initMac();
     void initCnt();
     bool getDate();
     void setDate();
