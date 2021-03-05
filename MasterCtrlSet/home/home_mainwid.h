@@ -30,6 +30,7 @@ private:
     Home_MpduWid *mMpduWid;
     Home_ZpduWid *mZpduWid;
     Home_RpduWid *mRpduWid;
+    Home_RpduWid *mXRpduWid;
     Home_AtsWid *mAtsWid;
 };
 

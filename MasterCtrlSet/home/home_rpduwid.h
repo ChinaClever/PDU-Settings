@@ -12,7 +12,7 @@ class Home_RpduWid : public QWidget
     Q_OBJECT
 
 public:
-    explicit Home_RpduWid(QWidget *parent = nullptr);
+    explicit Home_RpduWid(QString str ,QWidget *parent = nullptr);
     ~Home_RpduWid();
 
 private:
