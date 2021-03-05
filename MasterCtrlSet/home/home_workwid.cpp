@@ -284,7 +284,7 @@ void Home_WorkWid::initTypeComboBox()
     } else {
         ui->outputBtn->setHidden(true);
     }
-    ui->setBtn->setHidden(en);
+    //ui->setBtn->setHidden(en);
     ui->snCheckBox->setHidden(en);
 
     mSetOpDlg->updateIndex(index);
@@ -295,5 +295,5 @@ void Home_WorkWid::initTypeComboBox()
 void Home_WorkWid::on_snCheckBox_clicked(bool checked)
 {
     mItem->enSn = checked;
-    if(!checked) MsgBox::information(this, tr("你已选择不创建序列号"));
+    if(!checked) MsgBox::information(this, tr("注意：创建序列号有利于产品溯源。你已选择不创建序列号。"));
 }

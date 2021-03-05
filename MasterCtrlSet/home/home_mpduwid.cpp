@@ -34,6 +34,7 @@ void Home_MpduWid::initWid()
     QString str = tr("MPDU后台参数");
     mParamWid = new Home_MpduParamWid(ui->tabWidget);
     ui->tabWidget->addTab(mParamWid, str);
+    connect(mParamWid, SIGNAL(indexHiddenSig(int)), this, SLOT(indexHiddenSlot(int)));
 
     str = tr("MPDU报警参数");
     mAlarmWid = new Home_MpduAlarmWid(ui->tabWidget);
@@ -79,4 +80,12 @@ void Home_MpduWid::enabledSlot(bool en)
             emit errSig();
         }
     }
+}
+
+void Home_MpduWid::indexHiddenSlot(int index)
+{
+    if(1 == index)
+        ui->tabWidget->removeTab(1);
+    else
+        ui->tabWidget->addTab( mAlarmWid ,tr("MPDU报警参数"));
 }

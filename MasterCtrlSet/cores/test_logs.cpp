@@ -53,7 +53,7 @@ void Test_Logs::saveLogs()
     if(mMac.size()) writeMac();
     bool ret = writeLog();
     if(ret) {
-        writeLogs();        
+        writeLogs();
     } else {
         // updatePro(tr("因未创建序列号，日志无法保存！"), false);
     }
@@ -105,7 +105,7 @@ void Test_Logs::writeLogs()
 }
 
 bool Test_Logs::updatePro(const QString &str, bool pass, int sec)
-{       
+{
     if(mPro->step < Test_Over){
         if(!pass)appendLogItem(str, pass);
         mPacket->updatePro(str, pass, sec);

@@ -18,11 +18,11 @@ class Mpdu(MpduWeb):
         if(intRet == 0):
             return
         
-        opLists = self.opThreshold()
-        opLists.sort()
+        #opLists = self.opThreshold()
+        #opLists.sort()
         
         self.changetocorrect()
-        self.setCorrect2()
+        #self.setCorrect2()
         self.setCorrect1()
         time.sleep(5)
         self.login()
@@ -30,12 +30,12 @@ class Mpdu(MpduWeb):
         self.checkCorrectHtml()
         
         
-        self.checkTitleBar2()
-        if( int(cfg['series']) != 1 ):
-            self.checkTitleBar3(opLists)
-        self.clearEnergy()
-        self.setTime()
-        self.clearLogs()
+        #self.checkTitleBar2()
+        #if( int(cfg['series']) != 1 ):
+        #    self.checkTitleBar3(opLists)
+        #self.clearEnergy()
+        #self.setTime()
+        #self.clearLogs()
     
 
     def clearLogs(self):
@@ -59,8 +59,12 @@ class Mpdu(MpduWeb):
             self.sendtoMainapp(message)
             
     def close(self):
-        print(datetime.datetime.now())
-        self.driver.close()
+        time.sleep(1.5)
+        #print(datetime.datetime.now())
+        self.driver.quit()
+        #print(datetime.datetime.now())
+        time.sleep(3)
+        
 
     def changetocorrect(self):
         cfg = self.cfgs
@@ -73,14 +77,6 @@ class Mpdu(MpduWeb):
     
     def setCorrect1(self):
         cfg = self.cfgs
-        #self.setItById("LineN", cfg['lines'])
-        #self.setItById("CircuitN", cfg['loops'])
-        #self.setItById("OutputN", cfg['outputs'])
-        #self.setItById("neutral", cfg['standar'])
-        #self.setItById("type", cfg['series'])
-        #self.setItById("language", cfg['language'])
-        #self.setItById("breaker", cfg['breaker'])
-        #self.setItById("serial", cfg['modbus'])
         if (len(cfg['mac']) > 5  ):#NoSuchElementException
             strMac =  cfg['mac']
         try:
@@ -88,31 +84,18 @@ class Mpdu(MpduWeb):
         except NoSuchElementException:
             return
         v = self.driver.find_element_by_id('mac1').get_attribute('value')
-        if( (v == '' or v == 'FF:FF:FF:FF:FF:FF' or v == 'ff:ff:ff:ff:ff:ff') and len(cfg['mac']) > 5):
+        if( '2C:26:5F:' not in v):
             v = strMac
-        jsSheet1 = 'var level = document.getElementById("level").value;var claerset = createXmlRequest();claerset.onreadystatechange = setmac;ajaxget(claerset, \"/correct?a=\" +{set} +\"&b=\"+{type} +\"&c=\"+{language} + \"&d=\"+\"{mac1}\" + \"&e=\"+{breaker} + \"&f=\"+ {serial} + \"&g=\"+ {neutral}+\"&h=\"+{LineN}+\"&i=\"+{CircuitN} + \"&j=\"+{OutputN} + \"&k=\"+{level} +\"&\");'.format(set=int(1),type = cfg['series'] , language = cfg['language'] , mac1 = v , breaker = cfg['breaker'] , serial = cfg['modbus'] , neutral = cfg['standar'] , LineN = cfg['lines'] , CircuitN = cfg['loops'] , OutputN = cfg['outputs'] , level = str(0))
-        self.execJs(jsSheet1)
-        time.sleep(0.35)
+            jsSheet1 = 'var type = document.getElementById(\"type\").value;var language = document.getElementById(\"language").value;var breaker = document.getElementById(\"breaker\").value;var serial = document.getElementById(\"serial\").value;var neutral = document.getElementById(\"neutral\").value;var LineN = document.getElementById(\"LineN\").value;var CircuitN = document.getElementById(\"CircuitN\").value;var OutputN = document.getElementById(\"OutputN\").value;var level = document.getElementById("level").value;var claerset = createXmlRequest();claerset.onreadystatechange = setmac;ajaxget(claerset, \"/correct?a=\" +1 +\"&b=\"+type +\"&c=\"+language + \"&d=\"+\"{mac1}\" + \"&e=\"+breaker + \"&f=\"+ serial + \"&g=\"+ neutral+\"&h=\"+LineN+\"&i=\"+CircuitN + \"&j=\"+OutputN + \"&k=\"+level +\"&\");'.format(mac1 = v)
+            self.execJs(jsSheet1)
+            time.sleep(0.35)
+        else:
+            self.sendtoMainapp('MAC-1')
+        
 
     def setCorrect2(self):
         cfg = self.cfgs
-        #self.setItById("Tvmin", cfg['vol_min'])
-        #self.setItById("Tvmax", cfg['vol_max'])
-        #self.setItById("Tcmin", cfg['cur_min'])
-        #self.setItById("Tcxmin", cfg['cur_crmin'])
-        #self.setItById("Tcxmax", cfg['cur_crmax'])
-        #self.setItById("Tcmax", cfg['cur_max'])
-        #self.setItById("Temmin", cfg['tem_min'])
-        #self.setItById("Temmax", cfg['tem_max'])
-
-        #self.setItById("Hummin", cfg['hum_min'])
-        #self.setItById("Hummax", cfg['hum_max'])
-        #self.setItById("min", cfg['output_min'])
-        #self.setItById("xmin", cfg['output_crmin'])
-        #self.setItById("xmax", cfg['output_crmax'])
-        #self.setItById("max", cfg['output_max'])
         
-        #var limit1 = document.getElementById(\"Tvmin\").value;var limit2 = document.getElementById(\"Tvmax\").value;var limit3 = document.getElementById(\"Tcmin\").value*10;var limit4 = document.getElementById(\"Tcmax\").value*10;var limit5 = document.getElementById(\"Temmin\").value;var limit6 = document.getElementById(\"Temmax\").value;var limit7 = document.getElementById(\"Hummin\").value;var limit8 = document.getElementById(\"Hummax\").value;var limit9 = document.getElementById(\"min\").value*10;var limit10 = document.getElementById(\"xmin\").value*10;var limit11 = document.getElementById(\"xmax\").value*10;var limit12 = document.getElementById(\"max\").value*10;var limit13 = document.getElementById(\"Tcxmin\").value*10;var limit14 = document.getElementById(\"Tcxmax\").value*10;
         
         jsSheet = 'var claerlimit = createXmlRequest();claerlimit.onreadystatechange = setdatlimit;ajaxget(claerlimit, \"/alllimit?a=\" +{limit1}+\"&b=\"+{limit2} +\"&c=\"+{limit3} + \"&d=\"+{limit4}+\"&e=\"+{limit5} +\"&f=\"+{limit6} + \"&g=\"+{limit7}+\"&h=\"+{limit8} +\"&i=\"+{limit9} + \"&j=\"+{limit10}+\"&k=\"+{limit11} + \"&l=\"+{limit12} +\"&m=\"+{limit13} + \"&n=\"+{limit14} +\"&\");'.format( limit1 = cfg['vol_min'] , limit2 = cfg['vol_max'] , limit3 = int(cfg['cur_min'])*10 , limit4 = int(cfg['cur_max'])*10 ,limit5 = cfg['tem_min'] , limit6 = cfg['tem_max'],limit7 = cfg['hum_min'] , limit8 = cfg['hum_max'] ,limit9 = int(cfg['output_min'])*10 , limit10 = int(cfg['output_crmin'])*10 , limit11 = int(cfg['output_crmax'])*10 , limit12 = int(cfg['output_max'])*10 , limit13 = int(cfg['cur_crmin'])*10 , limit14 = int(cfg['cur_crmax'])*10)
         self.execJs(jsSheet)
@@ -120,30 +103,6 @@ class Mpdu(MpduWeb):
         
     def checkCorrectHtml(self):
         cfg = self.cfgs
-        status , message = self.check( 'LineN' , cfg['lines'] , '相数')
-        self.sendtoMainapp(message)
-        
-        status , message = self.check( 'CircuitN' , cfg['loops'] , '回路')
-        self.sendtoMainapp(message)
-        
-        status , message = self.check( 'OutputN' , cfg['outputs'] , '输出位' )
-        self.sendtoMainapp(message)
-        
-        status , message = self.check( 'neutral' , cfg['standar'] , '标准/中性')
-        self.sendtoMainapp(message)
-        
-        status , message = self.check( 'type' , cfg['series'] , '系列')
-        self.sendtoMainapp(message)
-        
-        status , message = self.check( 'language' , cfg['language'] , '中英文')
-        self.sendtoMainapp(message)
-        
-        status , message = self.check( 'breaker' , cfg['breaker'] , '断路器')
-        self.sendtoMainapp(message)
-        
-        status , message = self.check( 'serial' , cfg['modbus'] , 'IN/OUT级联方式')
-        self.sendtoMainapp(message)
-        
         if (len(cfg['mac']) > 5  ):
             status , message = self.macAddrCheck( 'mac1' , cfg['mac'] , 'mac地址')
             self.sendtoMainapp(message)
@@ -405,15 +364,17 @@ class Mpdu(MpduWeb):
     def clearEnergy(self):
         cfg = self.cfgs#Tenergy1Tenergy2Tenergy3
         self.divClick(2)#Cenergy1
-        time.sleep(0.35)
+        time.sleep(0.5)
         self.driver.find_element_by_id("titlebar4").click()
-        time.sleep(0.35)
+        time.sleep(0.5)
         
         jsSheet = 'var claerset = createXmlRequest();claerset.onreadystatechange = clearrec;ajaxget(claerset, \"/setenergy?a=\" + {0}+\"&\");'
         for i in range(1 , 4):
             self.execJs(jsSheet.format(i))
+            time.sleep(1)
+        time.sleep(1)
         self.driver.find_element_by_id("titlebar4").click()
-        time.sleep(0.35)
+        time.sleep(1)
         self.checkEnergy()
         
     def setTime(self):

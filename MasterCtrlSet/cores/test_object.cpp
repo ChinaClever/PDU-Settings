@@ -24,12 +24,16 @@ Test_Object::~Test_Object()
 
 void Test_Object::updateDev()
 {
+    qDebug()<<"updateDev"<<endl;
     switch (mItem->modeId) {
     case SI_PDU: mObj = Dev_SiCfg::bulid(this); break;
     case IP_PDU: mObj = Dev_IpCfg::bulid(this); break;
     case MPDU: mObj = Dev_Mpdu::bulid(this); break;
     }
 
-    mDev = mObj->getDev();
-    mDt = &(mDev->dt);
+    if(mObj != NULL)
+    {
+        mDev = mObj->getDev();
+        mDt = &(mDev->dt);
+    }
 }

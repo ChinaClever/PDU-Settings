@@ -61,6 +61,7 @@ void Home_MpduParamWid::initType()
     ui->boardSpin->setValue(dt->boards);
 
     on_verBox_currentIndexChanged(dt->mpdu_ver);
+    emit indexHiddenSig(dt->mpdu_ver);
     for(int i=0; i<6; ++i) mLoops[i]->setValue(dt->loop[i]);
     for(int i=0; i<3; ++i) mBoards[i]->setValue(dt->board[i]);
 }
@@ -109,12 +110,44 @@ void Home_MpduParamWid::setItHidden(bool hidden)
     ui->label_10->setHidden(hidden);
 }
 
+void Home_MpduParamWid::setItHiddenOpCtrl(bool hidden)
+{
+    ui->lineBox->setHidden(hidden);
+    ui->outputSpin->setHidden(hidden);
+    ui->loopBox->setHidden(hidden);
+    ui->breakerBox->setHidden(hidden);
+    ui->modbusBox->setHidden(hidden);
+    ui->standardBox->setHidden(hidden);
+    ui->languageBox->setHidden(hidden);
+    ui->seriesBox->setHidden(hidden);
+
+    ui->label_3->setHidden(hidden);
+    ui->label_4->setHidden(hidden);
+    ui->label_5->setHidden(hidden);
+    ui->label_6->setHidden(hidden);
+    ui->label_7->setHidden(hidden);
+    ui->label_8->setHidden(hidden);
+    ui->label_9->setHidden(hidden);
+    ui->label_10->setHidden(hidden);
+}
+
+void Home_MpduParamWid::setItShow(bool hidden)
+{
+    ui->label_7->setHidden(hidden);
+    ui->label_9->setHidden(hidden);
+    ui->languageBox->setHidden(hidden);
+    ui->seriesBox->setHidden(hidden);
+}
+
 void Home_MpduParamWid::on_verBox_currentIndexChanged(int index)
 {
     bool hidden = true;
     if(index) hidden = false; setItHidden(hidden);
     if(1 == index) hidden = true;
-     ui->groupBox_2->setHidden(hidden);
+    ui->groupBox_2->setHidden(hidden);
+    if(1 == index) setItHiddenOpCtrl(true);
+    else setItShow(false);
+    emit indexHiddenSig(index);
 }
 
 void Home_MpduParamWid::on_boardSpin_valueChanged(int arg1)
