@@ -19,12 +19,16 @@ public:
     void updateType();
     bool loopCheck();
     bool outputCheck();
+signals:
+    void indexHiddenSig(int index);
 
 protected:
     void initType();
     void initWid();
     void setItemEnable(int id, int en);
     void setItHidden(bool hidden);
+    void setItHiddenOpCtrl(bool hidden);
+    void setItShow(bool hidden);
 
 protected slots:
     void initFunSlot();

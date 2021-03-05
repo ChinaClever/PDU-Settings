@@ -24,6 +24,9 @@ include(sernum/sernum.pri)
 include(devices/devices.pri)
 include(web_ip/web_ip.pri)
 include(web_mpdu/web_mpdu.pri)
+include(web_rpdu/web_rpdu.pri)
+include(web_zpdu/web_zpdu.pri)
+include(web_ats/web_ats.pri)
 include(statedata/statedata.pri)
 
 SOURCES += \

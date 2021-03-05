@@ -26,6 +26,7 @@ protected:
 public slots:
     void initFunSlot();
     void enabledSlot(bool en);
+    void indexHiddenSlot(int index);
 
 private:
     Ui::Home_MpduWid *ui;

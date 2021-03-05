@@ -47,7 +47,7 @@ class IpWeb:
         self.cfgs = {'ip_version':1,'user': 'admin', 'pwd': 'admin',
                      'ip': '192.168.1.163', 'debug_web':  'correct.html',
                      'ip_lines':1, 'ip_modbus':1, 'ip_language':1, 'lcd_switch':1,
-                     'mac':'', 'ip_ac':1, 'log_en':1, 'ip_standard': 0}
+                     'mac':'', 'ip_ac':1, 'ip_lcd':0, 'log_en':1, 'ip_standard': 0}
         self.cfgs['mac'] = IpWeb.getCfg().get("Mac", "mac")
         for it in items:
             self.cfgs[it[0]] = it[1]
@@ -103,9 +103,15 @@ class IpWeb:
         self.setItById("min8", humMin, p)
         self.setItById("max8", humMax, p)
         self.execJs("setlimit(8)")
-        
+
+    def setLcdDir(self):
+        dir = self.cfgs['ip_lcd']
+        self.setSelect("dir", dir)
+        self.alertClick("lang_5")
+
     def setEle(self):
         self.divClick(3)
+        self.setLcdDir()
         jsSheet = " claerset = createXmlRequest();claerset.onreadystatechange = clearrec;ajaxget(claerset, \"/energyzero?a=\" + {0}+\"&\");"
         for num in range(0, 4):
             self.execJs(jsSheet.format(num))
@@ -125,8 +131,9 @@ class IpWeb:
 
     def setSelect(self, id, v):
         it = self.driver.find_element_by_id(id)
-        Select(it).select_by_index(v)
-        time.sleep(0.5)
+        if it.is_displayed():
+            Select(it).select_by_index(v)
+            time.sleep(0.5)
 
     def setItById(self, id, v, parameter):
         try:
@@ -136,10 +143,11 @@ class IpWeb:
             msg = '网页上找不到{0}'.format(id)
             #self.sendtoMainapp(msg, 0)
         else:
-            it.clear()
-            it.send_keys(str(v))
-            msg = '设置{0} {1}：{2}'.format(parameter, id, v)
-            self.sendtoMainapp(msg, 1)
+            if it.is_displayed():
+                it.clear()
+                it.send_keys(str(v))
+                msg = '设置{0} {1}：{2}'.format(parameter, id, v)
+                self.sendtoMainapp(msg, 1)
 
     def btnClick(self, id):
         self.driver.find_element_by_id(id).click()
@@ -163,7 +171,7 @@ class IpWeb:
         self.execJs(js)
         self.driver.switch_to.alert.accept()
         time.sleep(0.5)
-        
+
     def resetFactory(self):
         v = IpWeb.getCfg().get("ipCfg", "ip_version")
         jsSheet = "xmlset = createXmlRequest();xmlset.onreadystatechange = setdata;ajaxgets(xmlset, \"/setsys?a=\" + {0} + \"&\");"

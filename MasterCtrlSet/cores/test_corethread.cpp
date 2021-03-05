@@ -24,7 +24,10 @@ bool Test_CoreThread::checkNet()
     QString str = tr("检测设备网络");
     bool ret = cm_pingNet("192.168.1.163");
     if(ret) str += tr("正常");
-    else str += tr("错误");
+    else{
+      str += tr("错误");
+      mPro->result = Test_Fail;
+    }
 
     return mLogs->updatePro(str, ret);
 }
@@ -45,12 +48,16 @@ bool Test_CoreThread::startProcess()
 
     exe += ".exe";
     mRead->mac = true;
-    mProcess->close();
-    mProcess->start(exe);
-    bool ret = checkNet();
-    if(ret) ret = mProcess->waitForFinished(120*1000);
 
-    return mLogs->updatePro(tr("网页设置功能退出"), ret);
+    bool ret = checkNet();
+    if(ret){
+        mProcess->close();
+        mProcess->start(exe);
+        ret = mProcess->waitForFinished(120*1000);
+        mLogs->updatePro(tr("网页设置功能退出"), ret , 1);
+    }
+
+    return ret;
 }
 
 void Test_CoreThread::updateMacAddr()
