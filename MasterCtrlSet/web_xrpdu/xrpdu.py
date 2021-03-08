@@ -1,7 +1,7 @@
-from ctrlset_rpdu.rpdu_web import  *
+from ctrlset_xrpdu.xrpdu_web import  *
 import datetime
 
-class Rpdu(RpduWeb):
+class XRpdu(XRpduWeb):
        
     def start_fun(self , sock , dest_ip , dest_port):
         cfg = self.cfgs
@@ -30,7 +30,7 @@ class Rpdu(RpduWeb):
         time.sleep(0.1)
         #print(datetime.datetime.now())
         self.driver.quit()
-        #print(datetime.datetime.now())
+        print(datetime.datetime.now())
         time.sleep(3)
         
 

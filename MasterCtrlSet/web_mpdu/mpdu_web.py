@@ -31,7 +31,7 @@ class MpduWeb:
         
         self.cfgs = {'versions':'','user': 'admin', 'pwd': 'admin','ip_addr': '192.168.1.163', 'debug_web':  'correct.html','lines':1,'loops':1,'outputs':24,'standar':0,'series':4,'language':1,'breaker':1,'modbus':1,'vol_min':80,'vol_max':276,'cur_min':0,'cur_crmin':0,'cur_crmax':32,'cur_max':32,'tem_min':0,'tem_max':40,'hum_min':0,'hum_max':99,'output_min':0,'output_crmin':0,'output_crmax':16,'output_max':16,'op_1_min':0,'op_1_max':10,'op_1_en':0,'op_1_id':0,'op_1_crmin':0,'op_1_crmax':10,'op_2_min':0,'op_2_max':10,'op_2_en':0,'op_2_id':0,'op_2_crmin':0,'op_2_crmax':10,'op_3_min':0,'op_3_max':10,'op_3_en':0,'op_3_id':0,'op_3_crmin':0,'op_3_crmax':10,'op_4_min':0,'op_4_max':10,'op_4_en':0,'op_4_id':0,'op_4_crmin':0,'op_4_crmax':10,'op_5_min':0,'op_5_max':10,'op_5_en':0,'op_5_id':0,'op_5_crmin':0,'op_5_crmax':10,'op_6_min':0,'op_6_max':10,'op_6_en':0,'op_6_id':0,'op_6_crmin':0,'op_6_crmax':10,'mac':'','mpdu_ver':0,'boards':3,'level':0,'envbox':0,'loop_1':8,'loop_2':8,'loop_3':8,'loop_4':8,'loop_5':8,'loop_6':8,'mpdu_ver':0}
         items = MpduWeb.getCfg().items("mCfg")  # 获取section名为Mysql-Database所对应的全部键值对
-        self.cfgs['mac'] = MpduWeb.getCfg().get("Count", "mac")
+        self.cfgs['mac'] = MpduWeb.getCfg().get("Mac", "mac")
         for it in items:
             self.cfgs[it[0]] = it[1]
 

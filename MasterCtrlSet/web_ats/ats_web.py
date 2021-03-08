@@ -30,10 +30,10 @@ class AtsWeb:
     def initCfg(self):
         
         self.cfgs = {'versions':'','user': 'admin', 'pwd': 'admin','ip_addr': '192.168.1.163', 'debug_web':  'debug.html','mac':''}
-        items = AtsWeb.getCfg().items("mCfg")  # 获取section名为Mysql-Database所对应的全部键值对
-        self.cfgs['mac'] = AtsWeb.getCfg().get("Count", "mac")
-        for it in items:
-            self.cfgs[it[0]] = it[1]
+        #items = AtsWeb.getCfg().items("mCfg")  # 获取section名为Mysql-Database所对应的全部键值对
+        self.cfgs['mac'] = AtsWeb.getCfg().get("Mac", "mac")
+        #for it in items:
+        #    self.cfgs[it[0]] = it[1]
 
     def login(self):
         ip =  self.ip_prefix +self.cfgs['ip_addr']+'/'
@@ -74,8 +74,11 @@ class AtsWeb:
         self.driver.switch_to.frame('ifrm')
 
     def execJs(self, js):
-        self.driver.execute_script(js)
-        time.sleep(0.35)
+        try:
+            self.driver.execute_script(js)
+            time.sleep(0.35)
+        except:
+            return
 
     def execJsAlert(self, js):
         self.execJs(js)

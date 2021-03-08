@@ -30,10 +30,10 @@ class RpduWeb:
     def initCfg(self):
         
         self.cfgs = {'versions':'','user': 'admin', 'pwd': 'admin','ip_addr': '192.168.1.163', 'debug_web':  'debug.html','mac':''}
-        items = RpduWeb.getCfg().items("mCfg")  # 获取section名为Mysql-Database所对应的全部键值对
-        self.cfgs['mac'] = RpduWeb.getCfg().get("Count", "mac")
-        for it in items:
-            self.cfgs[it[0]] = it[1]
+        #items = RpduWeb.getCfg().items("mCfg")  # 获取section名为Mysql-Database所对应的全部键值对
+        self.cfgs['mac'] = RpduWeb.getCfg().get("Mac", "mac")
+        #for it in items:
+        #    self.cfgs[it[0]] = it[1]
 
     def login(self):
         ip =  self.ip_prefix +self.cfgs['ip_addr']+'/'
@@ -76,8 +76,11 @@ class RpduWeb:
         self.driver.switch_to.frame('fra')
 
     def execJs(self, js):
-        self.driver.execute_script(js)
-        time.sleep(0.35)
+        try:
+            self.driver.execute_script(js)
+            time.sleep(0.35)
+        except:
+            return
 
     def execJsAlert(self, js):
         self.execJs(js)

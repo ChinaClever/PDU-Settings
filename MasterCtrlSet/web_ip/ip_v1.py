@@ -20,7 +20,8 @@ class IpV1(IpWeb):
         self.setItById("lcdled", cfg['ip_lines'], '设备相数')
         self.setItById("ACDC", cfg['ip_ac'], '交直流')
         self.setItById("horizontal", cfg['lcd_switch'], '新旧屏')
-        self.setMacAddr()
+        if(len(cfg['mac']) > 5) :
+            self.setItById("mac1", cfg['mac'], 'Mac地址')
         self.alertClick("Button3")
         self.sendtoMainapp("设备后台网页配置成功", 1)
         self.driver.back()

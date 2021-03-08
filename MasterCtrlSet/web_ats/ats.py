@@ -14,7 +14,10 @@ class Ats(AtsWeb):
         if(intRet == 0):
             return
         
-        self.changetocorrect()
+        intRet , message = self.changetocorrect()
+        self.sendtoMainapp(message)
+        if(intRet == 0):
+            return
         self.setCorrect1()
         #time.sleep(10)
         #self.login()
@@ -25,7 +28,7 @@ class Ats(AtsWeb):
         time.sleep(0.1)
         #print(datetime.datetime.now())
         self.driver.quit()
-        print(datetime.datetime.now())
+        #print(datetime.datetime.now())
         time.sleep(3)
         
 
@@ -33,10 +36,15 @@ class Ats(AtsWeb):
         cfg = self.cfgs
         ip = self.ip_prefix + cfg['ip_addr'] + '/mac.html'
         
-        self.driver.get(ip)
-        time.sleep(1)
-        
-        self.driver.switch_to.default_content()
+        try:
+            self.driver.get(ip)
+        except:
+            self.sendtoMainapp('MAC-1')
+            return 0,'账号密码错误;0'
+        else:
+            time.sleep(1)
+            self.driver.switch_to.default_content()
+            return 1,'账号密码正确;1'
     
     def setCorrect1(self):
         cfg = self.cfgs
@@ -46,7 +54,11 @@ class Ats(AtsWeb):
         try:
             self.driver.find_element_by_id('mac1')
         except NoSuchElementException:
-            return
+            message = '无法找到MAC控件;0'
+            self.sendtoMainapp(message)
+            time.sleep(0.35)
+            self.sendtoMainapp('MAC-1')
+            return 0
         v = self.driver.find_element_by_id('mac1').get_attribute('value')
         if( '2C:26:5F:' not in v):
             v = strMac
@@ -59,7 +71,7 @@ class Ats(AtsWeb):
             
         else:
             self.sendtoMainapp('MAC-1')
-
+        
         #time.sleep(0.35)
         #self.driver.back()
         #self.divClick(9)
@@ -76,4 +88,4 @@ class Ats(AtsWeb):
             self.sendtoMainapp(message)
         
         self.driver.back()
-
+            

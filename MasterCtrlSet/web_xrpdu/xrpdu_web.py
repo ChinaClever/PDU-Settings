@@ -7,7 +7,7 @@ import configparser
 import time
 import os
 
-class ZpduWeb:
+class XRpduWeb:
 
     def __init__(self):
         self.ip_prefix = "http://"
@@ -29,9 +29,9 @@ class ZpduWeb:
 
     def initCfg(self):
         
-        self.cfgs = {'versions':'','user': 'admin', 'pwd': 'admin','ip_addr': '192.168.1.163', 'debug_web':  'debug.html','mac':''}
-        #items = ZpduWeb.getCfg().items("mCfg")  # 获取section名为Mysql-Database所对应的全部键值对
-        self.cfgs['mac'] = ZpduWeb.getCfg().get("Mac", "mac")
+        self.cfgs = {'versions':'','user': 'siemon', 'pwd': 'siemon','ip_addr': '192.168.1.163', 'debug_web':  'debug.html','mac':''}
+        #items = XRpduWeb.getCfg().items("mCfg")  # 获取section名为Mysql-Database所对应的全部键值对
+        self.cfgs['mac'] = XRpduWeb.getCfg().get("Mac", "mac")
         #for it in items:
         #    self.cfgs[it[0]] = it[1]
 
@@ -42,9 +42,8 @@ class ZpduWeb:
         except WebDriverException:
             return 0,'输入IP错误;0'
         self.setItById('name', self.cfgs['user'] , '账号')
-        self.setItById('psd', self.cfgs['pwd']  , '密码')
-        jsSheet = 'document.location.href=\"/login?id1=\"+{nm}+\"&id2=\"+{psd}+\"&\";'.format(nm = self.cfgs['user'] , psd = self.cfgs['pwd'])
-        self.execJs(jsSheet)
+        self.setItById('psd', self.cfgs['pwd']  , '密码')  
+        self.execJs("login()")
         time.sleep(1)
         return 1,'输入IP正确;1'
         
@@ -60,6 +59,8 @@ class ZpduWeb:
         Select(it).select_by_index(v)
         time.sleep(0.5)
 
+    
+
     def btnClick(self, id):
         self.driver.find_element_by_id(id).click()
         time.sleep(0.5)
@@ -72,7 +73,7 @@ class ZpduWeb:
     def divClick(self, id):
         self.driver.switch_to.default_content()
         self.execJs("clk({0})".format(id))
-        self.driver.switch_to.frame('rightMain')
+        self.driver.switch_to.frame('fra')
 
     def execJs(self, js):
         try:

@@ -14,7 +14,10 @@ class Zpdu(ZpduWeb):
         if(intRet == 0):
             return
         
-        self.changetocorrect()
+        intRet , message = self.changetocorrect()
+        self.sendtoMainapp(message)
+        if(intRet == 0):
+            return
         self.setCorrect1()
         #time.sleep(50)
         #self.login()
@@ -25,7 +28,7 @@ class Zpdu(ZpduWeb):
         time.sleep(0.1)
         #print(datetime.datetime.now())
         self.driver.quit()
-        print(datetime.datetime.now())
+        #print(datetime.datetime.now())
         time.sleep(3)
         
 
@@ -33,20 +36,29 @@ class Zpdu(ZpduWeb):
         cfg = self.cfgs
         ip = self.ip_prefix + cfg['ip_addr'] + '/debug.html'
         
-        self.driver.get(ip)
-        time.sleep(1)
-        
-        self.driver.switch_to.default_content()
+        try:
+            self.driver.get(ip)
+        except:
+            self.sendtoMainapp('MAC-1')
+            return 0,'账号密码错误;0'
+        else:
+            time.sleep(1)
+            self.driver.switch_to.default_content()
+            return 1,'账号密码正确;1'
     
     def setCorrect1(self):
         cfg = self.cfgs
-       
+        time.sleep(2)
         if (len(cfg['mac']) > 5  ):#NoSuchElementException
             strMac =  cfg['mac']
         try:
             self.driver.find_element_by_id('mac')
         except NoSuchElementException:
-            return
+            message = '无法找到MAC控件;0'
+            self.sendtoMainapp(message)
+            time.sleep(0.35)
+            self.sendtoMainapp('MAC-1')
+            return 0
         v = self.driver.find_element_by_id('mac').get_attribute('value')
         if( '2C:26:5F:' not in v):
             v = strMac
@@ -55,9 +67,10 @@ class Zpdu(ZpduWeb):
                 self.driver.find_element_by_xpath('//table[1]/tbody/tr[last()]/td[4]/input').click()
                 time.sleep(0.35)
             else:
-                return
+                return 1
         else:
             self.sendtoMainapp('MAC-1')
+        
 
     def checkId(self , id):
         try:

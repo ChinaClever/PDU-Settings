@@ -77,10 +77,16 @@ class Mpdu2(MpduWeb):
         cfg = self.cfgs
         ip = self.ip_prefix + cfg['ip_addr'] + '/correct.html'
         
-        self.driver.get(ip)
-        time.sleep(0.35)
-        
-        self.driver.switch_to.default_content()
+        try:
+            self.driver.get(ip)
+        except:
+            self.sendtoMainapp('账号密码错误;0')
+            time.sleep(0.35)
+            self.sendtoMainapp('MAC-1')
+            return
+        else:
+            time.sleep(0.35)
+            self.driver.switch_to.default_content()
     
     
     def setCorrect1(self):
@@ -525,3 +531,4 @@ class Mpdu2(MpduWeb):
                 lists[index].append(int(cfg[max]))
                 index += 1
         return lists
+            
