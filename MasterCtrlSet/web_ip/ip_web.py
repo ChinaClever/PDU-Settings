@@ -188,6 +188,10 @@ class IpWeb:
         self.setSelect("order",1)
         self.execJs(jsSheet.format(1))
         self.sendtoMainapp("设备Web出厂设置成功", 1)
+        
+    def reboot(self):
+        jsSheet = "xmlset = createXmlRequest();xmlset.onreadystatechange = setdata;ajaxgets(xmlset, \"/setsys?a=\" + {0} + \"&\");"
+        self.execJs(jsSheet.format(0))
 
 
 
