@@ -44,6 +44,7 @@ bool Test_CoreThread::startProcess()
     case ATS:  exe += "ats"; break;
     case RPDU:  exe += "rpdu"; break;
     case XRPDU:  exe += "xrpdu"; break;
+    case IP_BUSBAR:  exe += "ipbusbar"; break;
     }
 
     exe += ".exe";

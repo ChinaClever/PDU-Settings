@@ -39,6 +39,7 @@ void Home_SiWid::initType()
     ui->lineBox->setCurrentIndex(v);
     ui->sBox->setCurrentIndex(dt->standar);
     ui->curBox->setCurrentIndex(dt->series);
+    if(v) dt->ac = AC; else dt->ac = DC;
 }
 
 void Home_SiWid::updateType()
@@ -47,6 +48,7 @@ void Home_SiWid::updateType()
     dt->lines = ui->lineBox->currentIndex();
     dt->standar = ui->sBox->currentIndex();
     dt->series = ui->curBox->currentIndex();
+    if(dt->lines) dt->ac = AC; else dt->ac = DC;
 }
 
 bool Home_SiWid::inputCheck()

@@ -11,6 +11,7 @@ enum eDevTypes {
     ATS,
     RPDU,
     XRPDU,
+    IP_BUSBAR,
 
     AC = 1, // 交流
     DC,     // 直流

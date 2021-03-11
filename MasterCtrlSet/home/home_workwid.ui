@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1002</width>
-    <height>279</height>
+    <height>290</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -732,6 +732,11 @@
         <item>
          <property name="text">
           <string>西蒙RPDU</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>IP-BUSBAR</string>
          </property>
         </item>
        </widget>

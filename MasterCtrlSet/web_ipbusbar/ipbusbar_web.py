@@ -6,7 +6,7 @@ import socket
 import time
 import os
 
-class IpWeb:
+class IpBusbarWeb:
 
     def __init__(self):
         self.ip_prefix = "http://"
@@ -43,17 +43,14 @@ class IpWeb:
         return cf
 
     def initCfg(self):
-        items = IpWeb.getCfg().items("ipCfg")  # 获取section名为Mysql-Database所对应的全部键值对
+        items = IpBusbarWeb.getCfg().items("ipCfg")  # 获取section名为Mysql-Database所对应的全部键值对
         self.cfgs = {'ip_version':1,'user': 'admin', 'pwd': 'admin',
                      'ip': '192.168.1.163', 'debug_web':  'correct.html',
                      'ip_lines':1, 'ip_modbus':1, 'ip_language':1, 'lcd_switch':1,
                      'mac':'', 'ip_ac':1, 'ip_lcd':0, 'log_en':1, 'ip_standard': 0}
-        self.cfgs['mac'] = IpWeb.getCfg().get("Mac", "mac")
+        self.cfgs['mac'] = IpBusbarWeb.getCfg().get("Mac", "mac")
         for it in items:
             self.cfgs[it[0]] = it[1]
-        if int(self.cfgs['ip_lines']) == 0:
-            self.cfgs['ip_lines'] = 1
-            self.cfgs['ip_ac'] = 0
 
     def login(self):
         ip =  self.ip_prefix +self.cfgs['ip']+'/'

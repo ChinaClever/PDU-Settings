@@ -32,6 +32,7 @@ private:
     Home_RpduWid *mRpduWid;
     Home_RpduWid *mXRpduWid;
     Home_AtsWid *mAtsWid;
+    Home_IpBusbarwid *mIpBusbarWid;
 };
 
 #endif // HOME_MAINWID_H

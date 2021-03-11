@@ -1,15 +1,15 @@
-from ctrlset_ip.ip_web import  *
+from ctrlset_ipbusbar.ipbusbar_web import  *
 
-class IpV3(IpWeb):
+class IpBusbar(IpBusbarWeb):
 
     def start_fun(self):
         #self.ip_prefix = 'https://'
         self.login()
         self.setCorrect()
         #self.login()
-        self.setEle()
-        self.setThreshold()
-        self.clearLogs()
+        #self.setEle()
+        #self.setThreshold()
+        #self.clearLogs()
         #self.resetFactory()
         #self.reboot()
         self.driver.quit()
@@ -37,13 +37,7 @@ class IpV3(IpWeb):
         ip = self.ip_prefix + cfg['ip'] + '/correct.html'
         self.driver.get(ip); time.sleep(1)
         self.driver.switch_to.default_content()
-        self.setItById("language", cfg['ip_language'], '设备语言')
-        self.setItById("modbus", cfg['ip_modbus'], '设备模式')
-        self.setItById("lcdled", cfg['ip_lines'], '设备相数')
-        self.setItById("ACDC", cfg['ip_ac'], '交直流')
-        self.setItById("standard", cfg['ip_standard'], '标准中性')
-        self.setItById("LCDswitch", cfg['lcd_switch'], '新旧屏')
-        self.setItById("Log_flag", cfg['log_en'], '日志功能')
+
         if (len(cfg['mac']) > 5):
             self.setItById("mac1", cfg['mac'], 'Mac地址')
         self.alertClick("Button3")

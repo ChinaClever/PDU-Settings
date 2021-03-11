@@ -4,6 +4,7 @@ INCLUDEPATH += $$PWD
 
 HEADERS += \
     $$PWD/home_atswid.h \
+    $$PWD/home_ipbusbarwid.h \
     $$PWD/home_ipwid.h \
     $$PWD/home_lineunitwid.h \
     $$PWD/home_mainwid.h \
@@ -21,6 +22,7 @@ HEADERS += \
 	
 SOURCES += \
     $$PWD/home_atswid.cpp \
+    $$PWD/home_ipbusbarwid.cpp \
     $$PWD/home_ipwid.cpp \
     $$PWD/home_lineunitwid.cpp \
     $$PWD/home_mainwid.cpp \
@@ -38,6 +40,7 @@ SOURCES += \
 
 FORMS += \
     $$PWD/home_atswid.ui \
+    $$PWD/home_ipbusbarwid.ui \
     $$PWD/home_ipwid.ui \
     $$PWD/home_lineunitwid.ui \
     $$PWD/home_mainwid.ui \

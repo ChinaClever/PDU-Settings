@@ -52,6 +52,9 @@ void Home_MainWid::initWid()
     mRpduWid = new Home_RpduWid(tr("标准RPDU"),ui->tabWidget);
     ui->tabWidget->addTab(mRpduWid, tr("标准RPDU参数设置"));
 
-    mXRpduWid= new Home_RpduWid(tr("西蒙RPDU"),ui->tabWidget);
+    mXRpduWid = new Home_RpduWid(tr("西蒙RPDU"),ui->tabWidget);
     ui->tabWidget->addTab(mXRpduWid, tr("西蒙RPDU参数设置"));
+
+    mIpBusbarWid = new Home_IpBusbarwid(tr("IP-BUSBAR"),ui->tabWidget);
+    ui->tabWidget->addTab(mIpBusbarWid, tr("IP-BUSBAR参数设置"));
 }

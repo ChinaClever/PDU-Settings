@@ -24,14 +24,16 @@ Dev_SiRtu *Dev_SiRtu::bulid(QObject *parent)
 
 void Dev_SiRtu::initRtuItem(sRtuItem &it)
 {
+    mDev->dt.ac = AC;
     it.addr = mItem->addr;
     it.fn = 0x03;
     it.reg = 0;
     it.num = SI_RTU_THREE_LEN;
 
-    uchar res = mDev->dt.ac;
-    if(DC == res) {
-        it.num = SI_RTU_DC_LEN;
+    uchar res = mDev->dt.lines;
+    if(0 == res) {
+        mDev->dt.ac = DC;
+        it.num = SI_RTU_DC_LEN;       
     } else if(mDev->dt.standar) {
         it.num /= 2;  // 特殊定制
     }
