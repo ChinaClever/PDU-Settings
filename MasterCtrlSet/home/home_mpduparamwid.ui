@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1065</width>
+    <width>1072</width>
     <height>234</height>
    </rect>
   </property>
@@ -545,9 +545,6 @@
       <string/>
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
-      <property name="verticalSpacing">
-       <number>6</number>
-      </property>
       <item row="0" column="0">
        <layout class="QHBoxLayout" name="horizontalLayout_4">
         <item>
@@ -906,20 +903,22 @@
          </widget>
         </item>
         <item>
-         <widget class="QLabel" name="label_14">
-          <property name="maximumSize">
-           <size>
-            <width>16777215</width>
-            <height>30</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <pointsize>9</pointsize>
-           </font>
+         <widget class="QRadioButton" name="radioButton">
+          <property name="layoutDirection">
+           <enum>Qt::LeftToRight</enum>
           </property>
           <property name="text">
-           <string>如果带传感器盒子，需要手动设置及其阈值</string>
+           <string>标准版本</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QRadioButton" name="safeRadio">
+          <property name="text">
+           <string>安全版本</string>
           </property>
          </widget>
         </item>

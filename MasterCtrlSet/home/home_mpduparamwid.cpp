@@ -59,6 +59,7 @@ void Home_MpduParamWid::initType()
     ui->levelBox->setCurrentIndex(dt->level);
     ui->versionEdit->setText(dt->versions);
     ui->boardSpin->setValue(dt->boards);
+    ui->safeRadio->setChecked(dt->security);
 
     on_verBox_currentIndexChanged(dt->mpdu_ver);
     emit indexHiddenSig(dt->mpdu_ver);
@@ -88,6 +89,7 @@ void Home_MpduParamWid::updateType()
     dt->level = ui->levelBox->currentIndex();
     dt->versions = ui->versionEdit->text();
     dt->boards = ui->boardSpin->value();
+    dt->security = ui->safeRadio->isChecked()?1:0;
 
     for(int i=0; i<6; ++i) dt->loop[i] = mLoops[i]->value();
     for(int i=0; i<3; ++i) dt->board[i] = mBoards[i]->value();
