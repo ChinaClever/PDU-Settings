@@ -102,6 +102,7 @@ struct sDevType
     uchar board[3];
     uchar loop[6];
     uchar ip_lcd;
+    uchar security;
 
     QString versions;
 };
