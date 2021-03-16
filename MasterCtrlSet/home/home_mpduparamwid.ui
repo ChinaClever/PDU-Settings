@@ -631,6 +631,21 @@
             <string>水平</string>
            </property>
           </item>
+          <item>
+           <property name="text">
+            <string>水平90度</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>水平180度</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>水平270度</string>
+           </property>
+          </item>
          </widget>
         </item>
        </layout>

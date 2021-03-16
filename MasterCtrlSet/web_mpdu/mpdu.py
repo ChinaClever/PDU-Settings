@@ -305,7 +305,7 @@ class Mpdu(MpduWeb):
                 message =  '网页上找不到{0}ID;'.format('延时上电')
                 self.sock.sendto(message.encode('utf-8') , (self.ip , self.port))
                 return
-            self.setItById("totalms", 1)
+            self.setItById('totalms', 1 , '上电延时')
             jsSheet = 'var ms = parseFloat(document.getElementById(\"totalms\").value);var xmlset = createXmlRequest();xmlset.onreadystatechange = setdata;ajaxget(xmlset, \"/settime?a=\" + ms + \"&\");'
             self.execJs(jsSheet)
             time.sleep(0.35)
