@@ -40,6 +40,8 @@ private slots:
     void on_loopBox_currentIndexChanged(int index);
     void on_lineBox_currentIndexChanged(int index);
 
+    void on_seriesBox_currentIndexChanged(int index);
+
 private:
     Ui::Home_MpduParamWid *ui;
     sCfgItem *mItem;

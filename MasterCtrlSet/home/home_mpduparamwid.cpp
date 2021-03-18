@@ -155,6 +155,7 @@ void Home_MpduParamWid::on_verBox_currentIndexChanged(int index)
 void Home_MpduParamWid::on_boardSpin_valueChanged(int arg1)
 {
     bool en = true;
+    if(arg1 == 0) arg1 = 1;
     int v = ui->outputSpin->value() / arg1;
     for(int i=0; i<3; ++i) {
         if(i < arg1) {
@@ -236,5 +237,22 @@ void Home_MpduParamWid::on_lineBox_currentIndexChanged(int index)
         setItemEnable(2, 0);
         setItemEnable(4, 0);
         ui->loopBox->setCurrentIndex(0);
+    }
+}
+
+void Home_MpduParamWid::on_seriesBox_currentIndexChanged(int index)
+{
+    if( index == 0 || index == ui->seriesBox->count()-1 )
+    {
+        ui->outputSpin->setValue(0);
+        if(index == 0)
+            ui->boardSpin->setValue(0);
+        else if(ui->seriesBox->count()-1)
+            ui->boardSpin->setValue(1);
+    }
+    else
+    {
+        ui->outputSpin->setValue(24);
+        ui->boardSpin->setValue(3);
     }
 }
