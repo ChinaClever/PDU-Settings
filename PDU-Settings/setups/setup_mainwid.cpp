@@ -37,6 +37,7 @@ void Setup_MainWid::initFunSlot()
     timer->start(3*1000);
     connect(timer, SIGNAL(timeout()),this, SLOT(timeoutDone()));
 
+    ui->groupBox_4->setEnabled(false);
     QDate buildDate = QLocale(QLocale::English ).toDate( QString(__DATE__).replace("  ", " 0"), "MMM dd yyyy");
     ui->label_date->setText(buildDate.toString("yyyy-MM-dd"));
 }
@@ -62,6 +63,7 @@ void Setup_MainWid::initSerial()
 
 void Setup_MainWid::initMac()
 {
+    ui->spinBox->setValue(mItem->cntMac);
     ui->startMacLab->setText(mItem->startMac);
     ui->endMacLab->setText(mItem->endMac);
     updateMac();
@@ -114,9 +116,8 @@ void Setup_MainWid::on_pcBtn_clicked()
 
     bool ret = usr_land_jur();
     if(!ret) {
-        MsgBox::critical(this, tr("你无权进行此操作"));
-        return;
-    }
+        MsgBox::critical(this, tr("你无权进行此操作")); return;
+    } else mItem->cntMac = ui->spinBox->value();
 
     if(flg++ %2) {
         ret = false;
@@ -129,6 +130,7 @@ void Setup_MainWid::on_pcBtn_clicked()
 
     ui->pcBtn->setText(str);
     ui->logCountSpin->setEnabled(ret);
+    ui->groupBox_4->setEnabled(ret);
     if(mItem->pcNum) ret = false;
     ui->pcNumSpin->setEnabled(ret);
 }
