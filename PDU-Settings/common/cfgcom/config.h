@@ -45,9 +45,9 @@ struct sCfgItem
     QString mac;
     QString user;
     QString dev_type;
-
     QString startMac;
     QString endMac;
+    uint cntMac;
 
     sCount cnt;
     int logCount;
