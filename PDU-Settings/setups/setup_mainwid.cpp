@@ -27,6 +27,7 @@ Setup_MainWid::~Setup_MainWid()
 void Setup_MainWid::initFunSlot()
 {
     initPcNum();
+
     initLogCount();
     mUserWid = new UserMainWid(ui->stackedWid);
     ui->stackedWid->addWidget(mUserWid);
