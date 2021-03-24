@@ -129,7 +129,32 @@ class MpduHuawei(MpduWeb):
         
         self.driver.back()
         
-        
+    def setCcur(self):
+        cfg = self.cfgs
+        loop = 2
+        m , n , x , y = self.checkLoopValue(cfg['cur_min']),self.checkLoopValue(cfg['cur_crmin']),self.checkLoopValue(cfg['cur_crmax']),self.checkLoopValue(cfg['cur_max'])
+        for i in range(5 , 5+loop):
+            jsSheet = 'var xmlset = createXmlRequest();xmlset.onreadystatechange = setdata;ajaxget(xmlset, \"/setlimit?a=\" + {f} + \"&b=\" + {a} + \"&c=\" + {g} + \"&d=\" + {j} + \"&e=\" + {d} + \"&\")'.format( f = i , a = m*10 , g = y*10 , j = n*10 , d = x*10)
+            self.execJs(jsSheet)
+            
+    def checkLoopValue(self , value):
+        cfg = self.cfgs
+        line = 1
+        loop = 2
+        fileValue = int(value)
+        if( line == loop ):
+            fileValue = int(value)
+        elif( line == loop/2 ):
+            if( int(value) % 2 == 1 ):
+                fileValue = (int(value)+1)/2
+            else:
+                fileValue = int(value)/2
+        elif( line == loop/4 ):
+            if( int(value) % 2 == 1 ):
+                fileValue = (int(value)+1)/4
+            else:
+                fileValue = int(value)/4
+        return fileValue
         
     def checkTitleBar2(self):
         cfg = self.cfgs
@@ -159,6 +184,33 @@ class MpduHuawei(MpduWeb):
            
                     
         self.checkAndSendTitleBar3(list , cfgStr , outputStr , 1)
+        list.clear()
+        cfgStr.clear()
+        outputStr.clear()
+        
+        self.setCcur()
+        
+        time.sleep(0.35)
+        self.driver.find_element_by_id("titlebar2").click()
+        time.sleep(0.35)
+        
+        for i in range(2 , line+1):
+            list.append('Tcmin{0}'.format(i))
+            list.append('Txcmin{0}'.format(i))
+            list.append('Txcmax{0}'.format(i))
+            list.append('Tcmax{0}'.format(i))
+            cfgStr.append('cur_min')
+            cfgStr.append('cur_crmin')
+            cfgStr.append('cur_crmax')
+            cfgStr.append('cur_max')
+           
+            outputStr.append('C{0}回路电流最小值'.format(i))
+            outputStr.append('C{0}回路电流下临界值'.format(i))
+            outputStr.append('C{0}回路电流上临界值'.format(i))
+            outputStr.append('C{0}回路电流最大值'.format(i))
+           
+                    
+        self.checkAndSendTitleBar3(list , cfgStr , outputStr , 7)
         list.clear()
         cfgStr.clear()
         outputStr.clear()
@@ -207,11 +259,21 @@ class MpduHuawei(MpduWeb):
         zz = zip(list , cfgStr , outputStr)
         statusList = []
         messageList = []
-        for x,y,z in zz:
-            #Tvmin = self.driver.find_element_by_id(x).get_attribute('value')
-            status , message = self.checkStr( x , cfg[y] , z)
-            statusList.append(status)
-            messageList.append(message)
+        if( case != 7 ):
+            for x,y,z in zz:
+                status , message = self.checkStr( x , cfg[y] , z)
+                statusList.append(status)
+                messageList.append(message)
+        elif( case == 7 ):
+            for x,y,z in zz:
+                vv = int( cfg[y] )
+                if( int( cfg[y] ) % 2 == 1):
+                    vv = (int( cfg[y] ) + 1) /2
+                else:
+                    vv = int( cfg[y] ) /2
+                status , message = self.checkStr( x , str(int(vv)) , z)
+                statusList.append(status)
+                messageList.append(message)
         
         phaseStr = zip(statusList , messageList)
         flag = False
@@ -234,6 +296,11 @@ class MpduHuawei(MpduWeb):
             elif( case == 4):
                 self.sendtoMainapp("设置湿度最小值成功;1" )
                 self.sendtoMainapp("设置湿度最大值成功;1" )
+            elif( case == 7):
+                self.sendtoMainapp("设置回路电流最小值成功;1" )
+                self.sendtoMainapp("设置回路电流下临界值成功;1" )
+                self.sendtoMainapp("设置回路电流上临界值成功;1" )
+                self.sendtoMainapp("设置回路电流最大值成功;1" )
         statusList.clear()
         messageList.clear()
             
@@ -244,7 +311,7 @@ class MpduHuawei(MpduWeb):
         self.driver.find_element_by_id("titlebar3").click()
         time.sleep(0.35)
         
-        op = 24
+        op = cfg['outputs']
         if( int(cfg['series']) == 2 or int(cfg['series']) == 4):#输出位
             list=[]
             cfgStr = []

@@ -57,7 +57,7 @@ class Mpdu2(MpduWeb):
         self.divClick(6)
         time.sleep(1)
         if( int(self.cfgs['security']) == 1 ):
-            time.sleep(2)
+            time.sleep(2.5)
         for num in range(0, 2):
             self.execJs(jsSheet.format(num))
             time.sleep(0.35)
@@ -223,6 +223,16 @@ class Mpdu2(MpduWeb):
         
         self.checkTcur()
         
+        self.setCcur()
+        
+        if( int(self.cfgs['security']) == 1 ):
+            time.sleep(1)
+        time.sleep(0.35)
+        self.driver.find_element_by_id("titlebar2").click()
+        time.sleep(0.35)
+        
+        self.checkCcur()
+        
         self.checkTvol()
         
         self.checkTem()
@@ -257,6 +267,56 @@ class Mpdu2(MpduWeb):
             outputStr.append('L{0}总电流最大值'.format(i))
                     
         self.checkAndSendTitleBar3(list , cfgStr , outputStr , 1)
+        
+    def checkCcur(self):
+        cfg = self.cfgs
+        loop = int(cfg['loops'])
+        list=[]
+        cfgStr = []
+        outputStr = []
+       
+        for i in range(1 , loop+1):
+            list.append('cumin{0}'.format(i))
+            list.append('cxmin{0}'.format(i))
+            list.append('cxmax{0}'.format(i))
+            list.append('cumax{0}'.format(i))
+            cfgStr.append('cur_min')
+            cfgStr.append('cur_crmin')
+            cfgStr.append('cur_crmax')
+            cfgStr.append('cur_max')
+            outputStr.append('C{0}电流最小值'.format(i))
+            outputStr.append('C{0}电流下临界值'.format(i))
+            outputStr.append('C{0}电流上临界值'.format(i))
+            outputStr.append('C{0}电流最大值'.format(i))
+                    
+        self.checkAndSendTitleBar3(list , cfgStr , outputStr , 7)
+        
+    def setCcur(self):
+        cfg = self.cfgs
+        loop = int(cfg['loops'])
+        a , b , c , d = self.checkLoopValue(cfg['cur_min']),self.checkLoopValue(cfg['cur_crmin']),self.checkLoopValue(cfg['cur_crmax']),self.checkLoopValue(cfg['cur_max'])
+        for i in range(14 , 15+loop):
+            jsSheet = 'var slave1 = document.getElementById(\"slave\").value;var xmlset = createXmlRequest();xmlset.onreadystatechange = setdata;ajaxget(xmlset, \"/setlimit?a=\" + slave1 + \"&b=\" + {action} + \"&c=\" + {Tcmin} + \"&d=\" + {Tcmax} + \"&e=\" + {Txcmin}  + \"&f=\" + {Txcmax}+  \"&\");'.format( action = i , Tcmin = a*100 , Tcmax = d*100 , Txcmin = b*100 , Txcmax = c*100)
+            self.execJs(jsSheet)
+        
+    def checkLoopValue(self , value):
+        cfg = self.cfgs
+        line = int(cfg['lines'])
+        loop = int(cfg['loops'])
+        fileValue = int(value)
+        if( line == loop ):
+            fileValue = int(value)
+        elif( line == loop/2 ):
+            if( int(value) % 2 == 1 ):
+                fileValue = (int(value)+1)/2
+            else:
+                fileValue = int(value)/2
+        elif( line == loop/4 ):
+            if( int(value) % 2 == 1 ):
+                fileValue = (int(value)+1)/4
+            else:
+                fileValue = int(value)/4
+        return fileValue
     
     def checkTvol(self):
         cfg = self.cfgs
@@ -340,10 +400,16 @@ class Mpdu2(MpduWeb):
         zz = zip(list , cfgStr , outputStr)
         statusList = []
         messageList = []
-        for x,y,z in zz:
-            status , message = self.checkStr( x , cfg[y] , z)
-            statusList.append(status)
-            messageList.append(message)
+        if( case != 7 ):
+            for x,y,z in zz:
+                status , message = self.checkStr( x , cfg[y] , z)
+                statusList.append(status)
+                messageList.append(message)
+        elif( case == 7 ):
+            for x,y,z in zz:
+                status , message = self.checkStr2( x , cfg[y] , z)
+                statusList.append(status)
+                messageList.append(message)
         
         phaseStr = zip(statusList , messageList)
         flag = False
@@ -372,6 +438,11 @@ class Mpdu2(MpduWeb):
             elif( case == 6):
                 self.sendtoMainapp("设置传感器盒子湿度最小值成功;1" )
                 self.sendtoMainapp("设置传感器盒子湿度最大值成功;1" )
+            elif( case == 7):
+                self.sendtoMainapp("设置回路电流最小值成功;1" )
+                self.sendtoMainapp("设置回路电流下临界值成功;1" )
+                self.sendtoMainapp("设置回路电流上临界值成功;1" )
+                self.sendtoMainapp("设置回路电流最大值成功;1" )
         statusList.clear()
         messageList.clear()
             

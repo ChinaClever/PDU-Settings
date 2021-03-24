@@ -23,7 +23,7 @@ class MpduWeb:
     @staticmethod
     def getCfg():
         cf = configparser.ConfigParser()
-        fn = os.path.expanduser('~') + "/.MasterCtrlSet/cfg.ini"
+        fn = os.path.expanduser('~') + "/.PDU-Settings/cfg.ini"
         cf.read(fn, 'utf-8-sig')  # 读取配置文件，如果写文件的绝对路径，就可以不用os模块
         return cf
 
@@ -103,7 +103,7 @@ class MpduWeb:
 
     def execJs(self, js):
         self.driver.execute_script(js)
-        time.sleep(0.35)
+        time.sleep(0.5)
 
     def execJsAlert(self, js):
         self.execJs(js)
@@ -158,6 +158,40 @@ class MpduWeb:
             message ='设置{0}成功{1};'.format(parameter,value)+str(1)
         else:
             message = '设置{0}失败，实际值{1}，期待值{2};'.format(parameter,v,value)+str(0)
+            ret = 0
+        #sock.sendto(message.encode('utf-8-sig') , (dest_ip , dest_port))
+        return ret,message
+        
+    def checkStr2(self, ssid , value , parameter):
+        cfg = self.cfgs
+        line = int(cfg['lines'])
+        loop = int(cfg['loops'])
+        try:checkStr2
+            message =''
+            self.driver.find_element_by_id(ssid)
+        except NoSuchElementException:
+            message =  '网页上找不到{0}ID;'.format(parameter)+str(2)
+            #sock.sendto(message.encode('utf-8-sig') , (dest_ip , dest_port))
+            return 2,message
+        webValueStr = self.driver.find_element_by_id(ssid).get_attribute('value')
+        webValue = int(webValueStr)
+        ret = 1
+        if( line == loop ):
+            fileValue = int(value)
+        elif( line == loop/2 ):
+            if( int(value) % 2 == 1 ):
+                fileValue = (int(value)+1)/2
+            else:
+                fileValue = int(value)/2
+        elif( line == loop/4 ):
+            if( int(value) % 2 == 1 ):
+                fileValue = (int(value)+1)/4
+            else:
+                fileValue = int(value)/4
+        if(  fileValue == webValue ):
+            message ='设置{0}成功{1};'.format(parameter,fileValue)+str(1)
+        else:
+            message = '设置{0}失败，实际值{1}，期待值{2};'.format(parameter,webValue,fileValue)+str(0)
             ret = 0
         #sock.sendto(message.encode('utf-8-sig') , (dest_ip , dest_port))
         return ret,message
