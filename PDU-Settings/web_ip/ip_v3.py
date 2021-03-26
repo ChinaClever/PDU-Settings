@@ -11,7 +11,6 @@ class IpV3(IpWeb):
         self.setThreshold()
         self.clearLogs()
         #self.resetFactory()
-        #self.reboot()
         self.driver.quit()
 
     def setTime(self):
@@ -44,8 +43,7 @@ class IpV3(IpWeb):
         self.setItById("standard", cfg['ip_standard'], '标准中性')
         self.setItById("LCDswitch", cfg['lcd_switch'], '新旧屏')
         self.setItById("Log_flag", cfg['log_en'], '日志功能')
-        if (len(cfg['mac']) > 5):
-            self.setItById("mac1", cfg['mac'], 'Mac地址')
+        self.setMacAddr()
         self.alertClick("Button3")
         self.sendtoMainapp("设备后台网页配置成功", 1)
         self.driver.back()
