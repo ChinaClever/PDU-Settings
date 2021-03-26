@@ -166,7 +166,7 @@ class MpduWeb:
         cfg = self.cfgs
         line = int(cfg['lines'])
         loop = int(cfg['loops'])
-        try:checkStr2
+        try:
             message =''
             self.driver.find_element_by_id(ssid)
         except NoSuchElementException:
