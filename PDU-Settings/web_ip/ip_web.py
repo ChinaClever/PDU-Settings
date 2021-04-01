@@ -30,9 +30,21 @@ class IpWeb:
             self.dest_ip = '127.0.0.1'
             #self.sendtoMainapp("Mac地址错误：" + mac, 0)
 
+    def udpSendTo(self, message):
+        self.sock.sendto(message.encode('utf-8-sig'), (self.dest_ip, 10086))
+
     def sendtoMainapp(self, parameter, res):
         message = parameter + ";" + str(res)
-        self.sock.sendto(message.encode('utf-8-sig'), (self.dest_ip, 10086))
+        self.udpSendTo(message)
+
+    def setMacAddr(self):
+        cfg = self.cfgs
+        it = self.driver.find_element_by_id('mac1')
+        mac = it.get_attribute('value')
+        if "2C:26:5F:" in mac:
+            self.udpSendTo("MAC-1")
+        else:
+            self.setItById("mac1", cfg['mac'], 'Mac地址')
 
     @staticmethod
     def getCfg():
@@ -59,7 +71,7 @@ class IpWeb:
         ip =  self.ip_prefix +self.cfgs['ip']+'/'
         user = self.cfgs['user']
         pwd = self.cfgs['pwd']
-        self.driver.get(ip); time.sleep(0.45)
+        self.driver.get(ip); time.sleep(1)
         self.setItById("name", user,'账号')
         self.setItById("psd", pwd, '密码')
         self.execJs("login()")
@@ -104,11 +116,19 @@ class IpWeb:
         self.setItById("max8", humMax, p)
         self.execJs("setlimit(8)")
 
+    def setSelectLcd(self, id, v):
+        time.sleep(0.15)
+        it = self.driver.find_element_by_id(id)
+        if it.is_displayed():
+            Select(it).select_by_index(v); time.sleep(0.5)
+            self.execJs("setdevice()"); time.sleep(1)
+            self.driver.switch_to.alert.accept()
+
     def setLcdDir(self):
         dir = self.cfgs['ip_lcd']
         self.setSelectLcd("dir", dir)
-        #self.alertClick("lang_5")
-        
+        #self.setSelect("slave", 1)
+        #self.execJsAlert("setdevice()")
 
     def setEle(self):
         self.divClick(3)
@@ -130,25 +150,16 @@ class IpWeb:
         self.setEnv()
         self.sendtoMainapp("设备报警阈值设置成功", 1)
 
-    def setSelectLcd(self, id, v):
-        it = self.driver.find_element_by_id(id)
-        if it.is_displayed():
-            Select(it).select_by_index(v)
-            time.sleep(1)
-            
-            self.execJs("setdevice()")
-            time.sleep(1)
-            self.driver.switch_to.alert.accept()
-    
     def setSelect(self, id, v):
+        time.sleep(0.15)
         it = self.driver.find_element_by_id(id)
         if it.is_displayed():
             Select(it).select_by_index(v)
-            time.sleep(1)
+            time.sleep(0.5)
 
     def setItById(self, id, v, parameter):
         try:
-            time.sleep(0.1)
+            time.sleep(0.15)
             it = self.driver.find_element_by_id(id)
         except NoSuchElementException:
             msg = '网页上找不到{0}'.format(id)
@@ -167,19 +178,20 @@ class IpWeb:
     def alertClick(self, id):
         self.btnClick(id)
         self.driver.switch_to.alert.accept()
-        time.sleep(0.35)
+        time.sleep(0.5)
 
     def divClick(self, id):
         self.driver.switch_to.default_content()
         self.execJs("clk({0})".format(id))
         self.driver.switch_to.frame('ifrm')
+        time.sleep(0.5)
 
     def execJs(self, js):
         self.driver.execute_script(js)
-        time.sleep(0.45)
+        time.sleep(0.5)
 
     def execJsAlert(self, js):
-        self.execJs(js)
+        self.execJs(js); time.sleep(0.5)
         self.driver.switch_to.alert.accept()
         time.sleep(0.5)
 
@@ -194,17 +206,6 @@ class IpWeb:
         self.setSelect("order",1)
         self.execJs(jsSheet.format(1))
         self.sendtoMainapp("设备Web出厂设置成功", 1)
-        
-    def reboot(self):
-        try:
-            jsSheet = "xmlset = createXmlRequest();xmlset.onreadystatechange = setdata;ajaxgets(xmlset, \"/setsys?a=\" + {0} + \"&\");"
-            self.execJs(jsSheet.format(0))
-        except:
-            try:
-                jsSheet = "xmlset = createXmlRequest();xmlset.onreadystatechange = setdata;ajaxget(xmlset, \"/setsys?a=\" + {0} + \"&\");"
-                self.execJs(jsSheet.format(0))
-            except:
-                return
 
 
 
