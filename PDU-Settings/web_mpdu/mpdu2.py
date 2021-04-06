@@ -47,7 +47,7 @@ class Mpdu2(MpduWeb):
     def clearLogs(self):
         cfg = self.cfgs
         jsSheet = 'var xmlset = createXmlRequest();xmlset.onreadystatechange = setdata;var clearUrl = Encryption(\"/setlclear\");ajaxget(xmlset, clearUrl + \"?a=\" + {0} + \"&\")'
-        if int(cfg['versions']) < 14:
+        if int(cfg['versions']) <= 14:
             jsSheet = 'var xmlset = createXmlRequest();xmlset.onreadystatechange = setdata;ajaxget(xmlset, \"/setlclear?a=\" + {0} + \"&\");'
         flag = False
         ListMessage = []
@@ -533,7 +533,11 @@ class Mpdu2(MpduWeb):
         messageList = []
         for i in range(1 , int(op)+1):
             ms = 'ms{0}'.format(i)
-            status , message = self.checkStr( ms , '1' , '上下电延时')
+            status , message = '' ,''
+            if( int(self.cfgs['series']) == 3 or int(self.cfgs['series']) == 4):
+                status , message = self.checkStr( ms , '1' , '上下电延时')
+            else:
+                status , message = self.checkStr( ms , '0' , '上下电延时')
             statusList.append(status)
             messageList.append(message)
             
