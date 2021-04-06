@@ -28,7 +28,7 @@ class Mpdu2(MpduWeb):
         self.changetocorrect()
         self.setCorrect2()
         self.setCorrect1()
-        time.sleep(5)
+        time.sleep(7)
         self.login()
         
         
@@ -119,14 +119,14 @@ class Mpdu2(MpduWeb):
         #if( int(self.cfgs['security']) == 1 ):
             #jsSheet1 = 'var setUrl = Encryption(\"/correct\");var claerset = createXmlRequest();claerset.onreadystatechange = setmac;ajaxget(claerset, setUrl+ \"?a=\" +{set}+\"&b=\"+{type} +\"&c=\"+{language} + \"&d=\"+\"{mac1}\" + \"&e=\"+{lines} + \"&f=\"+{boards} + \"&g=\"+{breaker} + \"&h=\"+{loops} + \"&i=\"+{loop_1}+ \"&j=\"+{loop_2} + \"&k=\"+{loop_3} + \"&l=\"+{serial} + \"&m=\"+{neutral} + \"&n=\"+{board_1} + \"&u=\"+{board_2} + \"&v=\"+{board_3} + \"&w=\"+{sensorbox} + \"&x=\"+{VerticalLevel}+ \"&y=\"+{level} + \"&z=\"+ {LeLcdSw} + \"&aa=\"+ {loop_4} + \"&ab=\"+ {loop_5} + \"&ac=\"+ {loop_6} + \"&\");'.format(set=int(1),type = cfg['series'] , language = cfg['language'] , mac1 = v , lines = cfg['lines'] , boards = cfg['boards'] , breaker = cfg['breaker'] , loops = cfg['loops'] , loop_1 = cfg['loop_1'] ,   loop_2 = cfg['loop_2'] , loop_3 = cfg['loop_3'] , serial = cfg['modbus'] , neutral = cfg['standar'] , board_1 = cfg['board_1'] ,   board_2 = cfg['board_2'] , board_3 = cfg['board_3'] , sensorbox = cfg['envbox'] , VerticalLevel = cfg['level'] , level = cfg['level'] , LeLcdSw = str(0) , loop_4 = cfg['loop_4'] , loop_5 = cfg['loop_5'] , loop_6 = cfg['loop_6'])
         self.execJs(jsSheet1)
-        if int(cfg['versions']) >= 14:
+        if int(cfg['versions']) > 14:
             self.driver.back()
             self.divClick(7)
             if( int(self.cfgs['security']) == 1 ):
                 time.sleep(2)
-            time.sleep(0.35)
+            time.sleep(0.5)
             self.driver.find_element_by_id("biao1").click()
-            time.sleep(0.35)
+            time.sleep(0.5)
             jsSheet1 = 'var xmlset = createXmlRequest();xmlset.onreadystatechange = setdata;ajaxget(xmlset, \"/setsys?a=\" + 0 + \"&\");'
             #if( int(self.cfgs['security']) == 1 ):
                 #jsSheet1 = 'var setUrl = Encryption(\"/setsys\");var xmlset = createXmlRequest();xmlset.onreadystatechange = setdata;ajaxget(xmlset, setUrl+\"?a=\" + 0 + \"&\");'
