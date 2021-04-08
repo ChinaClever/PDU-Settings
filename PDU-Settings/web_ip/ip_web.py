@@ -166,7 +166,7 @@ class IpWeb:
             #self.sendtoMainapp(msg, 0)
         else:
             if it.is_displayed():
-                it.clear()
+                it.clear();time.sleep(0.1)
                 it.send_keys(str(v))
                 msg = '设置{0} {1}：{2}'.format(parameter, id, v)
                 self.sendtoMainapp(msg, 1)
