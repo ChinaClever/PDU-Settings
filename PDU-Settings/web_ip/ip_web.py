@@ -6,6 +6,7 @@ import socket
 import time
 import os
 
+
 class IpWeb:
 
     def __init__(self):
@@ -28,7 +29,7 @@ class IpWeb:
             return True
         else:
             self.dest_ip = '127.0.0.1'
-            #self.sendtoMainapp("Mac地址错误：" + mac, 0)
+            # self.sendtoMainapp("Mac地址错误：" + mac, 0)
 
     def udpSendTo(self, message):
         self.sock.sendto(message.encode('utf-8-sig'), (self.dest_ip, 10086))
@@ -51,15 +52,15 @@ class IpWeb:
         cf = configparser.ConfigParser()
         fn = os.path.expanduser('~') + "/.PDU-Settings/cfg.ini"
         cf.read(fn, 'utf-8-sig')  # 读取配置文件，如果写文件的绝对路径，就可以不用os模块
-        #cf.read("cfg.ini")
+        # cf.read("cfg.ini")
         return cf
 
     def initCfg(self):
         items = IpWeb.getCfg().items("ipCfg")  # 获取section名为Mysql-Database所对应的全部键值对
-        self.cfgs = {'ip_version':1,'user': 'admin', 'pwd': 'admin',
-                     'ip': '192.168.1.163', 'debug_web':  'correct.html',
-                     'ip_lines':1, 'ip_modbus':1, 'ip_language':1, 'lcd_switch':1,
-                     'mac':'', 'ip_ac':1, 'ip_lcd':0, 'log_en':1, 'ip_standard': 0}
+        self.cfgs = {'ip_version': 1, 'user': 'admin', 'pwd': 'admin',
+                     'ip': '192.168.1.163', 'debug_web': 'correct.html',
+                     'ip_lines': 1, 'ip_modbus': 1, 'ip_language': 1, 'lcd_switch': 1,
+                     'mac': '', 'ip_ac': 1, 'ip_lcd': 0, 'log_en': 1, 'ip_standard': 0}
         self.cfgs['mac'] = IpWeb.getCfg().get("Mac", "mac")
         for it in items:
             self.cfgs[it[0]] = it[1]
@@ -68,11 +69,11 @@ class IpWeb:
             self.cfgs['ip_ac'] = 0
 
     def login(self):
-        ip =  self.ip_prefix +self.cfgs['ip']+'/'
+        ip = self.ip_prefix + self.cfgs['ip'] + '/'
         user = self.cfgs['user']
         pwd = self.cfgs['pwd']
-        self.driver.get(ip); time.sleep(1)
-        self.setItById("name", user,'账号')
+        self.driver.get(ip); time.sleep(1.5)
+        self.setItById("name", user, '账号')
         self.setItById("psd", pwd, '密码')
         self.execJs("login()")
         self.sendtoMainapp("网页登陆成功", 1)
@@ -81,11 +82,11 @@ class IpWeb:
     def setCur(self, lines, min, max):
         p = '电流阈值'
         size = lines
-        if(size == 2):
+        if (size == 2):
             lines = 3
-        for num in range(1, lines+1):
-            if(size == 2 and num == 2):
-                max = int((int(max)+1)//2)
+        for num in range(1, lines + 1):
+            if (size == 2 and num == 2):
+                max = int((int(max) + 1) // 2)
             self.setItById("min" + str(num), int(min), p)
             self.setItById("max" + str(num), int(max), p)
             self.execJs("setlimit({0})".format(num))
@@ -93,9 +94,9 @@ class IpWeb:
     def setVol(self, lines, min, max):
         p = '电压阈值'
         size = lines
-        if(size == 2):
+        if (size == 2):
             lines = 3
-        for num in range(4, lines+4):
+        for num in range(4, lines + 4):
             self.setItById("min" + str(num), min, p)
             self.setItById("max" + str(num), max, p)
             self.execJs("setlimit({0})".format(num))
@@ -120,15 +121,15 @@ class IpWeb:
         time.sleep(0.15)
         it = self.driver.find_element_by_id(id)
         if it.is_displayed():
-            Select(it).select_by_index(v); time.sleep(0.5)
+            Select(it).select_by_index(v); time.sleep(1)
             self.execJs("setdevice()"); time.sleep(1)
             self.driver.switch_to.alert.accept()
 
     def setLcdDir(self):
         dir = self.cfgs['ip_lcd']
         self.setSelectLcd("dir", dir)
-        #self.setSelect("slave", 1)
-        #self.execJsAlert("setdevice()")
+        # self.setSelect("slave", 1)
+        # self.execJsAlert("setdevice()")
 
     def setEle(self):
         self.divClick(3)
@@ -151,19 +152,19 @@ class IpWeb:
         self.sendtoMainapp("设备报警阈值设置成功", 1)
 
     def setSelect(self, id, v):
-        time.sleep(0.15)
+        time.sleep(0.35)
         it = self.driver.find_element_by_id(id)
         if it.is_displayed():
             Select(it).select_by_index(v)
-            time.sleep(0.5)
+            time.sleep(0.8)
 
     def setItById(self, id, v, parameter):
         try:
-            time.sleep(0.15)
+            time.sleep(0.1)
             it = self.driver.find_element_by_id(id)
         except NoSuchElementException:
             msg = '网页上找不到{0}'.format(id)
-            #self.sendtoMainapp(msg, 0)
+            # self.sendtoMainapp(msg, 0)
         else:
             if it.is_displayed():
                 it.clear();time.sleep(0.1)
@@ -173,37 +174,37 @@ class IpWeb:
 
     def btnClick(self, id):
         self.driver.find_element_by_id(id).click()
-        time.sleep(0.5)
+        time.sleep(0.8)
 
     def alertClick(self, id):
-        self.btnClick(id)
+        self.btnClick(id); time.sleep(0.5)
         self.driver.switch_to.alert.accept()
-        time.sleep(0.5)
+        time.sleep(0.8)
 
     def divClick(self, id):
         self.driver.switch_to.default_content()
         self.execJs("clk({0})".format(id))
         self.driver.switch_to.frame('ifrm')
-        time.sleep(0.5)
+        time.sleep(0.8)
 
     def execJs(self, js):
         self.driver.execute_script(js)
-        time.sleep(0.5)
+        time.sleep(0.9)
 
     def execJsAlert(self, js):
-        self.execJs(js); time.sleep(0.5)
+        self.execJs(js); time.sleep(0.6)
         self.driver.switch_to.alert.accept()
-        time.sleep(0.5)
+        time.sleep(0.8)
 
     def resetFactory(self):
         v = IpWeb.getCfg().get("ipCfg", "ip_version")
         jsSheet = "xmlset = createXmlRequest();xmlset.onreadystatechange = setdata;ajaxgets(xmlset, \"/setsys?a=\" + {0} + \"&\");"
-        if(1 == int(v)):
+        if (1 == int(v)):
             self.divClick(8)
             jsSheet = "xmlset = createXmlRequest();xmlset.onreadystatechange = setdata;ajaxget(xmlset, \"/setsys?a=\" + {0} + \"&\");"
         else:
             self.divClick(10)
-        self.setSelect("order",1)
+        self.setSelect("order", 1)
         self.execJs(jsSheet.format(1))
         self.sendtoMainapp("设备Web出厂设置成功", 1)
 
