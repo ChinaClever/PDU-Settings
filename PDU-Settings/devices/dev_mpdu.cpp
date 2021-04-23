@@ -34,7 +34,7 @@ void Dev_Mpdu::initType()
     ptr->language = read("language", 1).toInt();
     ptr->versions = read("versions", "").toString();
     ptr->envbox = read("envbox", 0).toInt();
-    ptr->modbus = read("modbus", 0).toInt();
+    ptr->modbus = read("modbus", 1).toInt();
     ptr->boards = read("boards", 3).toInt();
     ptr->level = read("level", 0).toInt();
     ptr->mpdu_ver = read("mpdu_ver", 2).toInt();
