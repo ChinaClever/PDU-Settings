@@ -42,6 +42,7 @@ void Home_MainWid::initWid()
     ui->tabWidget->addTab(mMpduWid, tr("MPDU参数设置"));
     connect(mMpduWid, SIGNAL(errSig()), mWorkWid, SLOT(errSlot()));
     connect(mWorkWid, SIGNAL(enabledSig(bool)), mMpduWid, SLOT(enabledSlot(bool)));
+    connect(mMpduWid, SIGNAL(sendMpduVerSig(int)), mWorkWid, SLOT(recvVerSlot(int)));
 
     mZpduWid = new Home_ZpduWid(ui->tabWidget);
     ui->tabWidget->addTab(mZpduWid, tr("ZPDU参数设置"));
