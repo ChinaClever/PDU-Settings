@@ -61,12 +61,12 @@ bool Test_CoreThread::startProcess()
     return ret;
 }
 
-void Test_CoreThread::updateMacAddr()
+void Test_CoreThread::updateMacAddr(int step)
 {
     if(mItem->mac.size() > 5) {
         mLogs->writeMac(mItem->mac);
         MacAddr *mac = MacAddr::bulid();
-        mItem->mac = mac->macAdd(mItem->mac);
+        mItem->mac = mac->macAdd(mItem->mac, step);
     }
 }
 
@@ -94,8 +94,9 @@ void Test_CoreThread::workDown()
     mItem->sn.clear();
     mLogs->updatePro(tr("自动设置已启动"));
     if(mItem->modeId) {
+        updateMacAddr(1);
         ret = startProcess();
-        if(ret && mRead->mac) updateMacAddr();
+        if(!mRead->mac) updateMacAddr(-1);
     } else {
         ret = mCtrl->setDev();
     }

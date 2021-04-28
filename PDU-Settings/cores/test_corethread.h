@@ -14,7 +14,7 @@ protected:
     void workDown();
     bool checkNet();
     bool startProcess();
-    void updateMacAddr();
+    void updateMacAddr(int step);
     void workResult(bool res);
 
 protected slots:
