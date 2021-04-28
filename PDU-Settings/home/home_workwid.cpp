@@ -263,6 +263,19 @@ void Home_WorkWid::on_setBtn_clicked()
     QTimer::singleShot(50,this,SLOT(saveFunSlot()));
 }
 
+void Home_WorkWid::recvVerSlot(int ver)
+{
+    if( ver <= 32 )
+        ui->snCheckBox->setChecked(false);
+    else
+    {
+        ui->snCheckBox->setChecked(true);
+        if( ver >= 300 && ver <= 320)
+            ui->snCheckBox->setChecked(false);
+
+    }
+}
+
 void Home_WorkWid::saveErrSlot()
 {
     mCnt = 1;

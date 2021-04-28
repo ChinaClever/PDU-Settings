@@ -34,6 +34,9 @@ class IpWeb:
     def udpSendTo(self, message):
         self.sock.sendto(message.encode('utf-8-sig'), (self.dest_ip, 10086))
 
+    def udpSendTo(self, message):
+        self.sock.sendto(message.encode('utf-8-sig'), (self.dest_ip, 10086))
+
     def sendtoMainapp(self, parameter, res):
         message = parameter + ";" + str(res)
         self.udpSendTo(message)

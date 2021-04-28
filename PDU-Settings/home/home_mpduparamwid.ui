@@ -428,11 +428,17 @@
       </item>
       <item row="3" column="3">
        <widget class="QComboBox" name="modbusBox">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="minimumSize">
          <size>
           <width>0</width>
           <height>30</height>
          </size>
+        </property>
+        <property name="currentIndex">
+         <number>1</number>
         </property>
         <item>
          <property name="text">
@@ -582,6 +588,9 @@
             <width>120</width>
             <height>16777215</height>
            </size>
+          </property>
+          <property name="minimum">
+           <number>0</number>
           </property>
           <property name="maximum">
            <number>3</number>
@@ -891,7 +900,7 @@
         <item>
          <widget class="QComboBox" name="envBox">
           <property name="enabled">
-           <bool>false</bool>
+           <bool>true</bool>
           </property>
           <property name="minimumSize">
            <size>

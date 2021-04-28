@@ -21,6 +21,7 @@ public:
     bool outputCheck();
 signals:
     void indexHiddenSig(int index);
+    void sendVerSig(int ver);
 
 protected:
     void initType();
@@ -39,6 +40,8 @@ private slots:
     void on_verBox_currentIndexChanged(int index);
     void on_loopBox_currentIndexChanged(int index);
     void on_lineBox_currentIndexChanged(int index);
+
+    void on_seriesBox_currentIndexChanged(int index);
 
 private:
     Ui::Home_MpduParamWid *ui;
