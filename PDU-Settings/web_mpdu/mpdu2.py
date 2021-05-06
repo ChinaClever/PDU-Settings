@@ -506,10 +506,10 @@ class Mpdu2(MpduWeb):
                             self.execJs(jsSheet)
                             time.sleep(0.25)
                             index = opLists[j][6]
-                            cfgStr[len(cfgStr)-4]='op_{0}_min'.format(index)
-                            cfgStr[len(cfgStr)-3]='op_{0}_crmin'.format(index)
-                            cfgStr[len(cfgStr)-2]='op_{0}_crmax'.format(index)
-                            cfgStr[len(cfgStr)-1]='op_{0}_max'.format(index)
+                            cfgStr[(i-1)*4]='op_{0}_min'.format(index)
+                            cfgStr[(i-1)*4+1]='op_{0}_crmin'.format(index)
+                            cfgStr[(i-1)*4+2]='op_{0}_crmax'.format(index)
+                            cfgStr[(i-1)*4+3]='op_{0}_max'.format(index)
                     j+=1
                     
                 
