@@ -547,6 +547,8 @@ class Mpdu2(MpduWeb):
             if( int(cfg['versions']) == 16 ):
                 jsSheet = 'var setUrl = Encryption(\"/settime\");var slave = document.getElementById(\"slave\").value;var ms = parseFloat(document.getElementById(\"totalms\").value) ;xmlset2 = createXmlRequest();xmlset2.onreadystatechange = setdata2;ajaxget(xmlset2, setUrl+\"?a=\" + slave + \"&b=\" + {0}  + \"&\");'
             self.execJs(jsSheet.format(0))
+            time.sleep(0.35)
+            self.driver.find_element_by_id("titlebar3").click()
             time.sleep(1)
             self.checkDelayTime(op)
             
