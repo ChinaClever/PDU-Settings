@@ -378,9 +378,11 @@ class MpduHuawei(MpduWeb):
                 message =  '网页上找不到{0}ID;'.format('延时上电')
                 self.sock.sendto(message.encode('utf-8') , (self.ip , self.port))
                 return
-            self.setItById('totalms', 1 , '上电延时')
+            self.setItById('totalms', 0 , '上电延时')
             jsSheet = 'var ms = parseFloat(document.getElementById(\"totalms\").value);var xmlset = createXmlRequest();xmlset.onreadystatechange = setdata;ajaxget(xmlset, \"/settime?a=\" + ms + \"&\");'
             self.execJs(jsSheet)
+            time.sleep(0.35)
+            self.driver.find_element_by_id("titlebar3").click()
             time.sleep(0.35)
             self.checkDelayTime(op)
             
@@ -390,10 +392,7 @@ class MpduHuawei(MpduWeb):
         for i in range(1 , int(op)+1):
             ms = 'ms{0}'.format(i)
             status , message = '' ,''
-            if( int(self.cfgs['series']) == 3 or int(self.cfgs['series']) == 4):
-                status , message = self.checkStr( ms , '1' , '上下电延时')
-            else:
-                status , message = self.checkStr( ms , '0' , '上下电延时')
+            status , message = self.checkStr( ms , '0' , '上下电延时')
             statusList.append(status)
             messageList.append(message)
             
