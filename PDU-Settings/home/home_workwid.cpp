@@ -119,6 +119,10 @@ void Home_WorkWid::updateResult()
 {
     QString style;
     QString str = tr("---");
+    if(mItem->modeId == MPDU) {
+        if(mId < 25) mPro->result = Test_Fail;
+    }
+
     if (Test_Fail == mPro->result) {
         str = tr("失败");
         style = "background-color:red; color:rgb(255, 255, 255);";
@@ -265,14 +269,12 @@ void Home_WorkWid::on_setBtn_clicked()
 
 void Home_WorkWid::recvVerSlot(int ver)
 {
-    if( ver <= 32 )
+    if(ver <= 32)
         ui->snCheckBox->setChecked(false);
-    else
-    {
+    else {
         ui->snCheckBox->setChecked(true);
-        if( ver >= 300 && ver <= 320)
+        if(ver >= 300 && ver <= 320)
             ui->snCheckBox->setChecked(false);
-
     }
 }
 
