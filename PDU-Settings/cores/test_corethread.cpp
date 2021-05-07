@@ -49,13 +49,18 @@ bool Test_CoreThread::startProcess()
 
     exe += ".exe";
     mRead->mac = true;
-
     bool ret = checkNet();
     if(ret){
-        mProcess->close();
-        mProcess->start(exe);
-        ret = mProcess->waitForFinished(120*1000);
-        mLogs->updatePro(tr("网页设置功能退出"), ret , 1);
+        try {
+            mProcess->close();
+            mProcess->start(exe);
+            mLogs->updatePro(tr("网页设置功能启动"));
+            ret = mProcess->waitForFinished(240*1000);
+            mLogs->updatePro(tr("网页设置功能正常退出"), ret , 1);
+        } catch (...) {
+            ret = mLogs->updatePro(tr("网页设置功能异常退出"), false);
+            updateMacAddr(1);
+        }
     }
 
     return ret;
