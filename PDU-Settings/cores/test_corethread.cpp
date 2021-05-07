@@ -56,9 +56,9 @@ bool Test_CoreThread::startProcess()
             mProcess->start(exe);
             mLogs->updatePro(tr("网页设置功能启动"));
             ret = mProcess->waitForFinished(240*1000);
-            mLogs->updatePro(tr("网页设置功能正常退出"), ret , 1);
+            mLogs->updatePro(tr("网页设置功能正常退出"), ret , 2);
         } catch (...) {
-            ret = mLogs->updatePro(tr("网页设置功能异常退出"), false);
+            ret = mLogs->updatePro(tr("网页设置功能异常退出"), false, 1);
             updateMacAddr(1);
         }
     }
