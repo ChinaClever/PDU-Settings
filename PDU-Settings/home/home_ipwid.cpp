@@ -43,6 +43,7 @@ void Home_IpWid::initType()
     ui->sBox->setCurrentIndex(dt->standar);
     ui->lineBox->setCurrentIndex(dt->lines);
     ui->ipModeBox->setCurrentIndex(dt->modbus);
+    ui->securityBox->setCurrentIndex(dt->security);
     ui->languageBox->setCurrentIndex(dt->language);
 }
 
@@ -58,6 +59,7 @@ void Home_IpWid::updateType()
     dt->modbus = ui->ipModeBox->currentIndex();
     dt->standar = ui->sBox->currentIndex();
     dt->log_en = ui->logBox->currentIndex();
+    dt->security = ui->securityBox->currentIndex();
     dt->language = ui->languageBox->currentIndex();
 }
 

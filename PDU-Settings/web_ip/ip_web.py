@@ -34,9 +34,6 @@ class IpWeb:
     def udpSendTo(self, message):
         self.sock.sendto(message.encode('utf-8-sig'), (self.dest_ip, 10086))
 
-    def udpSendTo(self, message):
-        self.sock.sendto(message.encode('utf-8-sig'), (self.dest_ip, 10086))
-
     def sendtoMainapp(self, parameter, res):
         message = parameter + ";" + str(res)
         self.udpSendTo(message)
@@ -61,7 +58,7 @@ class IpWeb:
     def initCfg(self):
         items = IpWeb.getCfg().items("ipCfg")  # 获取section名为Mysql-Database所对应的全部键值对
         self.cfgs = {'ip_version': 1, 'user': 'admin', 'pwd': 'admin',
-                     'ip': '192.168.1.163', 'debug_web': 'correct.html',
+                     'ip': '192.168.1.163', 'debug_web': 'correct.html', 'security':0,
                      'ip_lines': 1, 'ip_modbus': 1, 'ip_language': 1, 'lcd_switch': 1,
                      'mac': '', 'ip_ac': 1, 'ip_lcd': 0, 'log_en': 1, 'ip_standard': 0}
         self.cfgs['mac'] = IpWeb.getCfg().get("Mac", "mac")
@@ -71,13 +68,32 @@ class IpWeb:
             self.cfgs['ip_lines'] = 1
             self.cfgs['ip_ac'] = 0
 
-    def login(self):
-        ip = self.ip_prefix + self.cfgs['ip'] + '/'
-        user = self.cfgs['user']
-        pwd = self.cfgs['pwd']
-        self.driver.get(ip); time.sleep(2)
+    def createAccount(self):
+        self.ip_prefix = 'https://'
+        ip = self.ip_prefix + self.cfgs['ip'] + '/index.html'
+        user = self.cfgs['user'] = 'abcd123'
+        pwd = self.cfgs['pwd'] = 'abcd123'
+        self.driver.get(ip); time.sleep(3)
         try:
+            self.setItById('old_pwd' , user ,'创建账号')
+            self.setItById('sign_pwd' , pwd,'创建密码')
+            self.setItById('sign_repwd' , pwd,'确认密码')
+            self.execJs('changePwd()'); time.sleep(1.2)
+            self.sendtoMainapp("创建测试账号成功", 1)
+        except:
+            self.sendtoMainapp("创建测试账号失败", 0)
+        finally:
             self.driver.refresh(); time.sleep(1)
+            self.setItById("name", user, '账号')
+            self.setItById("psd", pwd, '密码')
+            self.execJs("login()");time.sleep(2)
+
+    def inputAccount(self):
+        ip = self.ip_prefix + self.cfgs['ip'] + '/'
+        user = self.cfgs['user'] = 'admin'
+        pwd = self.cfgs['pwd'] = 'admin'
+        self.driver.get(ip); time.sleep(2.2)
+        try:
             self.setItById("name", user, '账号')
             self.setItById("psd", pwd, '密码')
             self.execJs("login()")
@@ -86,6 +102,13 @@ class IpWeb:
             self.sendtoMainapp("网页登陆失败", 0)
         finally:
             time.sleep(1.2)
+
+    def login(self):
+        security = int(self.cfgs['security'])
+        if(security):
+            self.createAccount()
+        else:
+            self.inputAccount()
 
     def setCur(self, lines, min, max):
         p = '电流阈值'
@@ -136,8 +159,6 @@ class IpWeb:
     def setLcdDir(self):
         dir = self.cfgs['ip_lcd']
         self.setSelectLcd("dir", dir)
-        # self.setSelect("slave", 1)
-        # self.execJsAlert("setdevice()")
 
     def setEle(self):
         self.divClick(3)
@@ -172,7 +193,7 @@ class IpWeb:
             it = self.driver.find_element_by_id(id)
         except NoSuchElementException:
             msg = '网页上找不到{0}'.format(id)
-            # self.sendtoMainapp(msg, 0)
+            #self.sendtoMainapp(msg, 0)
         else:
             if it.is_displayed():
                 it.clear();time.sleep(0.1)
@@ -190,14 +211,17 @@ class IpWeb:
         time.sleep(0.8)
 
     def divClick(self, id):
+        security = int(self.cfgs['security'])
         self.driver.switch_to.default_content()
         self.execJs("clk({0})".format(id))
         self.driver.switch_to.frame('ifrm')
+        if(security):time.sleep(1.2)
         time.sleep(0.8)
 
     def execJs(self, js):
-        self.driver.execute_script(js)
-        time.sleep(0.9)
+        security = int(self.cfgs['security'])
+        self.driver.execute_script(js);time.sleep(1)
+        if(security):time.sleep(1)
 
     def execJsAlert(self, js):
         self.execJs(js); time.sleep(0.6)
@@ -206,16 +230,14 @@ class IpWeb:
 
     def resetFactory(self):
         v = IpWeb.getCfg().get("ipCfg", "ip_version")
-        jsSheet = "xmlset = createXmlRequest();xmlset.onreadystatechange = setdata;ajaxgets(xmlset, \"/setsys?a=\" + {0} + \"&\");"
         if (1 == int(v)):
             self.divClick(8)
-            jsSheet = "xmlset = createXmlRequest();xmlset.onreadystatechange = setdata;ajaxget(xmlset, \"/setsys?a=\" + {0} + \"&\");"
         else:
             self.divClick(10)
         self.setSelect("order", 1)
-        self.execJs(jsSheet.format(1))
+        self.execJsAlert("setdevice();")
         self.sendtoMainapp("设备Web出厂设置成功", 1)
-
+        time.sleep(8)
 
 
 

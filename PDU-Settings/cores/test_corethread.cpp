@@ -72,6 +72,7 @@ void Test_CoreThread::updateMacAddr(int step)
         mLogs->writeMac(mItem->mac);
         MacAddr *mac = MacAddr::bulid();
         mItem->mac = mac->macAdd(mItem->mac, step);
+        Cfg::bulid()->write("mac", mItem->mac, "Mac");
     }
 }
 
@@ -101,7 +102,7 @@ void Test_CoreThread::workDown()
     if(mItem->modeId) {
         updateMacAddr(1);
         ret = startProcess();
-        if(!mRead->mac) updateMacAddr(-1);
+        //if(!mRead->mac) updateMacAddr(-1);
     } else {
         ret = mCtrl->setDev();
     }
