@@ -97,12 +97,12 @@ class MpduHuawei(MpduWeb):
             self.sendtoMainapp('MAC-1')
         jsSheet1 = 'var claerset = createXmlRequest();claerset.onreadystatechange = setmac;ajaxget(claerset, \"/correct?a=\" +1+\"&b=\"+{type}+\"&c=\"+{language} + \"&d=\"+\"{mac1}\" +\"&\");'.format(type = cfg['series'] , language = cfg['language'] , mac1 = v)
         self.execJs(jsSheet1)
-        time.sleep(1)
         self.driver.back()
+        time.sleep(1)
         self.divClick(7)
-        time.sleep(0.35)
+        time.sleep(1)
         self.driver.find_element_by_id("biao1").click()
-        time.sleep(0.35)
+        time.sleep(1)
         jsSheet1 = 'var xmlset = createXmlRequest();xmlset.onreadystatechange = setdata;ajaxget(xmlset, \"/setsys?a=\" + 0 + \"&\");'
         self.execJs(jsSheet1)
         time.sleep(0.25)
@@ -343,10 +343,10 @@ class MpduHuawei(MpduWeb):
                             time.sleep(0.25)
                             
                             index = opLists[j][6]
-                            cfgStr[len(cfgStr)-4]='op_{0}_min'.format(index)
-                            cfgStr[len(cfgStr)-3]='op_{0}_crmin'.format(index)
-                            cfgStr[len(cfgStr)-2]='op_{0}_crmax'.format(index)
-                            cfgStr[len(cfgStr)-1]='op_{0}_max'.format(index)
+                            cfgStr[(i-1)*4]='op_{0}_min'.format(index)
+                            cfgStr[(i-1)*4+1]='op_{0}_crmin'.format(index)
+                            cfgStr[(i-1)*4+2]='op_{0}_crmax'.format(index)
+                            cfgStr[(i-1)*4+3]='op_{0}_max'.format(index)
                     j+=1
                     
                 
@@ -354,6 +354,9 @@ class MpduHuawei(MpduWeb):
             
             statusList = []
             messageList = []
+            time.sleep(0.35)
+            self.driver.find_element_by_id("titlebar3").click()
+            time.sleep(0.35)
             for x,y,z in zz:
                 status , message = self.checkStr( x , cfg[y] , z) 
                 statusList.append(status)
