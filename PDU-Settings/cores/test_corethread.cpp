@@ -49,13 +49,18 @@ bool Test_CoreThread::startProcess()
 
     exe += ".exe";
     mRead->mac = true;
-
     bool ret = checkNet();
     if(ret){
-        mProcess->close();
-        mProcess->start(exe);
-        ret = mProcess->waitForFinished(120*1000);
-        mLogs->updatePro(tr("网页设置功能退出"), ret , 1);
+        try {
+            mProcess->close();
+            mProcess->start(exe);
+            mLogs->updatePro(tr("网页设置功能启动"));
+            ret = mProcess->waitForFinished(240*1000);
+            mLogs->updatePro(tr("网页设置功能正常退出"), ret , 2);
+        } catch (...) {
+            ret = mLogs->updatePro(tr("网页设置功能异常退出"), false, 1);
+            updateMacAddr(1);
+        }
     }
 
     return ret;
@@ -67,6 +72,7 @@ void Test_CoreThread::updateMacAddr(int step)
         mLogs->writeMac(mItem->mac);
         MacAddr *mac = MacAddr::bulid();
         mItem->mac = mac->macAdd(mItem->mac, step);
+        Cfg::bulid()->write("mac", mItem->mac, "Mac");
     }
 }
 
@@ -96,7 +102,7 @@ void Test_CoreThread::workDown()
     if(mItem->modeId) {
         updateMacAddr(1);
         ret = startProcess();
-        if(!mRead->mac) updateMacAddr(-1);
+        //if(!mRead->mac) updateMacAddr(-1);
     } else {
         ret = mCtrl->setDev();
     }
