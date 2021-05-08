@@ -81,7 +81,7 @@ class IpWeb:
             self.execJs('changePwd()'); time.sleep(1.2)
             self.sendtoMainapp("创建测试账号成功", 1)
         except:
-            self.sendtoMainapp("创建测试账号失败", 0)
+            self.sendtoMainapp("创建测试账号失败", 1)
         finally:
             self.driver.refresh(); time.sleep(1)
             self.setItById("name", user, '账号')
@@ -221,7 +221,7 @@ class IpWeb:
     def execJs(self, js):
         security = int(self.cfgs['security'])
         self.driver.execute_script(js);time.sleep(1)
-        if(security):time.sleep(1)
+        if(security):time.sleep(1.5)
 
     def execJsAlert(self, js):
         self.execJs(js); time.sleep(0.6)
