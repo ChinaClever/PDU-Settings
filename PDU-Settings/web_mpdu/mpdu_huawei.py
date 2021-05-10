@@ -59,11 +59,13 @@ class MpduHuawei(MpduWeb):
             self.sendtoMainapp(message)
             
     def close(self):
-        time.sleep(1.5)
-        #print(datetime.datetime.now())
-        self.driver.quit()
-        #print(datetime.datetime.now())
-        time.sleep(3)
+        try:
+            time.sleep(1)
+            self.driver.quit()
+        except:
+            self.sendtoMainapp('Web网页退出异常;1')
+        finally:
+            time.sleep(5)
         
 
     def changetocorrect(self):

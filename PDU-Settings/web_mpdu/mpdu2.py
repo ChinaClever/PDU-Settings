@@ -72,12 +72,13 @@ class Mpdu2(MpduWeb):
             self.sendtoMainapp(message)
             
     def close(self):
-        
-        #print(datetime.datetime.now())
-        self.driver.quit()
-        #print(datetime.datetime.now())
-        time.sleep(4.5)
-        
+        try:
+            time.sleep(1)
+            self.driver.quit()
+        except:
+            self.sendtoMainapp('Web网页退出异常;1')
+        finally:
+            time.sleep(5)
         
 
     def changetocorrect(self):
