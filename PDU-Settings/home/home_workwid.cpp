@@ -276,6 +276,7 @@ void Home_WorkWid::recvVerSlot(int ver)
         if(ver >= 300 && ver <= 320)
             ui->snCheckBox->setChecked(false);
     }
+    initTypeComboBox();
 }
 
 void Home_WorkWid::saveErrSlot()
