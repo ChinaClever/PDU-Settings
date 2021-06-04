@@ -28,7 +28,7 @@ class Mpdu2(MpduWeb):
         self.changetocorrect()
         self.setCorrect2()
         self.setCorrect1()
-        time.sleep(7)
+        time.sleep(20)
         self.login()
         
         
@@ -55,14 +55,14 @@ class Mpdu2(MpduWeb):
         ListMessage.append('操作日志清除失败;0')
         
         self.divClick(6)
-        time.sleep(1)
+        time.sleep(1.5)
         if( int(self.cfgs['security']) == 1 ):
-            time.sleep(2.5)
+            time.sleep(3)
         for num in range(0, 2):
             self.execJs(jsSheet.format(num))
-            time.sleep(0.35)
+            time.sleep(2.5)
             self.driver.find_element_by_id('biao{0}'.format(num+1)).click()
-            time.sleep(1)
+            time.sleep(1.5)
             tt = self.driver.find_element_by_id('evenlognum').text
             if( tt != 'Total : 0'):
                 self.sendtoMainapp(ListMessage[num])
@@ -76,7 +76,7 @@ class Mpdu2(MpduWeb):
         #print(datetime.datetime.now())
         self.driver.quit()
         #print(datetime.datetime.now())
-        time.sleep(4.5)
+        time.sleep(5)
         
         
 
@@ -88,11 +88,11 @@ class Mpdu2(MpduWeb):
             self.driver.get(ip)
         except:
             self.sendtoMainapp('账号密码错误;0')
-            time.sleep(0.35)
+            time.sleep(0.85)
             self.sendtoMainapp('MAC-1')
             return
         else:
-            time.sleep(0.35)
+            time.sleep(0.85)
             self.driver.switch_to.default_content()
     
     
@@ -123,7 +123,7 @@ class Mpdu2(MpduWeb):
         if( a == 1 and int(cfg['versions']) < 32 ):
             jsSheet = 'if(confirm("垂直切换成水平需要手动重启")){alert("确认手动重启");}else{alert("取消手动重启");}'
             self.execJs(jsSheet)
-            time.sleep(1)
+            time.sleep(1.5)
             while( True ):
                 alert = self.driver.switch_to_alert().text
                 if( alert == '垂直切换成水平需要手动重启' ):
@@ -140,18 +140,18 @@ class Mpdu2(MpduWeb):
         if int(cfg['versions']) > 14:
             self.divClick(7)
             if( int(self.cfgs['security']) == 1 ):
-                time.sleep(2)
-            time.sleep(1)
+                time.sleep(3)
+            time.sleep(2)
             self.driver.find_element_by_id("biao1").click()
-            time.sleep(1)
+            time.sleep(2)
             jsSheet1 = 'var xmlset = createXmlRequest();xmlset.onreadystatechange = setdata;ajaxget(xmlset, \"/setsys?a=\" + 0 + \"&\");'
             if( int(cfg['versions']) == 16 ):
                 jsSheet1 = 'var setUrl = Encryption(\"/setsys\");var xmlset = createXmlRequest();xmlset.onreadystatechange = setdata;ajaxget(xmlset, setUrl+\"?a=\" + 0 + \"&\");'
             self.execJs(jsSheet1)
-            time.sleep(1)
+            time.sleep(1.5)
             if( int(self.cfgs['security']) == 1 ):
-                time.sleep(2)
-            time.sleep(0.35)
+                time.sleep(3)
+            time.sleep(0.85)
         
 
     def setCorrect2(self):
@@ -161,7 +161,7 @@ class Mpdu2(MpduWeb):
         if( int(cfg['versions']) == 16 ):
             jsSheet = 'var limitUrl = Encryption(\"/alllimit\");var claerlimit = createXmlRequest();claerlimit.onreadystatechange = setdatlimit;ajaxget(claerlimit, limitUrl+\"?a=\" +{limit1}+\"&b=\"+{limit2} +\"&c=\"+{limit3} + \"&d=\"+{limit4}+\"&e=\"+{limit5} +\"&f=\"+{limit6} + \"&g=\"+{limit7}+\"&h=\"+{limit8} +\"&i=\"+{limit9} + \"&j=\"+{limit10}+\"&k=\"+{limit11} + \"&l=\"+{limit12} +\"&m=\"+{limit13} + \"&n=\"+{limit14} +\"&\");'.format( limit1 = int(cfg['vol_min'])*10 , limit2 = int(cfg['vol_max'])*10 , limit3 = int(cfg['cur_min'])*100 , limit4 = int(cfg['cur_max'])*100 ,limit5 = int(cfg['tem_min']) , limit6 = int(cfg['tem_max']),limit7 = int(cfg['hum_min']) , limit8 = int(cfg['hum_max']) ,limit9 = int(cfg['output_min'])*100 , limit10 = int(cfg['output_crmin'])*100 , limit11 = int(cfg['output_crmax'])*100 , limit12 = int(cfg['output_max'])*100 , limit13 = int(cfg['cur_crmin'])*100 , limit14 = int(cfg['cur_crmax'])*100)
         self.execJs(jsSheet)
-        time.sleep(0.25)
+        time.sleep(0.75)
         
     def checkCorrectHtml(self):
         cfg = self.cfgs
@@ -234,20 +234,20 @@ class Mpdu2(MpduWeb):
         cfg = self.cfgs
         self.divClick(2)
         if( int(self.cfgs['security']) == 1 ):
-            time.sleep(1)
-        time.sleep(2)
+            time.sleep(3)
+        time.sleep(2.5)
         self.driver.find_element_by_id("titlebar2").click()
-        time.sleep(1)
+        time.sleep(2)
         
         self.checkTcur()
         
         self.setCcur()
         
         if( int(self.cfgs['security']) == 1 ):
-            time.sleep(1)
-        time.sleep(0.35)
+            time.sleep(3)
+        time.sleep(0.85)
         self.driver.find_element_by_id("titlebar2").click()
-        time.sleep(0.35)
+        time.sleep(0.85)
         
         self.checkCcur()
         
@@ -469,10 +469,10 @@ class Mpdu2(MpduWeb):
         self.divClick(2)
         
         if( int(self.cfgs['security']) == 1 ):
-            time.sleep(1)
-        time.sleep(1)
-        self.driver.find_element_by_id("titlebar3").click()
+            time.sleep(3)
         time.sleep(2)
+        self.driver.find_element_by_id("titlebar3").click()
+        time.sleep(3)
         
         op = cfg['outputs']
         if( int(cfg['series']) == 2 or int(cfg['series']) == 4):#输出位
@@ -504,7 +504,7 @@ class Mpdu2(MpduWeb):
                             jsSheet = 'var slave1 = document.getElementById(\"slave\").value;var ms = parseFloat(document.getElementById(\"ms\" + ({action})).value) ;var output = document.getElementById(\"output\" + ({action})).value;var encodeName = encodeURI(encodeURI(output));xmlset1 = createXmlRequest();xmlset1.onreadystatechange = setdata1;ajaxget(xmlset1, \"/setunitlimit?a=\" + slave1 + \"&b=\" + {action} + \"&c=\" + {min} + \"&d=\" + {xmin}+ \"&e=\" + {xmax}+ \"&f=\" + {max} + \"&g=\" + ms + \"&h=\" + encodeName +  \"&\");'.format( action = i , min = opLists[j][2]*100 , xmin = opLists[j][3]*100 , xmax = opLists[j][4]*100 , max = opLists[j][5]*100)
                             
                             self.execJs(jsSheet)
-                            time.sleep(0.25)
+                            time.sleep(0.75)
                             index = opLists[j][6]
                             cfgStr[(i-1)*4]='op_{0}_min'.format(index)
                             cfgStr[(i-1)*4+1]='op_{0}_crmin'.format(index)
@@ -547,14 +547,14 @@ class Mpdu2(MpduWeb):
             if( int(cfg['versions']) == 16 ):
                 jsSheet = 'var setUrl = Encryption(\"/settime\");var slave = document.getElementById(\"slave\").value;var ms = parseFloat(document.getElementById(\"totalms\").value) ;xmlset2 = createXmlRequest();xmlset2.onreadystatechange = setdata2;ajaxget(xmlset2, setUrl+\"?a=\" + slave + \"&b=\" + {0}  + \"&\");'
             self.execJs(jsSheet.format(0))
-            time.sleep(0.35)
+            time.sleep(0.85)
             self.driver.find_element_by_id("titlebar3").click()
-            time.sleep(1)
+            time.sleep(3)
             self.checkDelayTime(op)
             
     def checkDelayTime(self , op):
         self.driver.find_element_by_id("titlebar3").click()
-        time.sleep(1)
+        time.sleep(2)
         statusList = []
         messageList = []
         for i in range(1 , int(op)+1):
@@ -611,10 +611,10 @@ class Mpdu2(MpduWeb):
         cfg = self.cfgs#Tenergy1Tenergy2Tenergy3
         self.divClick(2)#Cenergy1
         if( int(self.cfgs['security']) == 1 ):
-            time.sleep(1)
-        time.sleep(0.5)
+            time.sleep(3)
+        time.sleep(2)
         self.driver.find_element_by_id("titlebar4").click()
-        time.sleep(0.5)
+        time.sleep(2)
         
         #line = int(cfg['lines'])
         line = 3
@@ -623,24 +623,24 @@ class Mpdu2(MpduWeb):
             jsSheet = 'var setUrl = Encryption(\"/setenergy\");var slave1 = document.getElementById(\"slave\").value;var claerset = createXmlRequest();claerset.onreadystatechange = clearrec;ajaxget(claerset, setUrl+\"?a=\" + slave1 + \"&b=\" + {0}+\"&\");'
         for i in range(1,line+1):
             self.execJs(jsSheet.format(i))
-            time.sleep(1)
-        time.sleep(1)
+            time.sleep(1.5)
+        time.sleep(2)
         self.driver.find_element_by_id("titlebar4").click()
-        time.sleep(1)
+        time.sleep(2)
         self.checkEnergy()
         
     def setTime(self):
         self.divClick(4)
         if( int(self.cfgs['security']) == 1 ):
-            time.sleep(1)
-        time.sleep(0.5)
+            time.sleep(3)
+        time.sleep(1.5)
         self.driver.find_element_by_id("biao6").click()
-        time.sleep(0.5)
+        time.sleep(1.5)
         jsSheet = 'var b = loctime.innerHTML;var g = parseInt(b.substr(8, 2), 10);var f = parseInt(b.substr(3, 2), 10);var a = parseInt(b.substr(0, 2), 10);var d = parseInt(b.substr(11, 2), 10);var e = parseInt(b.substr(14, 2), 10);var c = parseInt(b.substr(17, 2), 10);if (g.length < 2) {g = \"0\" + g}if (f.length < 2) {f = \"0\" + f}if (a.length < 2) {a = \"0\" + a}if (d.length < 2) {d = \"0\" + d}if (e.length < 2) {e = \"0\" + e}if (c.length < 2) {c = \"0\" + c}var xmlset = createXmlRequest();xmlset.onreadystatechange = setdata;ajaxget(xmlset, \"/setdtime?a=\" + g + \"&b=\" + f + \"&c=\" + a + \"&d=\" + d + \"&e=\" + e + \"&f=\" + c + \"&\")'
         if( int(self.cfgs['versions']) == 16 ):
             jsSheet = 'var b = loctime.innerHTML;var g = parseInt(b.substr(8, 2), 10);var f = parseInt(b.substr(3, 2), 10);var a = parseInt(b.substr(0, 2), 10);var d = parseInt(b.substr(11, 2), 10);var e = parseInt(b.substr(14, 2), 10);var c = parseInt(b.substr(17, 2), 10);if (g.length < 2) {g = \"0\" + g}if (f.length < 2) {f = \"0\" + f}if (a.length < 2) {a = \"0\" + a}if (d.length < 2) {d = \"0\" + d}if (e.length < 2) {e = \"0\" + e}if (c.length < 2) {c = \"0\" + c}xmlset = createXmlRequest();xmlset.onreadystatechange = setdata;var setUrl = Encryption(\"/setdtime\");ajaxget(xmlset, setUrl + \"?a=\" + g + \"&b=\" + f + \"&c=\" + a + \"&d=\" + d + \"&e=\" + e + \"&f=\" + c + \"&\")'
         self.execJs(jsSheet)
-        time.sleep(0.25)
+        time.sleep(0.75)
         self.sendtoMainapp("设置时间成功;1" )
     
     def opThreshold(self):

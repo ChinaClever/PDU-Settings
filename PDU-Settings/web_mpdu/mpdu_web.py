@@ -39,6 +39,8 @@ class MpduWeb:
         ip =  self.ip_prefix +self.cfgs['ip_addr']+'/'
         try:
             self.driver.get(ip)
+            self.driver.refresh()
+            time.sleep(1.5)
         except WebDriverException:
             return 0,'输入IP错误;0'
         if( int(self.cfgs['security']) == 1 and int(MpduWeb.getCfg().get("mCfg", "mpdu_ver"))==2):
@@ -50,13 +52,13 @@ class MpduWeb:
             self.cfgs['pwd'] = 'abcd123'
             if( flag == True ):
                 self.execJs('changePwd()')
-                time.sleep(3)
+                time.sleep(4)
         self.setItById('name', self.cfgs['user'],'输入账号')
         self.setItById('psd', self.cfgs['pwd'],'输入密码')
         self.execJs('login()')
         if( int(self.cfgs['security']) == 1 and int(MpduWeb.getCfg().get("mCfg", "mpdu_ver"))==2):
             time.sleep(3)
-        time.sleep(1)
+        time.sleep(2)
         return 1,'输入IP正确;1'
         
         
@@ -69,11 +71,11 @@ class MpduWeb:
     def setSelect(self, id, v):
         it = self.driver.find_element_by_id(id)
         Select(it).select_by_index(v)
-        time.sleep(0.5)
+        time.sleep(1.5)
 
     def setItById(self, id, v, parameter):
         try:
-            time.sleep(0.1)
+            time.sleep(0.5)
             it = self.driver.find_element_by_id(id)
         except NoSuchElementException:
             msg = '网页上找不到{0}'.format(id)
@@ -94,7 +96,7 @@ class MpduWeb:
     def alertClick(self, id):
         self.btnClick(id)
         self.driver.switch_to.alert.accept()
-        time.sleep(0.35)
+        time.sleep(0.85)
 
     def divClick(self, id):
         self.driver.switch_to.default_content()
@@ -121,7 +123,7 @@ class MpduWeb:
         self.setSelect("order",1)
         jsSheet = "xmlset = createXmlRequest();xmlset.onreadystatechange = setdata;{0}(xmlset, \"/setsys?a=1\" + \"&\");"
         self.execJs(jsSheet.format(aj))
-        time.sleep(1)
+        time.sleep(2)
         
     def check(self, ssid , value , parameter):
         try:
@@ -209,7 +211,7 @@ class MpduWeb:
             self.divClick(1)
             message = '登陆成功;1'
             self.sendtoMainapp(message)
-            time.sleep(5)
+            time.sleep(6)
             tt = self.driver.find_element_by_xpath('//table[2]/tbody/tr[2]/td[2]')
             #print(tt.text)
             if( cfg['versions'] == ''):
