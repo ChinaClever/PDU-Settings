@@ -58,7 +58,7 @@ UdpBaseData *UdpRecvSocket::getData(void)
 {
     UdpBaseData *data = NULL;
 
-    QWriteLocker locker(mRecLock); /*获取线程状态*/
+    //QWriteLocker locker(mRecLock); /*获取线程状态*/
     int ret = mUdpQueueData->size();
     if( ret > 0) {
         data = mUdpQueueData->dequeue();
@@ -67,6 +67,15 @@ UdpBaseData *UdpRecvSocket::getData(void)
     return data;
 }
 
+/**
+ * @brief 获取锁
+ * @param data
+ * @return
+ */
+QReadWriteLock *UdpRecvSocket::getLock(void)
+{
+    return mRecLock;
+}
 
 
 
