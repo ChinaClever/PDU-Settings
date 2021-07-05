@@ -149,12 +149,16 @@ class IpWeb:
         self.execJs("setlimit(8)")
 
     def setSelectLcd(self, id, v):
-        time.sleep(0.15)
-        it = self.driver.find_element_by_id(id)
-        if it.is_displayed():
-            Select(it).select_by_index(v); time.sleep(1)
-            self.execJs("setdevice()"); time.sleep(1)
-            self.driver.switch_to.alert.accept()
+        try:
+            time.sleep(0.15)
+            it = self.driver.find_element_by_id(id)
+        except NoSuchElementException:
+            msg = '网页上找不到{0}'.format(id)
+        else:
+            if it.is_displayed():
+                Select(it).select_by_index(v); time.sleep(1)
+                self.execJs("setdevice()"); time.sleep(1)
+                self.driver.switch_to.alert.accept()
 
     def setLcdDir(self):
         dir = self.cfgs['ip_lcd']
