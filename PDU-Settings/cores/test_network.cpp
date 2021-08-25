@@ -41,7 +41,6 @@ void Test_NetWork::workDown()
             qDebug() <<"Test_NetWork workDown err" << list.size();
         }
         delete res;
-        if(res) res = nullptr;
     } else {
         msleep(1);
     }
