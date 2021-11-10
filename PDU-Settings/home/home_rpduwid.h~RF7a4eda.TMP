@@ -1,20 +1,20 @@
-#ifndef HOME_ATSWID_H
-#define HOME_ATSWID_H
+#ifndef HOME_RPDUWID_H
+#define HOME_RPDUWID_H
 
-#include "home_rpduwid.h"
-#include "dev_atscfg.h"
+#include "home_zpduwid.h"
+#include "dev_rpducfg.h"
 
 namespace Ui {
-class Home_AtsWid;
+class Home_RpduWid;
 }
 
-class Home_AtsWid : public QWidget
+class Home_RpduWid : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit Home_AtsWid(QWidget *parent = nullptr);
-    ~Home_AtsWid();
+    explicit Home_RpduWid(QString str ,QWidget *parent = nullptr);
+    ~Home_RpduWid();
     void initWid();
     bool dataSave();
     bool inputCheck();
@@ -26,12 +26,13 @@ public slots:
     void initFunSlot();
     void enabledSlot(bool en);
 private:
-    Ui::Home_AtsWid *ui;
+    Ui::Home_RpduWid *ui;
     sCfgItem *mItem;
     Dev_Object *mObj;
     sDevData *mDev;
 
     Home_SetMacWid *mParamWid;
+
 };
 
-#endif // HOME_ATSWID_H
+#endif // HOME_RPDUWID_H

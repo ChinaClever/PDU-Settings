@@ -46,16 +46,31 @@ void Home_MainWid::initWid()
 
     mZpduWid = new Home_ZpduWid(ui->tabWidget);
     ui->tabWidget->addTab(mZpduWid, tr("ZPDU参数设置"));
+    connect(mZpduWid, SIGNAL(errSig()), mWorkWid, SLOT(errSlot()));
+    connect(mWorkWid, SIGNAL(enabledSig(bool)), mZpduWid, SLOT(enabledSlot(bool)));
 
     mAtsWid = new Home_AtsWid(ui->tabWidget);
     ui->tabWidget->addTab(mAtsWid, tr("ATS-PDU参数设置"));
+    connect(mAtsWid, SIGNAL(errSig()), mWorkWid, SLOT(errSlot()));
+    connect(mWorkWid, SIGNAL(enabledSig(bool)), mAtsWid, SLOT(enabledSlot(bool)));
 
-    mRpduWid = new Home_RpduWid(tr("标准RPDU"),ui->tabWidget);
-    ui->tabWidget->addTab(mRpduWid, tr("标准RPDU参数设置"));
+    mRpduWid = new Home_RpduWid(ui->tabWidget);
+    ui->tabWidget->addTab(mRpduWid, tr("RPDU参数设置"));
+    connect(mRpduWid, SIGNAL(errSig()), mWorkWid, SLOT(errSlot()));
+    connect(mWorkWid, SIGNAL(enabledSig(bool)), mRpduWid, SLOT(enabledSlot(bool)));
 
-    mXRpduWid = new Home_RpduWid(tr("西蒙RPDU"),ui->tabWidget);
-    ui->tabWidget->addTab(mXRpduWid, tr("西蒙RPDU参数设置"));
-
-    mIpBusbarWid = new Home_IpBusbarwid(tr("IP-BUSBAR"),ui->tabWidget);
+    mIpBusbarWid = new Home_IpBusbarwid(ui->tabWidget);
     ui->tabWidget->addTab(mIpBusbarWid, tr("IP-BUSBAR参数设置"));
+    connect(mIpBusbarWid, SIGNAL(errSig()), mWorkWid, SLOT(errSlot()));
+    connect(mWorkWid, SIGNAL(enabledSig(bool)), mIpBusbarWid, SLOT(enabledSlot(bool)));
+
+    mMpduCustomizeWid = new Home_MpduCustomizeWid(ui->tabWidget);
+    ui->tabWidget->addTab(mMpduCustomizeWid, tr("MPDU一期或者特殊定制参数设置"));
+    connect(mMpduCustomizeWid, SIGNAL(errSig()), mWorkWid, SLOT(errSlot()));
+    connect(mWorkWid, SIGNAL(enabledSig(bool)), mMpduCustomizeWid, SLOT(enabledSlot(bool)));
+
+    mIpCustomizeWid = new Home_IpCustomizewid(ui->tabWidget);
+    ui->tabWidget->addTab(mIpCustomizeWid, tr("IP-PDU特殊定制参数设置"));
+    connect(mIpCustomizeWid, SIGNAL(errSig()), mWorkWid, SLOT(errSlot()));
+    connect(mWorkWid, SIGNAL(enabledSig(bool)), mIpCustomizeWid, SLOT(enabledSlot(bool)));
 }

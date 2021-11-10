@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Home_RpduWid</class>
- <widget class="QWidget" name="Home_RpduWid">
+ <class>Home_MpduCustomizeWid</class>
+ <widget class="QWidget" name="Home_MpduCustomizeWid">
   <property name="geometry">
    <rect>
     <x>0</x>

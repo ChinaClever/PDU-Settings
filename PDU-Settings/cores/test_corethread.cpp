@@ -43,8 +43,9 @@ bool Test_CoreThread::startProcess()
     case ZPDU:  exe += "zpdu"; break;
     case ATS:  exe += "ats"; break;
     case RPDU:  exe += "rpdu"; break;
-    case XRPDU:  exe += "xrpdu"; break;
     case IP_BUSBAR:  exe += "ipbusbar"; break;
+    case MPDU_CUSTOMIZE:  exe += "mpducustomize"; break;
+    case IP_PDU_CUSTOMIZE:  exe += "ippducustomize"; break;
     }
 
     exe += ".exe";
