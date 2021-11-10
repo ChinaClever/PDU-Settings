@@ -731,12 +731,17 @@
         </item>
         <item>
          <property name="text">
-          <string>西蒙RPDU</string>
+          <string>IP-BUSBAR</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>IP-BUSBAR</string>
+          <string>MPDU一期/特殊定制</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>IP-PDU特殊定制</string>
          </property>
         </item>
        </widget>

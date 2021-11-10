@@ -10,8 +10,9 @@ enum eDevTypes {
     ZPDU,
     ATS,
     RPDU,
-    XRPDU,
     IP_BUSBAR,
+    MPDU_CUSTOMIZE,
+    IP_PDU_CUSTOMIZE,
 
     AC = 1, // 交流
     DC,     // 直流
