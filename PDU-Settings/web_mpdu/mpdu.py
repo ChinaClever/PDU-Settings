@@ -274,12 +274,6 @@ class Mpdu(MpduWeb):
                             jsSheet = 'xmlset = createXmlRequest();xmlset.onreadystatechange = setdata;ajaxget(xmlset, \"/setunitlimit?a=\" + {action} + \"&b=\" + {min} + \"&c=\" + {xmin} + \"&d=\" + {xmax}+ \"&e=\" + {max}+ \"&f=\" + {ms} +  \"&\");'.format( action = i , min = opLists[j][2]*10 , xmin = opLists[j][3]*10 , xmax = opLists[j][4]*10 , max = opLists[j][5]*10 , ms = totalms)
                             self.execJs(jsSheet)
                             time.sleep(0.25)
-                            
-                            index = opLists[j][6]
-                            cfgStr[len(cfgStr)-4]='op_{0}_min'.format(index)
-                            cfgStr[len(cfgStr)-3]='op_{0}_crmin'.format(index)
-                            cfgStr[len(cfgStr)-2]='op_{0}_crmax'.format(index)
-                            cfgStr[len(cfgStr)-1]='op_{0}_max'.format(index)
                     j+=1
                     
                 
@@ -322,11 +316,7 @@ class Mpdu(MpduWeb):
         messageList = []
         for i in range(1 , int(op)+1):
             ms = 'ms{0}'.format(i)
-            status , message = '' ,''
-            if( int(self.cfgs['series']) == 3 or int(self.cfgs['series']) == 4):
-                status , message = self.checkStr( ms , '1' , '上下电延时')
-            else:
-                status , message = self.checkStr( ms , '0' , '上下电延时')
+            status , message = self.checkStr( ms , '1' , '上下电延时')
             statusList.append(status)
             messageList.append(message)
             
@@ -405,7 +395,7 @@ class Mpdu(MpduWeb):
     
     def opThreshold(self):
         cfg = self.cfgs
-        minList , maxList , enList , idList , crminList , crmaxList , indexList= [],[],[],[],[],[],[]
+        minList , maxList , enList , idList , crminList , crmaxList = [],[],[],[],[],[]
         minStr , maxStr , enStr , idStr , crminStr , crmaxStr = 'op_{0}_min','op_{0}_max','op_{0}_en','op_{0}_id','op_{0}_crmin','op_{0}_crmax'
         
         for i in range(1,7):
@@ -415,12 +405,11 @@ class Mpdu(MpduWeb):
             idList.append(idStr.format(i))
             crminList.append(crminStr.format(i))
             crmaxList.append(crmaxStr.format(i))
-            indexList.append(i)
             
         lists =[[]for i in range(6)]
-        zz = zip(minList , maxList , enList , idList , crminList , crmaxList,indexList)
+        zz = zip(minList , maxList , enList , idList , crminList , crmaxList)
         index = 0
-        for min , max , en , id , crmin , crmax ,index in zz:
+        for min , max , en , id , crmin , crmax in zz:
             if(int(cfg[id]) != 0 and int(cfg[en]) == 1):
                 lists[index].append(int(cfg[id]))
                 lists[index].append(int(cfg[en]))
@@ -428,7 +417,6 @@ class Mpdu(MpduWeb):
                 lists[index].append(int(cfg[crmin]))
                 lists[index].append(int(cfg[crmax]))
                 lists[index].append(int(cfg[max]))
-                lists[index].append(index)
                 index += 1
         return lists
             
