@@ -2,6 +2,12 @@
 #define TEST_OBJECT_H
 
 #include "sn_serialnum.h"
+#include "dev_atscfg.h"
+#include "dev_zpducfg.h"
+#include "dev_rpducfg.h"
+#include "dev_ipbusbarcfg.h"
+#include "dev_mpducustomizecfg.h"
+#include "dev_ipcustomizecfg.h"
 
 class Test_Object : public QThread
 {

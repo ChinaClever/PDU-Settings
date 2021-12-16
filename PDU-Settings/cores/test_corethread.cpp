@@ -22,7 +22,9 @@ void Test_CoreThread::initFunSlot()
 bool Test_CoreThread::checkNet()
 {
     QString str = tr("检测设备网络");
-    bool ret = cm_pingNet("192.168.1.163");
+    QString ipstr = "192.168.1.163";
+    if(mDt && !mDt->ip_addr.isEmpty()) ipstr = mDt->ip_addr;
+    bool ret = cm_pingNet(ipstr);
     if(ret) str += tr("正常");
     else{
       str += tr("错误");

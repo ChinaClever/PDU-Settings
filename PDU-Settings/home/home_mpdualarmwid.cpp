@@ -45,6 +45,8 @@ void Home_MpduAlarmWid::initData()
 
     ui->humMinSpin->setValue(obj->hum.min);
     ui->humMaxSpin->setValue(obj->hum.max);
+
+    ui->ratedVolSpin->setValue(obj->rateVol);
 }
 
 
@@ -68,4 +70,5 @@ void Home_MpduAlarmWid::updateData()
     obj->tem.max = ui->temMaxSpin->value();
     obj->hum.min = ui->humMinSpin->value();
     obj->hum.max = ui->humMaxSpin->value();
+    obj->rateVol = ui->ratedVolSpin->value();
 }
