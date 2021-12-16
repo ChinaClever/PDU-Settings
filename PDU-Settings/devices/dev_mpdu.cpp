@@ -76,6 +76,8 @@ void Dev_Mpdu::initData()
     initUnit("hum", ptr->hum);
     initUnit("output", ptr->output, 1);
 
+    ptr->rateVol = read("ratedVol", 230).toFloat();
+
     for(int i=0; i<OpSize; ++i) {
         QString str = "op_" + QString::number(i+1);
         initUnit(str, ptr->opCur[i], 2);
@@ -92,6 +94,7 @@ void Dev_Mpdu::writeData()
     writeUnit("hum", ptr->hum);
     writeUnit("output", ptr->output, 1);
 
+    write("ratedVol", QString::number(ptr->rateVol));
     for(int i=0; i<OpSize; ++i) {
         QString str = "op_" + QString::number(i+1);
         writeUnit(str, ptr->opCur[i], 2);

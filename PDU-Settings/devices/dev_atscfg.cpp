@@ -25,13 +25,13 @@ void Dev_AtsCfg::initData()
     ptr->default_macControlID = read("default_macControlID", 0).toInt();
     ptr->default_setMacControlID = read("default_setMacControlID", 0).toInt();
 
-    ptr->ip_prefix = read("ip_prefix", "http://").toString();
+    ptr->ip_prefix = read("ip_prefix", "https://").toString();
     ptr->ip_addr = read("ip_addr", "192.168.1.163").toString();
     ptr->user = read("user", "admin").toString();
     ptr->password = read("password", "admin").toString();
     ptr->backendAddress = read("backendAddress", "./mac.html").toString();
-    ptr->macControlID = read("macControlID", "mac1").toString();
-    ptr->setMacControlID = read("setMacControlID", "set()").toString();
+    ptr->macControlID = read("macControlID", "macAddr").toString();
+    ptr->setMacControlID = read("setMacControlID", "submit()").toString();
 }
 
 void Dev_AtsCfg::writeData()

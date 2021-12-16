@@ -76,6 +76,7 @@ struct sObjCfg
 
     sUnitCfg tem; // 温度
     sUnitCfg hum; // 湿度
+    float rateVol; //额定电压
 };
 
 struct sDevType

@@ -28,6 +28,12 @@ void Test_Object::updateDev()
     case SI_PDU: mObj = Dev_SiCfg::bulid(this); break;
     case IP_PDU: mObj = Dev_IpCfg::bulid(this); break;
     case MPDU: mObj = Dev_Mpdu::bulid(this); break;
+    case ZPDU:  mObj = Dev_ZpduCfg::bulid(this); break;
+    case ATS:  mObj = Dev_AtsCfg::bulid(this); break;
+    case RPDU:  mObj = Dev_RpduCfg::bulid(this); break;
+    case IP_BUSBAR:  mObj = Dev_IpBusbarCfg::bulid(this); break;
+    case MPDU_CUSTOMIZE:  mObj = Dev_MpduCustomizeCfg::bulid(this); break;
+    case IP_PDU_CUSTOMIZE:  mObj = Dev_IpCustomizeCfg::bulid(this); break;
     }
 
     if(mObj != NULL) {
