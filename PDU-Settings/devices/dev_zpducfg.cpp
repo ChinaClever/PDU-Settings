@@ -31,7 +31,7 @@ void Dev_ZpduCfg::initData()
     ptr->password = read("password", "admin").toString();
     ptr->backendAddress = read("backendAddress", "./debug.html").toString();
     ptr->macControlID = read("macControlID", "mac").toString();
-    ptr->setMacControlID = read("setMacControlID", "savedebug()").toString();
+    ptr->setMacControlID = read("setMacControlID", "setdebug()").toString();
 }
 
 void Dev_ZpduCfg::writeData()

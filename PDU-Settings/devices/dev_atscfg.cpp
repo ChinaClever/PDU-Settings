@@ -31,7 +31,7 @@ void Dev_AtsCfg::initData()
     ptr->password = read("password", "admin").toString();
     ptr->backendAddress = read("backendAddress", "./mac.html").toString();
     ptr->macControlID = read("macControlID", "mac1").toString();
-    ptr->setMacControlID = read("setMacControlID", "set()").toString();
+    ptr->setMacControlID = read("setMacControlID", "savedebug()").toString();
 }
 
 void Dev_AtsCfg::writeData()
