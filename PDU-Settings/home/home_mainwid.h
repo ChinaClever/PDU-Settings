@@ -3,6 +3,8 @@
 
 #include <QWidget>
 #include "home_workwid.h"
+#include "home_mpducustomizewid.h"
+#include "home_ipcustomizewid.h"
 
 namespace Ui {
 class Home_MainWid;
@@ -30,9 +32,10 @@ private:
     Home_MpduWid *mMpduWid;
     Home_ZpduWid *mZpduWid;
     Home_RpduWid *mRpduWid;
-    Home_RpduWid *mXRpduWid;
     Home_AtsWid *mAtsWid;
     Home_IpBusbarwid *mIpBusbarWid;
+    Home_MpduCustomizeWid *mMpduCustomizeWid;
+    Home_IpCustomizewid *mIpCustomizeWid;
 };
 
 #endif // HOME_MAINWID_H

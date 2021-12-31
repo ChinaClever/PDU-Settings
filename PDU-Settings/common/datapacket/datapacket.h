@@ -76,6 +76,7 @@ struct sObjCfg
 
     sUnitCfg tem; // 温度
     sUnitCfg hum; // 湿度
+    float rateVol; //额定电压
 };
 
 struct sDevType
@@ -99,12 +100,27 @@ struct sDevType
     uchar boards;
     uchar level;
     uchar mpdu_ver;
-    uchar board[3];
+    uchar board[6];
     uchar loop[6];
     uchar ip_lcd;
     uchar security;
 
     QString versions;
+
+    uchar default_ip_prefix;
+    uchar default_ip_addr;
+    uchar default_user;
+    uchar default_password;
+    uchar default_backendAddress;
+    uchar default_macControlID;
+    uchar default_setMacControlID;
+    QString ip_prefix;
+    QString ip_addr;
+    QString user;
+    QString password;
+    QString backendAddress;
+    QString macControlID;
+    QString setMacControlID;
 };
 
 
@@ -162,6 +178,9 @@ public:
     sDevData *getZpdu() {return zpdu;}
     sDevData *getRpdu() {return rpdu;}
     sDevData *getAts() {return ats;}
+    sDevData *getIpBusbar() {return ipBusbar;}
+    sDevData *getMpduCustomize() {return mpduCustomize;}
+    sDevData *getIpPDUCustomize() {return ippduCustomize;}
     sProgress *getPro() {return pro;}
 
     bool updatePro(const QString &str, bool pass=true, int sec=1);
@@ -173,6 +192,9 @@ private:
     sDevData *zpdu;
     sDevData *rpdu;
     sDevData *ats;
+    sDevData *ipBusbar;
+    sDevData *mpduCustomize;
+    sDevData *ippduCustomize;
     sProgress *pro;
 };
 

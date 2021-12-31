@@ -99,12 +99,12 @@ class MpduHuawei(MpduWeb):
             self.sendtoMainapp('MAC-1')
         jsSheet1 = 'var claerset = createXmlRequest();claerset.onreadystatechange = setmac;ajaxget(claerset, \"/correct?a=\" +1+\"&b=\"+{type}+\"&c=\"+{language} + \"&d=\"+\"{mac1}\" +\"&\");'.format(type = cfg['series'] , language = cfg['language'] , mac1 = v)
         self.execJs(jsSheet1)
+        time.sleep(1)
         self.driver.back()
-        time.sleep(1)
         self.divClick(7)
-        time.sleep(1)
+        time.sleep(0.35)
         self.driver.find_element_by_id("biao1").click()
-        time.sleep(1)
+        time.sleep(0.35)
         jsSheet1 = 'var xmlset = createXmlRequest();xmlset.onreadystatechange = setdata;ajaxget(xmlset, \"/setsys?a=\" + 0 + \"&\");'
         self.execJs(jsSheet1)
         time.sleep(0.25)
@@ -313,7 +313,7 @@ class MpduHuawei(MpduWeb):
         self.driver.find_element_by_id("titlebar3").click()
         time.sleep(0.35)
         
-        op = 24
+        op = cfg['outputs']
         if( int(cfg['series']) == 2 or int(cfg['series']) == 4):#输出位
             list=[]
             cfgStr = []
@@ -343,12 +343,6 @@ class MpduHuawei(MpduWeb):
                             jsSheet = 'xmlset = createXmlRequest();xmlset.onreadystatechange = setdata;ajaxget(xmlset, \"/setunitlimit?a=\" + {action} + \"&b=\" + {min} + \"&c=\" + {xmin} + \"&d=\" + {xmax}+ \"&e=\" + {max}+ \"&f=\" + {ms} +  \"&\");'.format( action = i , min = opLists[j][2]*10 , xmin = opLists[j][3]*10 , xmax = opLists[j][4]*10 , max = opLists[j][5]*10 , ms = totalms)
                             self.execJs(jsSheet)
                             time.sleep(0.25)
-                            
-                            index = opLists[j][6]
-                            cfgStr[(i-1)*4]='op_{0}_min'.format(index)
-                            cfgStr[(i-1)*4+1]='op_{0}_crmin'.format(index)
-                            cfgStr[(i-1)*4+2]='op_{0}_crmax'.format(index)
-                            cfgStr[(i-1)*4+3]='op_{0}_max'.format(index)
                     j+=1
                     
                 
@@ -356,9 +350,6 @@ class MpduHuawei(MpduWeb):
             
             statusList = []
             messageList = []
-            time.sleep(0.35)
-            self.driver.find_element_by_id("titlebar3").click()
-            time.sleep(0.35)
             for x,y,z in zz:
                 status , message = self.checkStr( x , cfg[y] , z) 
                 statusList.append(status)
@@ -383,11 +374,9 @@ class MpduHuawei(MpduWeb):
                 message =  '网页上找不到{0}ID;'.format('延时上电')
                 self.sock.sendto(message.encode('utf-8') , (self.ip , self.port))
                 return
-            self.setItById('totalms', 0 , '上电延时')
+            self.setItById('totalms', 1 , '上电延时')
             jsSheet = 'var ms = parseFloat(document.getElementById(\"totalms\").value);var xmlset = createXmlRequest();xmlset.onreadystatechange = setdata;ajaxget(xmlset, \"/settime?a=\" + ms + \"&\");'
             self.execJs(jsSheet)
-            time.sleep(0.35)
-            self.driver.find_element_by_id("titlebar3").click()
             time.sleep(0.35)
             self.checkDelayTime(op)
             
@@ -396,8 +385,7 @@ class MpduHuawei(MpduWeb):
         messageList = []
         for i in range(1 , int(op)+1):
             ms = 'ms{0}'.format(i)
-            status , message = '' ,''
-            status , message = self.checkStr( ms , '0' , '上下电延时')
+            status , message = self.checkStr( ms , '1' , '上下电延时')
             statusList.append(status)
             messageList.append(message)
             
@@ -473,7 +461,7 @@ class MpduHuawei(MpduWeb):
     
     def opThreshold(self):
         cfg = self.cfgs
-        minList , maxList , enList , idList , crminList , crmaxList , indexList= [],[],[],[],[],[],[]
+        minList , maxList , enList , idList , crminList , crmaxList = [],[],[],[],[],[]
         minStr , maxStr , enStr , idStr , crminStr , crmaxStr = 'op_{0}_min','op_{0}_max','op_{0}_en','op_{0}_id','op_{0}_crmin','op_{0}_crmax'
         
         for i in range(1,7):
@@ -483,12 +471,11 @@ class MpduHuawei(MpduWeb):
             idList.append(idStr.format(i))
             crminList.append(crminStr.format(i))
             crmaxList.append(crmaxStr.format(i))
-            indexList.append(i)
             
         lists =[[]for i in range(6)]
-        zz = zip(minList , maxList , enList , idList , crminList , crmaxList,indexList)
+        zz = zip(minList , maxList , enList , idList , crminList , crmaxList)
         index = 0
-        for min , max , en , id , crmin , crmax ,index in zz:
+        for min , max , en , id , crmin , crmax in zz:
             if(int(cfg[id]) != 0 and int(cfg[en]) == 1):
                 lists[index].append(int(cfg[id]))
                 lists[index].append(int(cfg[en]))
@@ -496,7 +483,6 @@ class MpduHuawei(MpduWeb):
                 lists[index].append(int(cfg[crmin]))
                 lists[index].append(int(cfg[crmax]))
                 lists[index].append(int(cfg[max]))
-                lists[index].append(index)
                 index += 1
         return lists
             

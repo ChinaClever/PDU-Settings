@@ -14,6 +14,9 @@ sDataPacket::sDataPacket()
     zpdu = new sDevData;
     rpdu = new sDevData;
     ats = new sDevData;
+    ipBusbar = new sDevData;
+    mpduCustomize = new sDevData;
+    ippduCustomize = new sDevData;
     pro = new sProgress();
 }
 

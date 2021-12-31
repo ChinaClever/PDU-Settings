@@ -1,40 +1,40 @@
-#include "home_ipbusbarwid.h"
-#include "ui_home_ipbusbarwid.h"
+#include "home_ipcustomizewid.h"
+#include "ui_home_ipcustomizewid.h"
 
-Home_IpBusbarwid::Home_IpBusbarwid(QWidget *parent) :
+Home_IpCustomizewid::Home_IpCustomizewid(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::Home_IpBusbarwid)
+    ui(new Ui::Home_IpCustomizewid)
 {
     ui->setupUi(this);
     set_background_icon(this,":/image/back.jpg");
     QTimer::singleShot(15,this,SLOT(initFunSlot()));
 }
 
-Home_IpBusbarwid::~Home_IpBusbarwid()
+Home_IpCustomizewid::~Home_IpCustomizewid()
 {
     delete ui;
 }
 
-void Home_IpBusbarwid::initFunSlot()
+void Home_IpCustomizewid::initFunSlot()
 {
     this->setEnabled(false);
     mItem = Cfg::bulid()->item;
-    mObj = Dev_IpBusbarCfg::bulid(this);
+    mObj = Dev_IpCustomizeCfg::bulid(this);
     mDev = mObj->getDev();
     initWid();
 }
 
-void Home_IpBusbarwid::initWid()
+void Home_IpCustomizewid::initWid()
 {
-    QString str = tr("IP-Busbar后台参数");
+    QString str = tr("IP-PDU特殊定制后台参数");
     mParamWid = new Home_SetMacWid(ui->tabWidget);
     ui->tabWidget->addTab(mParamWid, str);
     mParamWid->initWid(mDev);
 }
 
-void Home_IpBusbarwid::enabledSlot(bool en)
+void Home_IpCustomizewid::enabledSlot(bool en)
 {
-    if(mItem->modeId != IP_BUSBAR) return;
+    if(mItem->modeId != IP_PDU_CUSTOMIZE) return;
 
     this->setEnabled(en);
     if(!en) {
@@ -47,7 +47,7 @@ void Home_IpBusbarwid::enabledSlot(bool en)
     }
 }
 
-bool Home_IpBusbarwid::dataSave()
+bool Home_IpCustomizewid::dataSave()
 {
     bool ret = inputCheck();
     if(ret) {
@@ -57,7 +57,7 @@ bool Home_IpBusbarwid::dataSave()
     return ret;
 }
 
-bool Home_IpBusbarwid::inputCheck()
+bool Home_IpCustomizewid::inputCheck()
 {
     QString str;
     bool ret = mParamWid->Check();
