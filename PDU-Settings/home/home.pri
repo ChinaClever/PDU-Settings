@@ -20,7 +20,11 @@ HEADERS += \
     $$PWD/home_setopdlg.h \
     $$PWD/home_siwid.h \
     $$PWD/home_workwid.h \
-    $$PWD/home_zpduwid.h
+    $$PWD/home_zpduwid.h \
+    $$PWD/home_zpdualarmwid.h \
+    $$PWD/home_zpdudebugwid.h \
+    $$PWD/home_zpdusetwid.h \
+    $$PWD/home_zpduhwwid.h
 
 	
 SOURCES += \
@@ -41,7 +45,11 @@ SOURCES += \
     $$PWD/home_setopdlg.cpp \
     $$PWD/home_siwid.cpp \
     $$PWD/home_workwid.cpp \
-    $$PWD/home_zpduwid.cpp
+    $$PWD/home_zpduwid.cpp \
+    $$PWD/home_zpdualarmwid.cpp \
+    $$PWD/home_zpdudebugwid.cpp \
+    $$PWD/home_zpdusetwid.cpp \
+    $$PWD/home_zpduhwwid.cpp
 
 
 FORMS += \
@@ -62,7 +70,11 @@ FORMS += \
     $$PWD/home_setopdlg.ui \
     $$PWD/home_siwid.ui \
     $$PWD/home_workwid.ui \
-    $$PWD/home_zpduwid.ui
+    $$PWD/home_zpduwid.ui \
+    $$PWD/home_zpdualarmwid.ui \
+    $$PWD/home_zpdudebugwid.ui \
+    $$PWD/home_zpdusetwid.ui \
+    $$PWD/home_zpduhwwid.ui
 
 
 

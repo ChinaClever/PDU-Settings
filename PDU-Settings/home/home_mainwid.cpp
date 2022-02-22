@@ -73,4 +73,9 @@ void Home_MainWid::initWid()
     ui->tabWidget->addTab(mIpCustomizeWid, tr("IP-PDU特殊定制参数设置"));
     connect(mIpCustomizeWid, SIGNAL(errSig()), mWorkWid, SLOT(errSlot()));
     connect(mWorkWid, SIGNAL(enabledSig(bool)), mIpCustomizeWid, SLOT(enabledSlot(bool)));
+
+    mZpduHwWid = new Home_ZpduHwWid(ui->tabWidget);
+    ui->tabWidget->addTab(mZpduHwWid, tr("ZPDU华为参数设置"));
+    connect(mZpduHwWid, SIGNAL(errSig()), mWorkWid, SLOT(errSlot()));
+    connect(mWorkWid, SIGNAL(enabledSig(bool)), mZpduHwWid, SLOT(enabledSlot(bool)));
 }

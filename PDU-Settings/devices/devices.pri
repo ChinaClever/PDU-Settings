@@ -14,7 +14,8 @@ HEADERS += \
     $$PWD/dev_sicfg.h \
     $$PWD/dev_sictrl.h \
     $$PWD/dev_sirtu.h \
-    $$PWD/dev_zpducfg.h
+    $$PWD/dev_zpducfg.h \
+    $$PWD/dev_zpduhw.h
 	
 SOURCES += \
     $$PWD/dev_atscfg.cpp \
@@ -28,7 +29,8 @@ SOURCES += \
     $$PWD/dev_sicfg.cpp \
     $$PWD/dev_sictrl.cpp \
     $$PWD/dev_sirtu.cpp \
-    $$PWD/dev_zpducfg.cpp
+    $$PWD/dev_zpducfg.cpp \
+    $$PWD/dev_zpduhw.cpp
 
 FORMS +=
 

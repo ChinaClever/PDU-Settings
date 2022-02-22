@@ -12,6 +12,7 @@ sDataPacket::sDataPacket()
     ip = new sDevData;
     mpdu = new sDevData;
     zpdu = new sDevData;
+    zpduhw = new sDevData;
     rpdu = new sDevData;
     ats = new sDevData;
     ipBusbar = new sDevData;

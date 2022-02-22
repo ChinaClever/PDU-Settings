@@ -744,6 +744,11 @@
           <string>IP-PDU特殊定制</string>
          </property>
         </item>
+        <item>
+         <property name="text">
+          <string>ZPDU华为</string>
+         </property>
+        </item>
        </widget>
       </item>
      </layout>

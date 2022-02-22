@@ -5,6 +5,7 @@
 #include "home_workwid.h"
 #include "home_mpducustomizewid.h"
 #include "home_ipcustomizewid.h"
+#include "home_zpduhwwid.h"
 
 namespace Ui {
 class Home_MainWid;
@@ -36,6 +37,7 @@ private:
     Home_IpBusbarwid *mIpBusbarWid;
     Home_MpduCustomizeWid *mMpduCustomizeWid;
     Home_IpCustomizewid *mIpCustomizeWid;
+    Home_ZpduHwWid *mZpduHwWid;
 };
 
 #endif // HOME_MAINWID_H

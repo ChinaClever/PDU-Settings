@@ -48,6 +48,7 @@ bool Test_CoreThread::startProcess()
     case IP_BUSBAR:  exe += "ipbusbar"; break;
     case MPDU_CUSTOMIZE:  exe += "mpducustomize"; break;
     case IP_PDU_CUSTOMIZE:  exe += "ippducustomize"; break;
+    case ZPDUHW:  exe += "zpduhw"; break;
     }
 
     exe += ".exe";
