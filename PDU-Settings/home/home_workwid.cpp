@@ -194,6 +194,7 @@ bool Home_WorkWid::initSerial()
         }
     }
 
+    ret = true;
     if(ret){
         mId = 1;
         mItem->sn.clear();
