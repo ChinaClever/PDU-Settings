@@ -52,6 +52,7 @@ bool Test_CoreThread::startProcess()
     }
 
     exe += ".exe";
+    qDebug()<<exe<<endl;
     mRead->mac = true;
     bool ret = checkNet();
     if(ret){
