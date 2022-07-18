@@ -39,6 +39,7 @@ void Dev_Mpdu::initType()
     ptr->level = read("level", 0).toInt();
     ptr->mpdu_ver = read("mpdu_ver", 2).toInt();
     ptr->security = read("security", 0).toInt();
+    ptr->op_oder = read("op_oder", 0).toInt();
 
     for(int i=0; i<6; ++i) ptr->loop[i] = read(QString("loop_%1").arg(i+1), 8).toInt();
     for(int i=0; i<3; ++i) ptr->board[i] = read(QString("board_%1").arg(i+1), 8).toInt();
@@ -62,6 +63,7 @@ void Dev_Mpdu::writeType()
     write("level", ptr->level);
     write("mpdu_ver", ptr->mpdu_ver);
     write("security", ptr->security);
+    write("op_oder", ptr->op_oder);
 
     for(int i=0; i<6; ++i) write(QString("loop_%1").arg(i+1), ptr->loop[i]);
     for(int i=0; i<6; ++i) write(QString("board_%1").arg(i+1), ptr->board[i]);
@@ -72,6 +74,7 @@ void Dev_Mpdu::initData()
     sObjCfg *ptr = &(mDev->cfg);
     initUnit("vol", ptr->vol);
     initUnit("cur", ptr->cur, 1);
+    initUnit("loopcur", ptr->loopcur, 1);
 
     initUnit("tem", ptr->tem);
     initUnit("hum", ptr->hum);
@@ -90,6 +93,7 @@ void Dev_Mpdu::writeData()
     sObjCfg *ptr = &(mDev->cfg);
     writeUnit("vol", ptr->vol);
     writeUnit("cur", ptr->cur, 1);
+    writeUnit("loopcur", ptr->loopcur, 1);
 
     writeUnit("tem", ptr->tem);
     writeUnit("hum", ptr->hum);

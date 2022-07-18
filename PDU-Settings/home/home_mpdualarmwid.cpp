@@ -37,6 +37,11 @@ void Home_MpduAlarmWid::initData()
     ui->curCrMinSpin->setValue(obj->cur.crMin);
     ui->curCrMaxSpin->setValue(obj->cur.crMax);
 
+    ui->loopCurMinSpin->setValue(obj->loopcur.min);
+    ui->loopCurCrMinSpin->setValue(obj->loopcur.crMin);
+    ui->loopCurCrMaxSpin->setValue(obj->loopcur.crMax);
+    ui->loopCurMaxSpin->setValue(obj->loopcur.max);
+
     ui->volMinSpin->setValue(obj->vol.min);
     ui->volMaxSpin->setValue(obj->vol.max);
 
@@ -62,6 +67,11 @@ void Home_MpduAlarmWid::updateData()
     obj->cur.max = ui->curMaxSpin->value();
     obj->cur.crMin = ui->curCrMinSpin->value();
     obj->cur.crMax = ui->curCrMaxSpin->value();
+
+    obj->loopcur.min = ui->loopCurMinSpin->value();
+    obj->loopcur.crMin = ui->loopCurCrMinSpin->value();
+    obj->loopcur.crMax = ui->loopCurCrMaxSpin->value();
+    obj->loopcur.max = ui->loopCurMaxSpin->value();
 
     obj->vol.min = ui->volMinSpin->value();
     obj->vol.max = ui->volMaxSpin->value();

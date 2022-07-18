@@ -105,6 +105,7 @@ struct sDevType
     uchar ip_lcd;
     uchar security;
     QString versions;
+    uchar op_oder;
 
 
     uchar default_ip_prefix;

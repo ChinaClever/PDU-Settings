@@ -63,6 +63,7 @@ void Home_MpduParamWid::initType()
     ui->versionEdit->setText(dt->versions);
     ui->boardSpin->setValue(dt->boards);
     ui->safeRadio->setChecked(dt->security);
+    ui->opOderBox->setCurrentIndex(dt->op_oder);
 
     on_verBox_currentIndexChanged(dt->mpdu_ver);
     emit indexHiddenSig(dt->mpdu_ver);
@@ -98,6 +99,7 @@ void Home_MpduParamWid::updateType()
     dt->versions = ui->versionEdit->text();
     dt->boards = ui->boardSpin->value();
     dt->security = ui->safeRadio->isChecked()?1:0;
+    dt->op_oder = ui->opOderBox->currentIndex();
 
     for(int i=0; i<6; ++i) dt->loop[i] = mLoops[i]->value();
     for(int i=0; i<6; ++i) dt->board[i] = mBoards[i]->value();
@@ -234,8 +236,8 @@ void Home_MpduParamWid::on_outputSpin_valueChanged(int)
 
 void Home_MpduParamWid::setItemEnable(int id, int en)
 {
-    QModelIndex index = ui->loopBox->model()->index(id, 0);
-    ui->loopBox->model()->setData(index, QVariant(en), Qt::UserRole - 1);
+//    QModelIndex index = ui->loopBox->model()->index(id, 0);
+//    ui->loopBox->model()->setData(index, QVariant(en), Qt::UserRole - 1);
 }
 
 void Home_MpduParamWid::on_lineBox_currentIndexChanged(int index)
