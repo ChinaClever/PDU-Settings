@@ -716,7 +716,7 @@
         </item>
         <item>
          <property name="text">
-          <string>ZPDU</string>
+          <string>ZPDU特殊定制</string>
          </property>
         </item>
         <item>
@@ -747,6 +747,11 @@
         <item>
          <property name="text">
           <string>ZPDU华为</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>ZPDU标准</string>
          </property>
         </item>
        </widget>

@@ -45,7 +45,7 @@ void Home_MainWid::initWid()
     connect(mMpduWid, SIGNAL(sendMpduVerSig(int)), mWorkWid, SLOT(recvVerSlot(int)));
 
     mZpduWid = new Home_ZpduWid(ui->tabWidget);
-    ui->tabWidget->addTab(mZpduWid, tr("ZPDU参数设置"));
+    ui->tabWidget->addTab(mZpduWid, tr("ZPDU特殊定制参数设置"));
     connect(mZpduWid, SIGNAL(errSig()), mWorkWid, SLOT(errSlot()));
     connect(mWorkWid, SIGNAL(enabledSig(bool)), mZpduWid, SLOT(enabledSlot(bool)));
 
@@ -78,4 +78,9 @@ void Home_MainWid::initWid()
     ui->tabWidget->addTab(mZpduHwWid, tr("ZPDU华为参数设置"));
     connect(mZpduHwWid, SIGNAL(errSig()), mWorkWid, SLOT(errSlot()));
     connect(mWorkWid, SIGNAL(enabledSig(bool)), mZpduHwWid, SLOT(enabledSlot(bool)));
+
+    mZpduStdWid = new Home_ZpduHwWid(ui->tabWidget);
+    ui->tabWidget->addTab(mZpduStdWid, tr("ZPDU标准参数设置"));
+    connect(mZpduStdWid, SIGNAL(errSig()), mWorkWid, SLOT(errSlot()));
+    connect(mWorkWid, SIGNAL(enabledSig(bool)), mZpduStdWid, SLOT(enabledSlot(bool)));
 }

@@ -4,6 +4,7 @@
  *      Author: Lzy
  */
 #include "test_object.h"
+#include "dev_zpduhw.h"
 
 Test_Object::Test_Object(QObject *parent) : QThread(parent)
 {
@@ -34,6 +35,7 @@ void Test_Object::updateDev()
     case IP_BUSBAR:  mObj = Dev_IpBusbarCfg::bulid(this); break;
     case MPDU_CUSTOMIZE:  mObj = Dev_MpduCustomizeCfg::bulid(this); break;
     case IP_PDU_CUSTOMIZE:  mObj = Dev_IpCustomizeCfg::bulid(this); break;
+    case ZPDUHW: case ZPDUSTD:  mObj = Dev_Zpdu::bulid(this); break;
     }
 
     if(mObj != NULL) {

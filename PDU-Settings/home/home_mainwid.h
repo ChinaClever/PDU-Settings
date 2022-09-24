@@ -38,6 +38,7 @@ private:
     Home_MpduCustomizeWid *mMpduCustomizeWid;
     Home_IpCustomizewid *mIpCustomizeWid;
     Home_ZpduHwWid *mZpduHwWid;
+    Home_ZpduHwWid *mZpduStdWid;
 };
 
 #endif // HOME_MAINWID_H

@@ -14,6 +14,7 @@ enum eDevTypes {
     MPDU_CUSTOMIZE,
     IP_PDU_CUSTOMIZE,
     ZPDUHW,
+    ZPDUSTD,
 
     AC = 1, // 交流
     DC,     // 直流
