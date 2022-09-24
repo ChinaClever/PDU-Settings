@@ -1,13 +1,14 @@
 #include "home_zpduhwwid.h"
 #include "ui_home_zpduhwwid.h"
 
-Home_ZpduHwWid::Home_ZpduHwWid(QWidget *parent) :
+Home_ZpduHwWid::Home_ZpduHwWid(int index, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Home_ZpduHwWid)
 {
     ui->setupUi(this);
     set_background_icon(this,":/image/back.jpg");
     QTimer::singleShot(20,this,SLOT(initFunSlot()));
+    mindex = index;
 }
 
 Home_ZpduHwWid::~Home_ZpduHwWid()
@@ -72,7 +73,12 @@ bool Home_ZpduHwWid::dataSave()
 
 void Home_ZpduHwWid::enabledSlot(bool en)
 {
-    if(mItem->modeId != ZPDUHW) return;
+    if(mindex == 1){
+        if(mItem->modeId != ZPDUHW) return;
+    }
+    else if(mindex == 2){
+        if(mItem->modeId != ZPDUSTD) return;
+    }
 
     this->setEnabled(en);
     if(!en) {

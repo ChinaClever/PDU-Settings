@@ -17,7 +17,7 @@ class Home_ZpduHwWid : public QWidget
     Q_OBJECT
 
 public:
-    explicit Home_ZpduHwWid(QWidget *parent = nullptr);
+    explicit Home_ZpduHwWid(int index , QWidget *parent = nullptr);
     ~Home_ZpduHwWid();
 signals:
     void errSig();
@@ -41,6 +41,7 @@ private:
     Home_ZpduAlarmWid* mZpduAlarmWid;
     Home_ZpduDebugWid* mZpduDebugWid;
     Home_ZpduSetWid* mZpduSetWid;
+    int mindex;
 };
 
 #endif // HOME_ZPDUHWWID_H
