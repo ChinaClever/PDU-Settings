@@ -5,7 +5,7 @@
 
 #define LINE_NUM  3
 #define PACK_ARRAY_SIZE LINE_NUM
-#define OpSize  6
+#define OpSize  20
 #define ZpduOpSize 48
 
 
