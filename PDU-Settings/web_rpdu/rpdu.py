@@ -20,14 +20,9 @@ class Rpdu(RpduWeb):
         if(intRet == 0):
             return
         self.setCorrect1()
-        #time.sleep(30)
-        #self.login()
-        #self.changetocorrect()
-        #self.checkCorrectHtml()
-        #self.driver.quit()
              
     def close(self):
-        time.sleep(0.1)
+        time.sleep(5)
         #print(datetime.datetime.now())
         self.driver.quit()
         #print(datetime.datetime.now())
@@ -36,7 +31,7 @@ class Rpdu(RpduWeb):
 
     def changetocorrect(self):
         cfg = self.cfgs
-        ip = self.ip_prefix + cfg['ip_addr'] + '/debug.html'
+        ip = cfg['ip_prefix'] + cfg['ip_addr'] + cfg['backendaddress']
         
         try:
             self.driver.get(ip)
@@ -54,18 +49,17 @@ class Rpdu(RpduWeb):
         if (len(cfg['mac']) > 5  ):#NoSuchElementException
             strMac =  cfg['mac']
         try:
-            self.driver.find_element_by_id('mac')
+            self.driver.find_element_by_id(cfg['maccontrolid'])
         except NoSuchElementException:
             message = '无法找到MAC控件;0'
             self.sendtoMainapp(message)
             time.sleep(0.35)
             self.sendtoMainapp('MAC-1')
-            return 0
-        v = self.driver.find_element_by_id('mac').get_attribute('value')
+        v = self.driver.find_element_by_id(cfg['maccontrolid']).get_attribute('value')
         if( '2C:26:5F:' not in v):
             v = strMac
-            self.setItById("mac", cfg['mac'], 'Mac地址')
-            self.execJs("savedebug()")
+            self.setItById(cfg['maccontrolid'], cfg['mac'], 'Mac地址')
+            self.execJs(cfg['setmaccontrolid'])
         else:
             self.sendtoMainapp('MAC-1')
                

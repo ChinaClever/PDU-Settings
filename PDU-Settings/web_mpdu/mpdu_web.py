@@ -29,7 +29,7 @@ class MpduWeb:
 
     def initCfg(self):
         
-        self.cfgs = {'versions':'','user': 'admin', 'pwd': 'admin','ip_addr': '192.168.1.163', 'debug_web':  'correct.html','lines':1,'loops':1,'outputs':24,'standar':0,'series':4,'language':1,'breaker':1,'modbus':1,'vol_min':80,'vol_max':276,'cur_min':0,'cur_crmin':0,'cur_crmax':32,'cur_max':32,'tem_min':0,'tem_max':40,'hum_min':0,'hum_max':99,'output_min':0,'output_crmin':0,'output_crmax':16,'output_max':16,'op_1_min':0,'op_1_max':10,'op_1_en':0,'op_1_id':0,'op_1_crmin':0,'op_1_crmax':10,'op_2_min':0,'op_2_max':10,'op_2_en':0,'op_2_id':0,'op_2_crmin':0,'op_2_crmax':10,'op_3_min':0,'op_3_max':10,'op_3_en':0,'op_3_id':0,'op_3_crmin':0,'op_3_crmax':10,'op_4_min':0,'op_4_max':10,'op_4_en':0,'op_4_id':0,'op_4_crmin':0,'op_4_crmax':10,'op_5_min':0,'op_5_max':10,'op_5_en':0,'op_5_id':0,'op_5_crmin':0,'op_5_crmax':10,'op_6_min':0,'op_6_max':10,'op_6_en':0,'op_6_id':0,'op_6_crmin':0,'op_6_crmax':10,'mac':'','mpdu_ver':0,'boards':3,'level':0,'envbox':0,'loop_1':8,'loop_2':8,'loop_3':8,'loop_4':8,'loop_5':8,'loop_6':8,'mpdu_ver':0, 'security':0}
+        self.cfgs = {'versions':'','user': 'admin', 'pwd': 'admin','ip_addr': '192.168.1.163', 'debug_web':  'correct.html','lines':1,'loops':1,'outputs':24,'standar':0,'series':4,'language':1,'breaker':1,'modbus':1,'vol_min':80,'vol_max':276,'cur_min':0,'cur_crmin':0,'cur_crmax':32,'cur_max':32,'tem_min':0,'tem_max':40,'hum_min':0,'hum_max':99,'output_min':0,'output_crmin':0,'output_crmax':16,'output_max':16,'op_1_min':0,'op_1_max':10,'op_1_en':0,'op_1_id':0,'op_1_crmin':0,'op_1_crmax':10,'op_2_min':0,'op_2_max':10,'op_2_en':0,'op_2_id':0,'op_2_crmin':0,'op_2_crmax':10,'op_3_min':0,'op_3_max':10,'op_3_en':0,'op_3_id':0,'op_3_crmin':0,'op_3_crmax':10,'op_4_min':0,'op_4_max':10,'op_4_en':0,'op_4_id':0,'op_4_crmin':0,'op_4_crmax':10,'op_5_min':0,'op_5_max':10,'op_5_en':0,'op_5_id':0,'op_5_crmin':0,'op_5_crmax':10,'op_6_min':0,'op_6_max':10,'op_6_en':0,'op_6_id':0,'op_6_crmin':0,'op_6_crmax':10,'mac':'','mpdu_ver':0,'boards':3,'level':0,'envbox':0,'loop_1':8,'loop_2':8,'loop_3':8,'loop_4':8,'loop_5':8,'loop_6':8, 'security':0,'op_oder':0,'ratedvol':230}
         items = MpduWeb.getCfg().items("mCfg")  # 获取section名为Mysql-Database所对应的全部键值对
         self.cfgs['mac'] = MpduWeb.getCfg().get("Mac", "mac")
         for it in items:
@@ -39,6 +39,8 @@ class MpduWeb:
         ip =  self.ip_prefix +self.cfgs['ip_addr']+'/'
         try:
             self.driver.get(ip)
+            self.driver.refresh()
+            time.sleep(1.5)
         except WebDriverException:
             return 0,'输入IP错误;0'
         if( int(self.cfgs['security']) == 1 and int(MpduWeb.getCfg().get("mCfg", "mpdu_ver"))==2):
@@ -50,13 +52,13 @@ class MpduWeb:
             self.cfgs['pwd'] = 'abcd123'
             if( flag == True ):
                 self.execJs('changePwd()')
-                time.sleep(3)
+                time.sleep(4)
         self.setItById('name', self.cfgs['user'],'输入账号')
         self.setItById('psd', self.cfgs['pwd'],'输入密码')
         self.execJs('login()')
         if( int(self.cfgs['security']) == 1 and int(MpduWeb.getCfg().get("mCfg", "mpdu_ver"))==2):
             time.sleep(3)
-        time.sleep(1)
+        time.sleep(2)
         return 1,'输入IP正确;1'
         
         
@@ -69,11 +71,11 @@ class MpduWeb:
     def setSelect(self, id, v):
         it = self.driver.find_element_by_id(id)
         Select(it).select_by_index(v)
-        time.sleep(0.5)
+        time.sleep(1.5)
 
     def setItById(self, id, v, parameter):
         try:
-            time.sleep(0.1)
+            time.sleep(0.5)
             it = self.driver.find_element_by_id(id)
         except NoSuchElementException:
             msg = '网页上找不到{0}'.format(id)
@@ -94,7 +96,7 @@ class MpduWeb:
     def alertClick(self, id):
         self.btnClick(id)
         self.driver.switch_to.alert.accept()
-        time.sleep(0.35)
+        time.sleep(0.85)
 
     def divClick(self, id):
         self.driver.switch_to.default_content()
@@ -106,9 +108,12 @@ class MpduWeb:
         time.sleep(0.5)
 
     def execJsAlert(self, js):
-        self.execJs(js)
-        self.driver.switch_to.alert.accept()
-        time.sleep(0.5)
+        try:
+            self.execJs(js); time.sleep(0.6)
+            self.driver.switch_to.alert.accept()
+            time.sleep(0.5)
+        except:
+            pass
         
     def resetFactory(self):
         v = self.cfgs['version']
@@ -121,7 +126,7 @@ class MpduWeb:
         self.setSelect("order",1)
         jsSheet = "xmlset = createXmlRequest();xmlset.onreadystatechange = setdata;{0}(xmlset, \"/setsys?a=1\" + \"&\");"
         self.execJs(jsSheet.format(aj))
-        time.sleep(1)
+        time.sleep(2)
         
     def check(self, ssid , value , parameter):
         try:
@@ -176,22 +181,22 @@ class MpduWeb:
         webValueStr = self.driver.find_element_by_id(ssid).get_attribute('value')
         webValue = int(webValueStr)
         ret = 1
-        if( line == loop ):
-            fileValue = int(value)
-        elif( line == loop/2 ):
-            if( int(value) % 2 == 1 ):
-                fileValue = (int(value)+1)/2
-            else:
-                fileValue = int(value)/2
-        elif( line == loop/4 ):
-            if( int(value) % 2 == 1 ):
-                fileValue = (int(value)+1)/4
-            else:
-                fileValue = int(value)/4
-        if(  fileValue == webValue ):
-            message ='设置{0}成功{1};'.format(parameter,fileValue)+str(1)
+        #if( line == loop ):
+        #    fileValue = int(value)
+        #elif( line == loop/2 ):
+        #    if( int(value) % 2 == 1 ):
+        #        fileValue = (int(value)+1)/2
+        #    else:
+        #        fileValue = int(value)/2
+        #elif( line == loop/4 ):
+        #    if( int(value) % 2 == 1 ):
+        #        fileValue = (int(value)+1)/4
+        #    else:
+        #        fileValue = int(value)/4
+        if(  int(value) == webValue ):
+            message ='设置{0}成功{1};'.format(parameter,int(value))+str(1)
         else:
-            message = '设置{0}失败，实际值{1}，期待值{2};'.format(parameter,webValue,fileValue)+str(0)
+            message = '设置{0}失败，实际值{1}，期待值{2};'.format(parameter,webValue,int(value))+str(0)
             ret = 0
         #sock.sendto(message.encode('utf-8-sig') , (dest_ip , dest_port))
         return ret,message
@@ -209,16 +214,27 @@ class MpduWeb:
             self.divClick(1)
             message = '登陆成功;1'
             self.sendtoMainapp(message)
-            time.sleep(5)
+            time.sleep(6)
             tt = self.driver.find_element_by_xpath('//table[2]/tbody/tr[2]/td[2]')
             #print(tt.text)
             if( cfg['versions'] == ''):
                 return 2,'软件版本空;2'
                 
             if( cfg['versions'] in tt.text and len(str(cfg['versions'])) >= 2 ):
+                if( '.' in cfg['versions']):
+                    cfg['versions'] = '55'
                 return 1,'软件版本正确;1'
             else:
-                return 0,'软件版本错误;0'
+                if(int(cfg['mpdu_ver']) == 0):#huawei
+                #//table[2]/tbody/tr[1]/td[2]
+                    try:
+                        tt = self.driver.find_element_by_xpath('//table[2]/tbody/tr[1]/td[2]')
+                        if( cfg['versions'] in tt.text and len(str(cfg['versions'])) >= 2 ):
+                            return 1,'软件版本正确;1'
+                    except:
+                        return 0,'软件版本错误;0'
+                else:
+                    return 0,'软件版本错误;0'
         except UnexpectedAlertPresentException:
             message = '登陆失败，账号密码错误;0'
             return 0,message

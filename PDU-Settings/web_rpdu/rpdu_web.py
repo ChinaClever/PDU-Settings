@@ -10,7 +10,6 @@ import os
 class RpduWeb:
 
     def __init__(self):
-        self.ip_prefix = "http://"
         self.initCfg()
         self.initDriver()
 
@@ -29,20 +28,21 @@ class RpduWeb:
 
     def initCfg(self):
         
-        self.cfgs = {'versions':'','user': 'admin', 'pwd': 'admin','ip_addr': '192.168.1.163', 'debug_web':  'debug.html','mac':''}
-        #items = RpduWeb.getCfg().items("mCfg")  # 获取section名为Mysql-Database所对应的全部键值对
+        self.cfgs = {'versions':'','ip_prefix':'http://','user': 'admin', 'password': 'admin','ip_addr': '192.168.1.163', 'backendaddress':  './debug.html',
+                     'maccontrolid':  'mac','setmaccontrolid':  'savedebug()','mac':''}
+        items = RpduWeb.getCfg().items("rpduCfg")  # 获取section名为Mysql-Database所对应的全部键值对
         self.cfgs['mac'] = RpduWeb.getCfg().get("Mac", "mac")
-        #for it in items:
-        #    self.cfgs[it[0]] = it[1]
+        for it in items:
+            self.cfgs[it[0]] = it[1]
 
     def login(self):
-        ip =  self.ip_prefix +self.cfgs['ip_addr']+'/'
+        ip =  self.cfgs['ip_prefix'] +self.cfgs['ip_addr']+'/'
         try:
             self.driver.get(ip)
         except WebDriverException:
             return 0,'输入IP错误;0'
         self.setItById('name', self.cfgs['user'] , '账号')
-        self.setItById('psd', self.cfgs['pwd']  , '密码')  
+        self.setItById('psd', self.cfgs['password']  , '密码')  
         self.execJs("login()")
         time.sleep(1)
         return 1,'输入IP正确;1'
@@ -56,19 +56,27 @@ class RpduWeb:
 
     def setSelect(self, id, v):
         it = self.driver.find_element_by_id(id)
-        Select(it).select_by_index(v)
-        time.sleep(0.5)
+        if it.is_displayed():
+            Select(it).select_by_index(v)
+            time.sleep(1)
 
     
 
     def btnClick(self, id):
-        self.driver.find_element_by_id(id).click()
-        time.sleep(0.5)
+        try:
+            self.driver.find_element_by_id(id).click()
+            time.sleep(0.5)
+        except:
+            msg = '网页上找不到{0}'.format(id)
+            self.sendtoMainapp(msg, 0)
 
     def alertClick(self, id):
-        self.btnClick(id)
-        self.driver.switch_to.alert.accept()
-        time.sleep(0.35)
+        try:
+            self.btnClick(id)
+            self.driver.switch_to.alert.accept()
+            time.sleep(0.35)
+        except:
+            msg = '网页上没有弹框'
 
     def divClick(self, id):
         self.driver.switch_to.default_content()
@@ -78,7 +86,7 @@ class RpduWeb:
     def execJs(self, js):
         try:
             self.driver.execute_script(js)
-            time.sleep(0.35)
+            time.sleep(0.5)
         except:
             return
 
@@ -86,19 +94,6 @@ class RpduWeb:
         self.execJs(js)
         self.driver.switch_to.alert.accept()
         time.sleep(0.5)
-        
-    def resetFactory(self):
-        v = self.cfgs['version']
-        aj = 'ajaxget'
-        if(3 == int(v)):
-            aj += 's'
-            self.divClick(10)
-        else:
-            self.divClick(8)
-        self.setSelect("order",1)
-        jsSheet = "xmlset = createXmlRequest();xmlset.onreadystatechange = setdata;{0}(xmlset, \"/setsys?a=1\" + \"&\");"
-        self.execJs(jsSheet.format(aj))
-        time.sleep(1)
         
     def check(self, ssid , value , parameter):
         try:

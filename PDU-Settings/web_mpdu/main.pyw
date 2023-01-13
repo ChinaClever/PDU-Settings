@@ -20,12 +20,17 @@ if __name__ == '__main__':
         app2 = Mpdu2()
         app2.start_fun(sock , dest_ip , dest_port)
         app2.close()
+        time.sleep(1.5)
     elif(int(ver) == 1):
         app1 = Mpdu()
         app1.start_fun(sock , dest_ip , dest_port)
         app1.close()
+        time.sleep(1.5)
     else:
         app3 = MpduHuawei()
         app3.start_fun(sock , dest_ip , dest_port)
         app3.close()
+        time.sleep(1.5)
+    sock.close()
+    time.sleep(3.5)
 

@@ -6,7 +6,7 @@ import socket
 import time
 import os
 
-class IpBusbarWeb:
+class MpduCustomizeWeb:
 
     def __init__(self):
         self.initCfg()
@@ -27,6 +27,7 @@ class IpBusbarWeb:
             return True
         else:
             self.dest_ip = '127.0.0.1'
+            #self.sendtoMainapp("Mac地址错误：" + mac, 0)
 
     def sendtoMainapp(self, parameter, res):
         message = parameter + ";" + str(res)
@@ -36,34 +37,35 @@ class IpBusbarWeb:
     def getCfg():
         cf = configparser.ConfigParser()
         fn = os.path.expanduser('~') + "/.PDU-Settings/cfg.ini"
-        cf.read(fn, 'utf-8-sig')
+        cf.read(fn, 'utf-8-sig')  # 读取配置文件，如果写文件的绝对路径，就可以不用os模块
         return cf
 
     def initCfg(self):
-        items = IpBusbarWeb.getCfg().items("ipbusbarCfg")  # 获取section名为Mysql-Database所对应的全部键值对
-        self.cfgs = {'version':'','ip_prefix':'http://','user': 'admin', 'password': 'admin',
+        items = MpduCustomizeWeb.getCfg().items("mpduCustomizeCfg")  # 获取section名为Mysql-Database所对应的全部键值对
+        self.cfgs = {'ip_prefix':'http://','user': 'admin', 'password': 'admin',
                      'ip_addr': '192.168.1.163', 'backendaddress':  './correct.html',
                      'maccontrolid':  'mac1','setmaccontrolid':  'Button3',
                      'ip_lines':1, 'ip_modbus':1, 'ip_language':1, 'lcd_switch':1,
                      'mac':'', 'ip_ac':1, 'ip_lcd':0, 'log_en':1, 'ip_standard': 0}
-        self.cfgs['mac'] = IpBusbarWeb.getCfg().get("Mac", "mac")
+        self.cfgs['mac'] = MpduCustomizeWeb.getCfg().get("Mac", "mac")
         for it in items:
             self.cfgs[it[0]] = it[1]
-
+            
     def createAccount(self):
         ip = self.cfgs['ip_prefix'] + self.cfgs['ip_addr'] + '/index.html'
         user = self.cfgs['user'] = 'abcd123'
         pwd = self.cfgs['password'] = 'abcd123'
+        self.driver.get(ip); time.sleep(3)
         try:
-            self.driver.get(ip); time.sleep(3)
             self.setItById('old_pwd' , user ,'创建账号')
             self.setItById('sign_pwd' , pwd,'创建密码')
             self.setItById('sign_repwd' , pwd,'确认密码')
             self.execJs('changePwd()'); time.sleep(1.2)
             self.sendtoMainapp("创建测试账号成功", 1)
         except:
-            self.sendtoMainapp("创建测试账号失败，或者是ip_prefix填写http://", 0)
-            return False
+            pass
+            #self.sendtoMainapp("创建测试账号失败，或者是ip_prefix填写http://", 0)
+            #return False
         self.driver.refresh(); time.sleep(1)
         self.setItById("name", user, '账号')
         self.setItById("psd", pwd, '密码')
@@ -226,14 +228,16 @@ class IpBusbarWeb:
 
     def resetFactory(self):
         v = self.cfgs['ip_prefix']
-        jsSheet = "xmlset = createXmlRequest();xmlset.onreadystatechange = setdata;ajaxgets(xmlset, \"/setsys?a=\" + {0} + \"&\");"
-        if( 'http://' == v ):
-            self.divClick(8)
-            jsSheet = "xmlset = createXmlRequest();xmlset.onreadystatechange = setdata;ajaxget(xmlset, \"/setsys?a=\" + {0} + \"&\");"
-        else:
+        aj = 'ajaxget'
+        if('https://' == v):
+            aj += 's'
             self.divClick(10)
+        else:
+            self.divClick(8)
         self.setSelect("order",1)
-        self.execJs(jsSheet.format(1))
+        jsSheet = "xmlset = createXmlRequest();xmlset.onreadystatechange = setdata;{0}(xmlset, \"/setsys?a=1\" + \"&\");"
+        self.execJs(jsSheet.format(aj))
+        time.sleep(2)
         self.sendtoMainapp("设备Web出厂设置成功", 1)
         
     def reboot(self):

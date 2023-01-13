@@ -1,6 +1,6 @@
-from ctrlset_ipbusbar.ipbusbar_web import  *
+from ctrlset_ipcustomize.ipcustomize_web import  *
 
-class IpBusbar(IpBusbarWeb):
+class IpCustomize(IpCustomizeWeb):
 
     def start_fun(self):
         ret = self.login()
@@ -31,7 +31,8 @@ class IpBusbar(IpBusbarWeb):
     def setCorrect(self):
         cfg = self.cfgs
         ip = cfg['ip_prefix'] + cfg['ip_addr'] + cfg['backendaddress']
-        self.driver.get(ip); time.sleep(1)
+        self.driver.get(ip)
+        time.sleep(1)
         self.driver.switch_to.default_content()
 
         self.setMacAddr()
@@ -42,7 +43,7 @@ class IpBusbar(IpBusbarWeb):
         
     def setMacAddr(self):
         cfg = self.cfgs
-        try:
+        try:   
             it = self.driver.find_element_by_id(cfg['maccontrolid'])
             mac = it.get_attribute('value')
             if "2C:26:5F:" in mac:

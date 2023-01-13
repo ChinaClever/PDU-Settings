@@ -28,17 +28,16 @@ class ZpduWeb:
 
     def initCfg(self):
         
-        self.cfgs = {'versions':'','ip_prefix':'https://','user': 'admin', 'password': 'admin',
+        self.cfgs = {'versions':'','ip_prefix':'http://','user': 'admin', 'password': 'admin',
                      'ip_addr': '192.168.1.163', 'backendaddress':  './debug.html',
                      'maccontrolid':  'mac','setmaccontrolid':  'setdebug()','mac':''}
-        items = ZpduWeb.getCfg().items("zhwCfg")  # 获取section名为Mysql-Database所对应的全部键值对
+        items = ZpduWeb.getCfg().items("zpduCfg")  # 获取section名为Mysql-Database所对应的全部键值对
         self.cfgs['mac'] = ZpduWeb.getCfg().get("Mac", "mac")
         for it in items:
             self.cfgs[it[0]] = it[1]
 
     def login1(self):
         ip =  self.cfgs['ip_prefix'] +self.cfgs['ip_addr']
-        print(ip)
         try:
             self.driver.get(ip)
         except WebDriverException:
@@ -50,11 +49,11 @@ class ZpduWeb:
         if( '错误' in win.text):
             win.accept()
             return 1,'账号和密码错误;1'
-        win.send_keys('Admin123')
+        win.send_keys(self.cfgs['password'])
         win.accept()
         time.sleep(2)
         win = self.driver.switch_to_alert()
-        win.send_keys('Admin123')
+        win.send_keys(self.cfgs['password'])
         win.accept()
         self.driver.refresh()
         time.sleep(2)
@@ -62,12 +61,11 @@ class ZpduWeb:
         
     def login2(self):
         ip =  self.cfgs['ip_prefix'] +self.cfgs['ip_addr']
-        print(ip)
         try:
             self.driver.get(ip)
         except WebDriverException:
             return 0,'输入IP错误;0'
-        self.login(self.cfgs['user'] , 'Admin123')
+        self.login(self.cfgs['user'] , self.cfgs['password'])
         try:
             win = self.driver.switch_to_alert()
             print(win.text)
