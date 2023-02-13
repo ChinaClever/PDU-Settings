@@ -28,7 +28,10 @@ include(web_mpdu/web_mpdu.pri)
 include(web_rpdu/web_rpdu.pri)
 include(web_xrpdu/web_xrpdu.pri)
 include(web_zpdu/web_zpdu.pri)
+include(web_zpduhw/web_zpduhw.pri)
 include(web_ats/web_ats.pri)
+include(web_mpducustomize/web_mpducustomize.pri)
+include(web_ipcustomize/web_ipcustomize.pri)
 include(statedata/statedata.pri)
 
 SOURCES += \

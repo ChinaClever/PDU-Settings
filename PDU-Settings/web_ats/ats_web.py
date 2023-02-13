@@ -10,7 +10,6 @@ import os
 class AtsWeb:
 
     def __init__(self):
-        self.ip_prefix = "http://"
         self.initCfg()
         self.initDriver()
 
@@ -29,23 +28,75 @@ class AtsWeb:
 
     def initCfg(self):
         
-        self.cfgs = {'versions':'','user': 'admin', 'pwd': 'admin','ip_addr': '192.168.1.163', 'debug_web':  'debug.html','mac':''}
-        #items = AtsWeb.getCfg().items("mCfg")  # 获取section名为Mysql-Database所对应的全部键值对
+        self.cfgs = {'versions':'','ip_prefix':'http://','user': 'admin', 'password': 'admin','ip_addr': '192.168.1.163', 'backendaddress':  './mac.html',
+                     'maccontrolid':  'mac1','setmaccontrolid': 'set()','mac':''}
+        items = AtsWeb.getCfg().items("atsCfg")  # 获取section名为Mysql-Database所对应的全部键值对
         self.cfgs['mac'] = AtsWeb.getCfg().get("Mac", "mac")
-        #for it in items:
-        #    self.cfgs[it[0]] = it[1]
+        for it in items:
+            self.cfgs[it[0]] = it[1]
+
+    #def login(self):
+    #    ip =  self.cfgs['ip_prefix'] +self.cfgs['ip_addr']+'/'
+    #    try:
+    #        self.driver.get(ip)
+    #    except WebDriverException:
+    #        return 0,'输入IP错误;0'
+    #    self.setItById('name', self.cfgs['user'] , '账号')
+    #    self.setItById('psd', self.cfgs['password']  , '密码')  
+    #    self.execJs("login()")
+    #    time.sleep(1)
+    #    return 1,'输入IP正确;1'
+        
+    def createAccount(self):
+        ip = self.cfgs['ip_prefix'] + self.cfgs['ip_addr']
+        user = self.cfgs['user']
+        pwd = self.cfgs['password']
+        try:
+            self.driver.get(ip); time.sleep(3)
+            self.setItById('name' , user ,'创建账号')
+            self.setItById('psd' , pwd,'创建密码')
+            ret = self.setItById('psd_check' , pwd,'确认密码')
+            if(ret == True):
+                self.execJs('login(this)'); time.sleep(1.2)
+                self.sendtoMainapp("创建测试账号成功;1")
+                self.driver.refresh(); time.sleep(1)
+        except:
+            self.sendtoMainapp("创建测试账号失败，或者是ip_prefix填写http:// ;0")
+            return False
+        
+        self.setItById("name_x", user, '账号')
+        self.setItById("psd_x", pwd, '密码')
+        self.execJs("login(this)");time.sleep(2)
+        return True
+
+    def inputAccount(self):
+        ip = self.cfgs['ip_prefix'] + self.cfgs['ip_addr'] + '/'
+        user = self.cfgs['user']
+        pwd = self.cfgs['password']
+        try:
+            self.driver.get(ip); time.sleep(2.2)
+            try:
+                self.setItById("name", user, '账号')
+                self.setItById("psd", pwd, '密码')
+                self.execJs("login()")
+                print(self.driver.switch_to_alert().text)#有弹框就是账号或者密码错误
+            except:
+                self.sendtoMainapp("网页登陆成功;1")
+                return True
+        except:
+            self.sendtoMainapp("网页登陆失败;0")
+            return False
+        self.sendtoMainapp("网页登陆失败;0")
+        time.sleep(1.2)
+        return False
 
     def login(self):
-        ip =  self.ip_prefix +self.cfgs['ip_addr']+'/'
-        try:
-            self.driver.get(ip)
-        except WebDriverException:
-            return 0,'输入IP错误;0'
-        self.setItById('name', self.cfgs['user'] , '账号')
-        self.setItById('psd', self.cfgs['pwd']  , '密码')  
-        self.execJs("login()")
-        time.sleep(1)
-        return 1,'输入IP正确;1'
+        ret = False
+        if(self.cfgs['ip_prefix']=='https://'):
+            ret = self.createAccount()
+        else:
+            ret = self.inputAccount()
+        return ret
         
         
     def setEle(self):
@@ -56,17 +107,27 @@ class AtsWeb:
 
     def setSelect(self, id, v):
         it = self.driver.find_element_by_id(id)
-        Select(it).select_by_index(v)
-        time.sleep(0.5)
+        if it.is_displayed():
+            Select(it).select_by_index(v)
+            time.sleep(1)
+
+    
 
     def btnClick(self, id):
-        self.driver.find_element_by_id(id).click()
-        time.sleep(0.5)
+        try:
+            self.driver.find_element_by_id(id).click()
+            time.sleep(0.5)
+        except:
+            msg = '网页上找不到{0}'.format(id)
+            self.sendtoMainapp(msg, 0)
 
     def alertClick(self, id):
-        self.btnClick(id)
-        self.driver.switch_to.alert.accept()
-        time.sleep(0.35)
+        try:
+            self.btnClick(id)
+            self.driver.switch_to.alert.accept()
+            time.sleep(0.35)
+        except:
+            msg = '网页上没有弹框'
 
     def divClick(self, id):
         self.driver.switch_to.default_content()
@@ -84,19 +145,6 @@ class AtsWeb:
         self.execJs(js)
         self.driver.switch_to.alert.accept()
         time.sleep(0.5)
-        
-    def resetFactory(self):
-        v = self.cfgs['version']
-        aj = 'ajaxget'
-        if(3 == int(v)):
-            aj += 's'
-            self.divClick(10)
-        else:
-            self.divClick(8)
-        self.setSelect("order",1)
-        jsSheet = "xmlset = createXmlRequest();xmlset.onreadystatechange = setdata;{0}(xmlset, \"/setsys?a=1\" + \"&\");"
-        self.execJs(jsSheet.format(aj))
-        time.sleep(1)
         
     def check(self, ssid , value , parameter):
         try:
@@ -182,17 +230,24 @@ class AtsWeb:
         #sock.sendto(message.encode('utf-8-sig') , (dest_ip , dest_port))
         return ret,message
         
+            
     def setItById(self, id, v, parameter):
         try:
+            time.sleep(0.5)
             it = self.driver.find_element_by_id(id)
-        except NoSuchElementException:
+        except:
             msg = '网页上找不到{0}'.format(id)
             #self.sendtoMainapp(msg, 0)
+            return False
         else:
-            it.clear()
-            it.send_keys(str(v))
-            msg = '设置{0} {1}：{2};1'.format(parameter, id, v)
-            self.sendtoMainapp(msg)
+            if it.is_displayed():
+                it.clear()
+                it.send_keys(str(v))
+                msg = '设置{0} {1}：{2};{3}'.format(parameter, id, v , 1)
+                self.sendtoMainapp(msg)
+            else:
+                return False
+            return True
 
 
 

@@ -13,9 +13,8 @@ FORMS +=
 
 DISTFILES += \
     $$PWD/main.pyw \
-    $$PWD/zpdu.py \
-    $$PWD/zpdu_webnew.py \
-    $$PWD/zpdu_web.py
+    $$PWD/mpducustomize.py \
+    $$PWD/mpducustomize_web.py
 
 
 

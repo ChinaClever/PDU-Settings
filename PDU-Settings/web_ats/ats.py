@@ -5,13 +5,11 @@ class Ats(AtsWeb):
        
     def start_fun(self , sock , dest_ip , dest_port):
         cfg = self.cfgs
-        self.ip_prefix = 'http://'
         self.sock = sock
         self.ip = dest_ip
         self.port = dest_port
-        intRet , message = self.login()
-        self.sendtoMainapp(message)
-        if(intRet == 0):
+        intRet = self.login()
+        if(intRet == False):
             return
         
         intRet , message = self.changetocorrect()
@@ -19,10 +17,6 @@ class Ats(AtsWeb):
         if(intRet == 0):
             return
         self.setCorrect1()
-        #time.sleep(10)
-        #self.login()
-        #self.changetocorrect()
-        #self.checkCorrectHtml()
              
     def close(self):
         time.sleep(0.1)
@@ -34,7 +28,7 @@ class Ats(AtsWeb):
 
     def changetocorrect(self):
         cfg = self.cfgs
-        ip = self.ip_prefix + cfg['ip_addr'] + '/mac.html'
+        ip = cfg['ip_prefix'] + cfg['ip_addr'] + cfg['backendaddress']
         
         try:
             self.driver.get(ip)
@@ -52,19 +46,19 @@ class Ats(AtsWeb):
         if (len(cfg['mac']) > 5  ):#NoSuchElementException
             strMac =  cfg['mac']
         try:
-            self.driver.find_element_by_id('mac1')
+            self.driver.find_element_by_id(cfg['maccontrolid'])
         except NoSuchElementException:
             message = '无法找到MAC控件;0'
             self.sendtoMainapp(message)
             time.sleep(0.35)
             self.sendtoMainapp('MAC-1')
             return 0
-        v = self.driver.find_element_by_id('mac1').get_attribute('value')
+        v = self.driver.find_element_by_id(cfg['maccontrolid']).get_attribute('value')
         if( '2C:26:5F:' not in v):
             v = strMac
-            self.setItById("mac1", cfg['mac'], 'Mac地址')
+            self.setItById(cfg['maccontrolid'], cfg['mac'], 'Mac地址')
             
-            self.execJs("set()")
+            self.execJs(cfg['setmaccontrolid'])
             time.sleep(2)
             self.driver.switch_to.alert.accept()
             
