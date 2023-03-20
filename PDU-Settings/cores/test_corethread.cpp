@@ -61,7 +61,7 @@ bool Test_CoreThread::startProcess()
             mProcess->close();
             mProcess->start(exe);
             mLogs->updatePro(tr("网页设置功能启动"));
-            ret = mProcess->waitForFinished(300*1000);
+            ret = mProcess->waitForFinished(420*1000);
             mLogs->updatePro(tr("网页设置功能正常退出"), ret , 2);
         } catch (...) {
             ret = mLogs->updatePro(tr("网页设置功能异常退出"), false, 1);
