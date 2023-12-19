@@ -38,6 +38,10 @@ void Dev_Zpdu::initDebugHtml()
     ptr->level = read("level", 0).toInt();
     ptr->zpdu_ver = read("zpdu_ver", 1).toInt();
     ptr->devZpduType = read("devzpdutype" , 16).toInt();
+    ptr->tem = read("tem" , 1).toInt();
+    ptr->aboard = read("aboard" , 0).toInt();
+    ptr->logopath = read("logopath" , "").toString();
+
 
     for(int i=0; i<3; ++i) ptr->line_op[i] = read(QString("line_op%1").arg(i+1), 8).toInt();
     for(int i=0; i<6; ++i) ptr->loop_op[i] = read(QString("loop_op%1").arg(i+1), 4).toInt();
@@ -66,6 +70,9 @@ void Dev_Zpdu::writeDebugHtml()
     write("level", ptr->level);
     write("zpdu_ver", ptr->zpdu_ver);
     write("devzpdutype", ptr->devZpduType);
+    write("tem", ptr->tem);
+    write("aboard", ptr->aboard);
+    write("logopath", ptr->logopath);
 
     for(int i=0; i<3; ++i) write(QString("line_op%1").arg(i+1), ptr->line_op[i]);
     for(int i=0; i<6; ++i) write(QString("loop_op%1").arg(i+1), ptr->loop_op[i]);

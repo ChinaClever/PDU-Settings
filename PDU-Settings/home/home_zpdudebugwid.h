@@ -25,8 +25,12 @@ public:
 protected slots:
     void initFunSlot();
 
+private slots:
+    void on_logopathBtn_clicked();
+
 private:
     void initData();
+    QString selectFile(const QString &filter, QString dir);
 
 private:
     Ui::Home_ZpduDebugWid *ui;

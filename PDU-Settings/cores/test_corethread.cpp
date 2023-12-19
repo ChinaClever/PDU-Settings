@@ -50,6 +50,7 @@ bool Test_CoreThread::startProcess()
     case IP_PDU_CUSTOMIZE:  exe += "ippducustomize"; break;
     case ZPDUHW:  exe += "zpduhw"; break;
     case ZPDUSTD: exe += "zpdustd"; break;
+    case ZPDUNETSAFE: exe += "zpdunetsafe"; break;
     }
 
     exe += ".exe";

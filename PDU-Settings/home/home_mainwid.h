@@ -39,6 +39,7 @@ private:
     Home_IpCustomizewid *mIpCustomizeWid;
     Home_ZpduHwWid *mZpduHwWid;
     Home_ZpduHwWid *mZpduStdWid;
+    Home_ZpduHwWid *mZpduNetSafeWid;
 };
 
 #endif // HOME_MAINWID_H

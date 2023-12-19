@@ -1,5 +1,6 @@
 #include "home_zpdudebugwid.h"
 #include "ui_home_zpdudebugwid.h"
+#include <QFileDialog>
 
 Home_ZpduDebugWid::Home_ZpduDebugWid(QWidget *parent) :
     QWidget(parent),
@@ -30,6 +31,9 @@ void Home_ZpduDebugWid::initData()
     ui->devZpduTypeBox->setCurrentIndex(obj->devZpduType-1);
     ui->standarBox->setCurrentIndex(obj->standar);
     ui->languageBox->setCurrentIndex(obj->language);
+    ui->temBox->setCurrentIndex(obj->tem);
+    ui->aboardBox->setCurrentIndex(obj->aboard);
+    ui->logopathEdit->setText(obj->logopath);
     ui->C1OpEdit->setText(QString::number(obj->loop_op[0]));
     ui->C2OpEdit->setText(QString::number(obj->loop_op[1]));
     ui->C3OpEdit->setText(QString::number(obj->loop_op[2]));
@@ -57,6 +61,9 @@ void Home_ZpduDebugWid::updateData()
     obj->devZpduType = ui->devZpduTypeBox->currentIndex()+1;
     obj->standar = ui->standarBox->currentIndex();
     obj->language = ui->languageBox->currentIndex();
+    obj->tem = ui->temBox->currentIndex();
+    obj->aboard = ui->aboardBox->currentIndex();
+    obj->logopath = ui->logopathEdit->text();
     obj->loop_op[0] = ui->C1OpEdit->text().toInt();
     obj->loop_op[1] = ui->C2OpEdit->text().toInt();
     obj->loop_op[2] = ui->C3OpEdit->text().toInt();
@@ -102,4 +109,21 @@ bool Home_ZpduDebugWid::lineCheck()
     res += ui->L3OpEdit->text().toInt();
     if(v != res) ret = false;
     return ret;
+}
+
+QString Home_ZpduDebugWid::selectFile(const QString &filter, QString dir)
+{
+    if(dir.isEmpty()) dir = QCoreApplication::applicationDirPath();
+    QString fn = QFileDialog::getOpenFileName(this, tr("选择文件"), dir, filter);
+    if(fn.contains(" ")) {
+        MsgBox::critical(this, tr("目录存在空格，请重试")); fn.clear();
+    }
+
+    return fn;
+}
+
+void Home_ZpduDebugWid::on_logopathBtn_clicked()
+{
+    QString fn = selectFile("执行文件(*.png)", ui->logopathEdit->text());
+    if(fn.contains(".png"))  ui->logopathEdit->setText(fn);
 }

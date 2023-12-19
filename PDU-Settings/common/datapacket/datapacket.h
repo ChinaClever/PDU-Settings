@@ -126,15 +126,18 @@ struct sDevType
 
     uchar outputs;
     uchar version;
+    uchar tem;//# 0：标准  1：专用
+    QString logopath;
     uchar language;
     uchar lines;// 1 单相     2 单相两路/双火线  3 三相
     uchar breaker;//0 16A, 1 20A
     uchar level;//垂直、水平
-    uchar standar;//标准、中性
+    uchar standar;//#0:标准  1：中性  2：定制
     uchar line_op[3];
     uchar loop_op[6];
     uchar loop_smallloop[6];
     uchar devZpduType;//1-20
+    uchar aboard;
 
     uchar rated_voltage;//0:220 , 1:380
     uchar rated_current;//0:16 , 1:32 , 2:63

@@ -754,6 +754,11 @@
           <string>ZPDU米尔</string>
          </property>
         </item>
+        <item>
+         <property name="text">
+          <string>ZPDU米尔网络安全</string>
+         </property>
+        </item>
        </widget>
       </item>
      </layout>
