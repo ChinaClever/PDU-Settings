@@ -60,9 +60,13 @@ bool Test_CoreThread::startProcess()
     if(ret){
         try {
             mProcess->close();
-            mProcess->start(exe);
+//            if(mItem->modeId == MPDU) mProcess->startDetached(exe);
+//            else
+                mProcess->start(exe);
             mLogs->updatePro(tr("网页设置功能启动"));
             ret = mProcess->waitForFinished(420*1000);
+
+//            if(mItem->modeId == MPDU) {sleep(92); ret = true;}
             mLogs->updatePro(tr("网页设置功能正常退出"), ret , 2);
         } catch (...) {
             ret = mLogs->updatePro(tr("网页设置功能异常退出"), false, 1);
