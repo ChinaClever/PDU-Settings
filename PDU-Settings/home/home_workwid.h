@@ -49,6 +49,8 @@ private slots:
     void on_snCheckBox_clicked(bool checked);
     void recvVerSlot(int ver);
 
+    void on_pcbEdit_textChanged(const QString &arg1);
+
 public slots:
     void errSlot() {QTimer::singleShot(5,this,SLOT(saveErrSlot()));}
 

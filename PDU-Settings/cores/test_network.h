@@ -15,6 +15,8 @@ protected:
     void run();
     void workDown();
 
+signals:
+    void sendVersionSig(QString str);
 protected slots:
     void initFunSlot();
 

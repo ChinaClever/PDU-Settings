@@ -15,6 +15,7 @@ enum eDevTypes {
     IP_PDU_CUSTOMIZE,
     ZPDUHW,
     ZPDUSTD,
+    ZPDUNETSAFE,
 
     AC = 1, // 交流
     DC,     // 直流

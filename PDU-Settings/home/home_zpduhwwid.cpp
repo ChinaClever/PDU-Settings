@@ -78,7 +78,10 @@ void Home_ZpduHwWid::enabledSlot(bool en)
     }
     else if(mindex == 2){
         if(mItem->modeId != ZPDUSTD) return;
+    }else if(mindex == 3){
+        if(mItem->modeId != ZPDUNETSAFE) return;
     }
+
 
     this->setEnabled(en);
     if(!en) {

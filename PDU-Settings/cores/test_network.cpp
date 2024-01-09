@@ -34,6 +34,8 @@ void Test_NetWork::workDown()
         QStringList list = QString(res->datagram).split(";");
         if(list.size() == 2) {
             QString str = list.first();
+            if(str.contains(("version")))
+                emit sendVersionSig(str);
             bool pass = list.last().toInt();
             mLogs->updatePro(str, pass, 0);
         } else {

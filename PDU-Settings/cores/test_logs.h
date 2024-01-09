@@ -2,6 +2,7 @@
 #define TEST_LOGS_H
 #include "dbstates.h"
 #include "test_object.h"
+#include "json_pack.h"
 
 class Test_Logs : public Test_Object
 {

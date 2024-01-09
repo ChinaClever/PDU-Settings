@@ -42,6 +42,21 @@ void sDataPacket::init()
     pro->step = Test_Fun;
     pro->result = Test_Info;
     pro->startTime = QTime::currentTime();
+
+    pro->productType.clear();
+    pro->productSN.clear();
+    pro->macAddress.clear();
+    pro->clientName.clear();
+    pro->testTime.clear();
+
+    pro->softwareType = "PDU-Settings";
+    pro->companyName = "clever";
+    pro->protocolVersion = "V1.0";
+    pro->testStartTime = QDateTime::currentDateTime().toString("yyyy-MM-dd HH:mm:ss");
+    pro->testEndTime.clear();
+    pro->no.clear();
+    pro->itemName.clear();
+    pro->uploadPass.clear();
 }
 
 bool sDataPacket::updatePro(const QString &str, bool pass, int sec)
@@ -52,6 +67,9 @@ bool sDataPacket::updatePro(const QString &str, bool pass, int sec)
 
     pro->item << str;
     pro->status << str;
+
+    pro->uploadPass << pass;
+    pro->itemName << str;
     if(pass) pass = delay(sec);
     else pro->result = Test_Fail;
 

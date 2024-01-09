@@ -151,11 +151,14 @@ void Home_WorkWid::updateWid()
     QString str = mItem->sn;
     if(str.isEmpty()) str = "--- ---";
     ui->snLab->setText(str);
+    mPro->productSN = str;
 
     str = mItem->dev_type;
     if(str.isEmpty()) str = "--- ---";
     ui->devLab->setText(str);
+    mPro->productType = str;
 
+    mPro->clientName = mItem->user;//工单号
     if(mPro->step < Test_Over) {
         updateTime();
     } else if(mPro->step < Test_End){
@@ -326,3 +329,9 @@ void Home_WorkWid::on_snCheckBox_clicked(bool checked)
     mItem->enSn = checked;
     if(!checked) MsgBox::information(this, tr("注意：创建序列号有利于产品溯源。你已选择不创建序列号。"));
 }
+
+void Home_WorkWid::on_pcbEdit_textChanged(const QString &arg1)
+{
+    ui->pcbEdit->setClearButtonEnabled(1);
+}
+

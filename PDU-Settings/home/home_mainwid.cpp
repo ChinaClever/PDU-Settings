@@ -83,4 +83,9 @@ void Home_MainWid::initWid()
     ui->tabWidget->addTab(mZpduStdWid, tr("ZPDU标准参数设置"));
     connect(mZpduStdWid, SIGNAL(errSig()), mWorkWid, SLOT(errSlot()));
     connect(mWorkWid, SIGNAL(enabledSig(bool)), mZpduStdWid, SLOT(enabledSlot(bool)));
+
+    mZpduNetSafeWid = new Home_ZpduHwWid(3 ,ui->tabWidget );
+    ui->tabWidget->addTab(mZpduNetSafeWid, tr("ZPDU网络安全设置"));
+    connect(mZpduNetSafeWid, SIGNAL(errSig()), mWorkWid, SLOT(errSlot()));
+    connect(mWorkWid, SIGNAL(enabledSig(bool)), mZpduNetSafeWid, SLOT(enabledSlot(bool)));
 }
