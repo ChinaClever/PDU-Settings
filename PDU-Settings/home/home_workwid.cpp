@@ -158,6 +158,7 @@ void Home_WorkWid::updateWid()
     ui->devLab->setText(str);
     mPro->productType = str;
 
+    mPro->PCB_Code = ui->pcbEdit->text();
     mPro->clientName = mItem->user;//工单号
     if(mPro->step < Test_Over) {
         updateTime();
@@ -232,7 +233,11 @@ bool Home_WorkWid::initWid()
 void Home_WorkWid::on_startBtn_clicked()
 {
     if(mPro->step == Test_End) {
-        if(initWid()) mCoreThread->start();
+        if(!ui->pcbEdit->text().isEmpty()){
+            if(initWid()) mCoreThread->start();
+        }else{
+            MsgBox::critical(this, tr("请先填写PCB码！"));
+        }
     } else {
         bool ret = MsgBox::question(this, tr("确定需要提前结束？"));
         if(ret) {
