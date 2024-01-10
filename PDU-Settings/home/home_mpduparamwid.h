@@ -48,7 +48,8 @@ private:
     sCfgItem *mItem;
     Dev_Object *mObj;
     sDevData *mDev;
-
+    sDataPacket *mPacket;
+    sProgress *mPro;
     QSpinBox *mLoops[6];
     QSpinBox *mBoards[6];
 };

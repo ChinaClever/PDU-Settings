@@ -40,6 +40,9 @@ void Home_WorkWid::initFunSlot()
     mSetOpDlg = new Home_SetOpDlg(this);
     mCoreThread = new Test_CoreThread(this);
 
+    mObj = Dev_Mpdu::bulid(this);
+    mDev = mObj->getDev();
+
     mPacket = sDataPacket::bulid();
     mPro = mPacket->getPro();
     mItem = Cfg::bulid()->item;
@@ -158,6 +161,11 @@ void Home_WorkWid::updateWid()
     ui->devLab->setText(str);
     mPro->productType = str;
 
+    sDevType *dt = &(mDev->dt);
+    if(mItem->modeId < 9){
+        // qDebug()<<"mPro->softwareVersion "<<mPro->softwareVersion;
+        // mPro->softwareVersion = dt->versions;
+    }
     mPro->PCB_Code = ui->pcbEdit->text();
     mPro->clientName = mItem->user;//工单号
     if(mPro->step < Test_Over) {

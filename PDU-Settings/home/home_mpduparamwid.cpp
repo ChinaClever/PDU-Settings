@@ -20,6 +20,8 @@ void Home_MpduParamWid::initFunSlot()
     mItem = Cfg::bulid()->item;
     mObj = Dev_Mpdu::bulid(this);
     mDev = mObj->getDev();
+    mPacket = sDataPacket::bulid();
+    mPro = mPacket->getPro();
     initWid();
     initType();
 }

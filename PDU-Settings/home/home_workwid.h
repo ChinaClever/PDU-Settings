@@ -64,6 +64,9 @@ private:
     sDataPacket *mPacket;
     Home_SetOpDlg *mSetOpDlg;
     Test_CoreThread *mCoreThread;
+
+    Dev_Object *mObj;
+    sDevData *mDev;
 };
 
 #endif // HOME_WORKWID_H
