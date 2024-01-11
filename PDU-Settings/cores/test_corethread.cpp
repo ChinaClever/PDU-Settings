@@ -24,9 +24,9 @@ void Test_CoreThread::getVersionSlot(QString str)
 {
     if( str.size() != 0 ){
         if(mItem->modeId > 8){
-            QString str1 = str.right(11);
-            char targetChar = '.'; // 目标字符
-            int index = str1.indexOf(targetChar); // 查找目标字符的索引
+            QString str1;
+            str1 = str.right(str.size()-(str.lastIndexOf(":")+1));
+            int index = str1.indexOf("."); // 查找目标字符的索引
             if (index != -1){
                 this->mVersion = str1.mid(0, index).trimmed(); // 截取从开头到目标字符之间的子字符串（包括目标字符）
                 mPro->softwareVersion = this->mVersion;
